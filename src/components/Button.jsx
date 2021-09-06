@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 const Button = styled.button`
-  background: ${(props) => (props.primary ? 'palevioletred' : 'white')};
-  color: ${(props) => (props.primary ? 'white' : 'palevioletred')};
+  background: ${({ primary }) => (primary ? 'palevioletred' : 'white')};
+  color: ${({ primary }) => (primary ? 'white' : 'palevioletred')};
 
   font-size: 1em;
   margin: 1em;
