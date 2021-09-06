@@ -1,12 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button2 from '@material-ui/core/Button';
 
 import NavBar from '../components/layouts/NavBar';
 import BranchBar from '../components/layouts/BranchBar';
 import ContentBox from '../components/layouts/ContentBox';
 import CommitBar from '../components/layouts/CommitBar';
-import CommitMessageBox from '../components/CommitMessageBox';
 
 import Button from '../components/Button';
 
@@ -28,17 +26,12 @@ export default function Repo() {
         <NavBar>
           <Button>test button</Button>
           <Button primary>test button</Button>
-          <Button2 variant="contained" color="primary">
-            test button 2
-          </Button2>
         </NavBar>
       </HeaderWrapper>
       <BodyWrapper>
         <BranchBar>Branch bar</BranchBar>
         <ContentBox>Content Box</ContentBox>
-        <CommitBar>
-          <CommitMessageBox />
-        </CommitBar>
+        <CommitBar>Commit bar</CommitBar>
       </BodyWrapper>
     </>
   );
