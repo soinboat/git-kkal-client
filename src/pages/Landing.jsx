@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
+import axios from 'axios';
 
 import styled from 'styled-components';
 import NavBar from '../components/layouts/NavBar';
@@ -7,6 +8,18 @@ import ContentBox from '../components/layouts/ContentBox';
 import { BodyWrapper, HeaderWrapper } from './styles';
 
 export default function Landing() {
+  const [repoUrl, setRepoUrl] = useState('');
+
+  const handleEnterUrlOnSubmit = useCallback(async (ev) => {
+    ev.preventDefault();
+
+    const data = await axios.get(
+      `http://localhost:8000/repository?repoUrl=${repoUrl}`,
+    );
+
+    console.log('data', data);
+  });
+
   return (
     <>
       <HeaderWrapper>
@@ -15,8 +28,12 @@ export default function Landing() {
       <BodyWrapper>
         <BranchBar>Branch bar</BranchBar>
         <ContentBox>
-          <Form>
-            <UrlInput />
+          <Form name="urlForm" onSubmit={handleEnterUrlOnSubmit}>
+            <UrlInput
+              type="url"
+              value={repoUrl}
+              onChange={(ev) => setRepoUrl(ev.target.value)}
+            />
             <Button>Enter Repo Url</Button>
           </Form>
         </ContentBox>
