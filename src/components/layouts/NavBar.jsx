@@ -13,7 +13,7 @@ const StyledWrapper = styled.nav`
 export default function NavBar({ children }) {
   return (
     <>
-      <StyledWrapper>{children || ''}</StyledWrapper>
+      <StyledWrapper>{children || null}</StyledWrapper>
     </>
   );
 }

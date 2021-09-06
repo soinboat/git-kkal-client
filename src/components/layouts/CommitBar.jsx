@@ -12,7 +12,7 @@ const StyledWrapper = styled.div`
 export default function CommitBar({ children }) {
   return (
     <>
-      <StyledWrapper>{children || ''}</StyledWrapper>
+      <StyledWrapper>{children || null}</StyledWrapper>
     </>
   );
 }

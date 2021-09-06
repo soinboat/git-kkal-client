@@ -13,7 +13,7 @@ const StyledWrapper = styled.div`
 export default function ContentBox({ children }) {
   return (
     <>
-      <StyledWrapper>{children || ''}</StyledWrapper>
+      <StyledWrapper>{children || null}</StyledWrapper>
     </>
   );
 }
