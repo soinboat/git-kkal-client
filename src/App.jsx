@@ -6,16 +6,14 @@ import Repo from './pages/Repo';
 
 function App() {
   return (
-    <>
-      <Switch>
-        <Route exact path="/">
-          <Landing />
-        </Route>
-        <Route path="/repository">
-          <Repo />
-        </Route>
-      </Switch>
-    </>
+    <Switch>
+      <Route exact path="/">
+        <Landing />
+      </Route>
+      <Route path="/repository">
+        <Repo />
+      </Route>
+    </Switch>
   );
 }
 
