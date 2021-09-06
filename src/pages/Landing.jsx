@@ -2,12 +2,13 @@ import React, { useCallback, useState } from 'react';
 import axios from 'axios';
 
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import NavBar from '../components/layouts/NavBar';
 import BranchBar from '../components/layouts/BranchBar';
 import ContentBox from '../components/layouts/ContentBox';
 import { BodyWrapper, HeaderWrapper } from './styles';
 
-export default function Landing() {
+export default function Landing({ saveRepoData }) {
   const [repoUrl, setRepoUrl] = useState('');
 
   const handleEnterUrlOnSubmit = useCallback(async (ev) => {
@@ -17,7 +18,7 @@ export default function Landing() {
       `http://localhost:8000/repository?repoUrl=${repoUrl}`,
     );
 
-    console.log('data', data);
+    saveRepoData(data);
   });
 
   return (
@@ -41,6 +42,10 @@ export default function Landing() {
     </>
   );
 }
+
+Landing.propTypes = {
+  saveRepoData: PropTypes.func.isRequired,
+};
 
 const Form = styled.form`
   width: 50%;
