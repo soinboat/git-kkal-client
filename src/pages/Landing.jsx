@@ -1,13 +1,15 @@
 import React, { useCallback, useState } from 'react';
-import axios from 'axios';
 
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+
 import NavBar from '../components/layouts/NavBar';
 import BranchBar from '../components/layouts/BranchBar';
 import ContentBox from '../components/layouts/ContentBox';
 import { BodyWrapper, HeaderWrapper } from './styles';
+
 import UI from '../constants/ui';
+import fetchRepoData from '../utils';
 
 export default function Landing({ saveRepoData }) {
   const [repoUrl, setRepoUrl] = useState('');
@@ -15,11 +17,9 @@ export default function Landing({ saveRepoData }) {
   const handleEnterUrlOnSubmit = useCallback(async (ev) => {
     ev.preventDefault();
 
-    const data = await axios.get(
-      `${process.env.REACT_APP_SERVER_URL}/repository?repoUrl=${repoUrl}`,
-    );
+    const repoData = await fetchRepoData(repoUrl);
 
-    saveRepoData(data);
+    saveRepoData(repoData);
   });
 
   return (
@@ -31,7 +31,7 @@ export default function Landing({ saveRepoData }) {
         <BranchBar>Branch bar</BranchBar>
         <ContentBox>
           <Form name="urlForm" onSubmit={handleEnterUrlOnSubmit}>
-            <UrlInput
+            <Input
               type="url"
               value={repoUrl}
               onChange={(ev) => setRepoUrl(ev.target.value)}
@@ -52,7 +52,7 @@ const Form = styled.form`
   width: 50%;
 `;
 
-const UrlInput = styled.input`
+const Input = styled.input`
   width: 100%;
 `;
 
