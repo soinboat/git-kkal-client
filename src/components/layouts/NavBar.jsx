@@ -1,8 +1,6 @@
 import React from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-import { theme } from '../../constants/theme';
 
 const StyledWrapper = styled.nav`
   width: 100%;
@@ -12,11 +10,7 @@ const StyledWrapper = styled.nav`
 `;
 
 export default function NavBar({ children }) {
-  return (
-    <ThemeProvider theme={theme}>
-      <StyledWrapper>{children || null}</StyledWrapper>
-    </ThemeProvider>
-  );
+  return <StyledWrapper>{children || null}</StyledWrapper>;
 }
 
 NavBar.propTypes = {
