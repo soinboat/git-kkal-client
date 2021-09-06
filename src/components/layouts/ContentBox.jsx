@@ -1,20 +1,21 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
-import { colors } from '../../constants/colors';
+
+import { theme } from '../../constants/theme';
 
 const StyledWrapper = styled.div`
   width: 100%;
   min-width: 200px;
-  background-color: ${colors.background.GREY_1};
-  color: ${colors.font.WHITE};
+  background-color: ${({ theme: { background } }) => background.GREY_1};
+  color: ${({ theme: { font } }) => font.WHITE};
 `;
 
 export default function ContentBox({ children }) {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <StyledWrapper>{children || null}</StyledWrapper>
-    </>
+    </ThemeProvider>
   );
 }
 

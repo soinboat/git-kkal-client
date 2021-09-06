@@ -1,7 +1,7 @@
 import React from 'react';
 
-import styled from 'styled-components';
-import { colors } from '../constants/colors';
+import styled, { ThemeProvider } from 'styled-components';
+import { theme } from '../constants/theme';
 
 const CommitMessageBoxWrapper = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ const CommitMessage = styled.div`
   height: 40px;
   margin: 10px;
   padding: 10px;
-  background-color: ${colors.background.GREY_4};
+  background-color: ${({ theme: { background } }) => background.GREY_4};
 `;
 
 const CommitHash = styled.div`
@@ -29,7 +29,7 @@ const CommitHash = styled.div`
   align-items: center;
   width: 100%;
   height: 30px;
-  background-color: ${colors.background.GREY_4};
+  background-color: ${({ theme: { background } }) => background.GREY_4};
 `;
 
 export default function CommitMessageBox() {
@@ -38,11 +38,13 @@ export default function CommitMessageBox() {
 
   return (
     <CommitMessageBoxWrapper>
-      <CommitHash>
-        commit:
-        {HASH}
-      </CommitHash>
-      <CommitMessage>{MESSAGE}</CommitMessage>
+      <ThemeProvider theme={theme}>
+        <CommitHash>
+          commit:
+          {HASH}
+        </CommitHash>
+        <CommitMessage>{MESSAGE}</CommitMessage>
+      </ThemeProvider>
     </CommitMessageBoxWrapper>
   );
 }

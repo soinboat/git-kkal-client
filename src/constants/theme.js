@@ -1,4 +1,4 @@
-export const colors = {
+export const theme = {
   background: {
     BLACK: '#000000',
     GREY_1: '#212121',
@@ -13,4 +13,4 @@ export const colors = {
   },
 };
 
-export default colors;
+export default theme;

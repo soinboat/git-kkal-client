@@ -1,20 +1,21 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
-import { colors } from '../../constants/colors';
+
+import { theme } from '../../constants/theme';
 
 const StyledWrapper = styled.nav`
   width: 100%;
   height: 60px;
-  background-color: ${colors.background.BLACK};
-  color: ${colors.font.GREY};
+  background-color: ${({ theme: { background } }) => background.BLACK};
+  color: ${({ theme: { font } }) => font.GREY};
 `;
 
 export default function NavBar({ children }) {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <StyledWrapper>{children || null}</StyledWrapper>
-    </>
+    </ThemeProvider>
   );
 }
 

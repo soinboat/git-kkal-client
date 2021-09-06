@@ -1,19 +1,20 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
-import { colors } from '../../constants/colors';
+
+import { theme } from '../../constants/theme';
 
 const StyledWrapper = styled.div`
   min-width: 250px;
-  background-color: ${colors.background.GREY_3};
-  color: ${colors.font.WHITE};
+  background-color: ${({ theme: { background } }) => background.GREY_3};
+  color: ${({ theme: { font } }) => font.WHITE};
 `;
 
 export default function CommitBar({ children }) {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <StyledWrapper>{children || null}</StyledWrapper>
-    </>
+    </ThemeProvider>
   );
 }
 
