@@ -7,6 +7,7 @@ import NavBar from '../components/layouts/NavBar';
 import BranchBar from '../components/layouts/BranchBar';
 import ContentBox from '../components/layouts/ContentBox';
 import { BodyWrapper, HeaderWrapper } from './styles';
+import UI from '../constants/ui';
 
 export default function Landing({ saveRepoData }) {
   const [repoUrl, setRepoUrl] = useState('');
@@ -15,7 +16,7 @@ export default function Landing({ saveRepoData }) {
     ev.preventDefault();
 
     const data = await axios.get(
-      `http://localhost:8000/repository?repoUrl=${repoUrl}`,
+      `${process.env.REACT_APP_SERVER_URL}/repository?repoUrl=${repoUrl}`,
     );
 
     saveRepoData(data);
@@ -35,7 +36,7 @@ export default function Landing({ saveRepoData }) {
               value={repoUrl}
               onChange={(ev) => setRepoUrl(ev.target.value)}
             />
-            <Button>Enter Repo Url</Button>
+            <Button>{UI.ENTER_REPO_URL}</Button>
           </Form>
         </ContentBox>
       </BodyWrapper>
