@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import NavBar from '../components/layouts/NavBar';
@@ -8,12 +9,15 @@ import CommitBar from '../components/layouts/CommitBar';
 
 import Button from '../components/Button';
 import { BodyWrapper, HeaderWrapper } from '../components/styles';
+import getBranchList from '../utils';
+import BranchList from '../components/BranchList';
 
 export default function Repo({ repoData }) {
-  const branchList = repoData.branchList.map((log) => log.branchName2);
-  const filteredBranchList = branchList.filter(
-    (branch, index) => branchList.indexOf(branch) === index,
-  );
+  if (!repoData) {
+    return <Redirect to="/" />;
+  }
+
+  const branchList = getBranchList(repoData);
 
   return (
     <>
@@ -24,7 +28,9 @@ export default function Repo({ repoData }) {
         </NavBar>
       </HeaderWrapper>
       <BodyWrapper>
-        <BranchBar branchList={filteredBranchList}>Branch bar</BranchBar>
+        <BranchBar>
+          <BranchList branchList={branchList} />
+        </BranchBar>
         <ContentBox>Content Box</ContentBox>
         <CommitBar>Commit bar</CommitBar>
       </BodyWrapper>
@@ -32,10 +38,21 @@ export default function Repo({ repoData }) {
   );
 }
 
+Repo.defaultProps = {
+  repoData: {
+    repoName: 'repoName',
+    branchList: [
+      {
+        message: 'Message',
+      },
+    ],
+  },
+};
+
 Repo.propTypes = {
   repoData: PropTypes.shape({
+    repoName: PropTypes.string.isRequired,
     branchList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))
       .isRequired,
-    repoName: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
 };

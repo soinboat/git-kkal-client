@@ -57,9 +57,9 @@ Landing.defaultProps = {
 
 Landing.propTypes = {
   repoData: PropTypes.shape({
+    repoName: PropTypes.string.isRequired,
     branchList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))
       .isRequired,
-    repoName: PropTypes.string.isRequired,
   }),
   handleRepoUrlSubmit: PropTypes.func.isRequired,
 };
