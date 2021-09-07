@@ -14,13 +14,16 @@ import fetchRepoData from '../utils';
 export default function Landing({ saveRepoData }) {
   const [repoUrl, setRepoUrl] = useState('');
 
-  const handleEnterUrlOnSubmit = useCallback(async (ev) => {
-    ev.preventDefault();
+  const handleEnterUrlOnSubmit = useCallback(
+    async (ev) => {
+      ev.preventDefault();
 
-    const repoData = await fetchRepoData(repoUrl);
+      const repoData = await fetchRepoData(repoUrl);
 
-    saveRepoData(repoData);
-  });
+      saveRepoData(repoData);
+    },
+    [repoUrl],
+  );
 
   return (
     <>
