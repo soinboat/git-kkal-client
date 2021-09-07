@@ -12,6 +12,7 @@ import Button from '../components/Button';
 import { BodyWrapper, HeaderWrapper } from '../components/styles';
 import getBranchList from '../utils';
 import BranchList from '../components/BranchList';
+import UI from '../constants/ui';
 
 export default function Repo({ repoData }) {
   if (!repoData) {
@@ -26,8 +27,9 @@ export default function Repo({ repoData }) {
         <NavBar>
           <Wrapper>
             <Span>Repository: {repoData.repoName}</Span>
-            <Button>test button</Button>
-            <Button primary>test button</Button>
+            <Span>Branch name:</Span>
+            <Button>{UI.TWO_DIMENSION}</Button>
+            <Button primary>{UI.THREE_DIMENSION}</Button>
           </Wrapper>
         </NavBar>
       </HeaderWrapper>
