@@ -34,6 +34,7 @@ export default function Landing({ saveRepoData }) {
             <Input
               type="url"
               value={repoUrl}
+              placeholder={UI.REPOSITORY_URL}
               onChange={(ev) => setRepoUrl(ev.target.value)}
             />
             <Button>{UI.ENTER_REPO_URL}</Button>
