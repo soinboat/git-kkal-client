@@ -20,7 +20,10 @@ function App() {
   return (
     <Switch>
       <Route exact path="/">
-        <Landing handleRepoUrlSubmit={handleRepoUrlSubmit} />
+        <Landing
+          repoData={repoData}
+          handleRepoUrlSubmit={handleRepoUrlSubmit}
+        />
       </Route>
       <Route path="/repository">
         <Repo repoData={repoData} />

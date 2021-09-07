@@ -1,4 +1,6 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -10,8 +12,12 @@ import { BodyWrapper, HeaderWrapper } from '../components/styles';
 
 import UI from '../constants/ui';
 
-export default function Landing({ handleRepoUrlSubmit }) {
+export default function Landing({ repoData, handleRepoUrlSubmit }) {
   const [repoUrl, setRepoUrl] = useState('');
+
+  if (repoData) {
+    return <Redirect to="/repository" />;
+  }
 
   return (
     <>
@@ -40,6 +46,7 @@ export default function Landing({ handleRepoUrlSubmit }) {
 }
 
 Landing.propTypes = {
+  repoData: PropTypes.object.isRequired,
   handleRepoUrlSubmit: PropTypes.func.isRequired,
 };
 
