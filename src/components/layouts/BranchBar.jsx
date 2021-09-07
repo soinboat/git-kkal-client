@@ -1,11 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { nanoid } from 'nanoid';
 
-export default function BranchBar({ data }) {
-  console.log('data', data);
-
-  return <StyledWrapper />;
+export default function BranchBar({ branchList }) {
+  return (
+    <StyledWrapper>
+      <div>
+        {branchList?.map((branch) => (
+          <div key={nanoid()}>{branch}</div>
+        ))}
+      </div>
+    </StyledWrapper>
+  );
 }
 
 const StyledWrapper = styled.div`
@@ -16,9 +23,9 @@ const StyledWrapper = styled.div`
 `;
 
 BranchBar.defaultProps = {
-  data: [],
+  branchList: [],
 };
 
 BranchBar.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.string),
+  branchList: PropTypes.arrayOf(PropTypes.string),
 };

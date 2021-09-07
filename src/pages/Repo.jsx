@@ -10,8 +10,9 @@ import Button from '../components/Button';
 import { BodyWrapper, HeaderWrapper } from '../components/styles';
 
 export default function Repo({ repoData }) {
-  const branchList = repoData?.branchList.map(
-    (branchData) => branchData.branchName2,
+  const branchList = repoData.branchList.map((log) => log.branchName2);
+  const filteredBranchList = branchList.filter(
+    (branch, index) => branchList.indexOf(branch) === index,
   );
 
   return (
@@ -23,7 +24,7 @@ export default function Repo({ repoData }) {
         </NavBar>
       </HeaderWrapper>
       <BodyWrapper>
-        <BranchBar data={branchList}>Branch bar</BranchBar>
+        <BranchBar branchList={filteredBranchList}>Branch bar</BranchBar>
         <ContentBox>Content Box</ContentBox>
         <CommitBar>Commit bar</CommitBar>
       </BodyWrapper>
