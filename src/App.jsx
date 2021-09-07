@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import loadable from '@loadable/component';
+import fetchRepoData from './utils';
 
 const Landing = loadable(() => import('./pages/Landing'));
 const Repo = loadable(() => import('./pages/Repo'));
@@ -8,14 +9,18 @@ const Repo = loadable(() => import('./pages/Repo'));
 function App() {
   const [repoData, setRepoData] = useState(null);
 
-  const handleRepoData = (value) => {
-    setRepoData(value);
+  const handleRepoUrlSubmit = async (ev, repoUrl) => {
+    ev.preventDefault();
+
+    const data = await fetchRepoData(repoUrl);
+
+    setRepoData(data);
   };
 
   return (
     <Switch>
       <Route exact path="/">
-        <Landing saveRepoData={handleRepoData} />
+        <Landing handleRepoUrlSubmit={handleRepoUrlSubmit} />
       </Route>
       <Route path="/repository">
         <Repo repoData={repoData} />

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -9,21 +9,9 @@ import ContentBox from '../components/layouts/ContentBox';
 import { BodyWrapper, HeaderWrapper } from './styles';
 
 import UI from '../constants/ui';
-import fetchRepoData from '../utils';
 
-export default function Landing({ saveRepoData }) {
+export default function Landing({ handleRepoUrlSubmit }) {
   const [repoUrl, setRepoUrl] = useState('');
-
-  const handleEnterUrlOnSubmit = useCallback(
-    async (ev) => {
-      ev.preventDefault();
-
-      const repoData = await fetchRepoData(repoUrl);
-
-      saveRepoData(repoData);
-    },
-    [repoUrl],
-  );
 
   return (
     <>
@@ -33,7 +21,10 @@ export default function Landing({ saveRepoData }) {
       <BodyWrapper>
         <BranchBar>Branch bar</BranchBar>
         <ContentBox>
-          <Form name="urlForm" onSubmit={handleEnterUrlOnSubmit}>
+          <Form
+            name="urlForm"
+            onSubmit={(ev) => handleRepoUrlSubmit(ev, repoUrl)}
+          >
             <Input
               type="url"
               value={repoUrl}
@@ -49,7 +40,7 @@ export default function Landing({ saveRepoData }) {
 }
 
 Landing.propTypes = {
-  saveRepoData: PropTypes.func.isRequired,
+  handleRepoUrlSubmit: PropTypes.func.isRequired,
 };
 
 const Form = styled.form`
