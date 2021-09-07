@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import loadable from '@loadable/component';
 
-import Landing from './pages/Landing';
-import Repo from './pages/Repo';
+const Landing = loadable(() => import('./pages/Landing'));
+const Repo = loadable(() => import('./pages/Repo'));
 
 function App() {
   const [repoData, setRepoData] = useState(null);
