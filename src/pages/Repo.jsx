@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import NavBar from '../components/layouts/NavBar';
 import BranchBar from '../components/layouts/BranchBar';
@@ -23,8 +24,11 @@ export default function Repo({ repoData }) {
     <>
       <HeaderWrapper>
         <NavBar>
-          <Button>test button</Button>
-          <Button primary>test button</Button>
+          <Wrapper>
+            <Span>Repository: {repoData.repoName}</Span>
+            <Button>test button</Button>
+            <Button primary>test button</Button>
+          </Wrapper>
         </NavBar>
       </HeaderWrapper>
       <BodyWrapper>
@@ -37,6 +41,24 @@ export default function Repo({ repoData }) {
     </>
   );
 }
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 60px;
+  background-color: ${({ theme: { background } }) => background.BLACK};
+  color: ${({ theme: { font } }) => font.GREY};
+`;
+
+const Span = styled.span`
+  background: ${({ primary }) => (primary ? 'palevioletred' : 'white')};
+  color: ${({ primary }) => (primary ? 'white' : 'palevioletred')};
+
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+`;
 
 Repo.defaultProps = {
   repoData: {

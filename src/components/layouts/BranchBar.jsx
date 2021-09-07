@@ -1,12 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 export default function BranchBar({ children }) {
-  return <StyledWrapper>{children || null}</StyledWrapper>;
+  return <Wrapper>{children || null}</Wrapper>;
 }
 
-const StyledWrapper = styled.div`
+const Wrapper = styled.div`
   min-width: 200px;
   height: 100%;
   background-color: ${({ theme: { background } }) => background.GREY_3};

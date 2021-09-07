@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
+
 import loadable from '@loadable/component';
 import fetchRepoData from './api/git';
 
