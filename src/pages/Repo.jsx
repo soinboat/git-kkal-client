@@ -6,7 +6,7 @@ import ContentBox from '../components/layouts/ContentBox';
 import CommitBar from '../components/layouts/CommitBar';
 
 import Button from '../components/Button';
-import { BodyWrapper, HeaderWrapper } from './styles';
+import { BodyWrapper, HeaderWrapper } from '../components/styles';
 
 export default function Repo() {
   return (
