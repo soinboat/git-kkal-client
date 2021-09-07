@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -11,6 +10,10 @@ import Button from '../components/Button';
 import { BodyWrapper, HeaderWrapper } from '../components/styles';
 
 export default function Repo({ repoData }) {
+  const branchList = repoData?.branchList.map(
+    (branchData) => branchData.branchName2,
+  );
+
   return (
     <>
       <HeaderWrapper>
@@ -20,7 +23,7 @@ export default function Repo({ repoData }) {
         </NavBar>
       </HeaderWrapper>
       <BodyWrapper>
-        <BranchBar data={repoData}>Branch bar</BranchBar>
+        <BranchBar data={branchList}>Branch bar</BranchBar>
         <ContentBox>Content Box</ContentBox>
         <CommitBar>Commit bar</CommitBar>
       </BodyWrapper>
@@ -29,5 +32,9 @@ export default function Repo({ repoData }) {
 }
 
 Repo.propTypes = {
-  repoData: PropTypes.object.isRequired,
+  repoData: PropTypes.shape({
+    branchList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))
+      .isRequired,
+    repoName: PropTypes.string.isRequired,
+  }).isRequired,
 };

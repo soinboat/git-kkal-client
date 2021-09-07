@@ -2,6 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+export default function BranchBar({ data }) {
+  console.log('data', data);
+
+  return <StyledWrapper />;
+}
+
 const StyledWrapper = styled.div`
   min-width: 200px;
   height: 100%;
@@ -9,10 +15,10 @@ const StyledWrapper = styled.div`
   color: ${({ theme: { font } }) => font.WHITE};
 `;
 
-export default function BranchBar({ children }) {
-  return <StyledWrapper>{children || null}</StyledWrapper>;
-}
+BranchBar.defaultProps = {
+  data: [],
+};
 
 BranchBar.propTypes = {
-  children: PropTypes.node.isRequired,
+  data: PropTypes.arrayOf(PropTypes.string),
 };

@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
@@ -45,8 +44,23 @@ export default function Landing({ repoData, handleRepoUrlSubmit }) {
   );
 }
 
+Landing.defaultProps = {
+  repoData: {
+    repoName: 'repoName',
+    branchList: [
+      {
+        message: 'Message',
+      },
+    ],
+  },
+};
+
 Landing.propTypes = {
-  repoData: PropTypes.object.isRequired,
+  repoData: PropTypes.shape({
+    branchList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))
+      .isRequired,
+    repoName: PropTypes.string.isRequired,
+  }),
   handleRepoUrlSubmit: PropTypes.func.isRequired,
 };
 
