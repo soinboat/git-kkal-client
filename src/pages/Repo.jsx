@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -7,11 +8,11 @@ import NavBar from '../components/layouts/NavBar';
 import BranchBar from '../components/layouts/BranchBar';
 import ContentBox from '../components/layouts/ContentBox';
 import CommitBar from '../components/layouts/CommitBar';
-
+import BranchList from '../components/BranchList';
 import Button from '../components/Button';
 import { BodyWrapper, HeaderWrapper } from '../components/styles';
+
 import getBranchList from '../utils';
-import BranchList from '../components/BranchList';
 import UI from '../constants/ui';
 
 export default function Repo({ repoData }) {
@@ -65,7 +66,7 @@ const Span = styled.span`
 Repo.defaultProps = {
   repoData: {
     repoName: 'repoName',
-    branchList: [
+    logList: [
       {
         message: 'Message',
       },
@@ -76,7 +77,6 @@ Repo.defaultProps = {
 Repo.propTypes = {
   repoData: PropTypes.shape({
     repoName: PropTypes.string.isRequired,
-    branchList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))
-      .isRequired,
+    logList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   }),
 };
