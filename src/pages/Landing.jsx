@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import NavBar from '../components/layouts/NavBar';
 import BranchBar from '../components/layouts/BranchBar';
@@ -47,7 +47,7 @@ export default function Landing({ repoData, handleRepoUrlSubmit }) {
 Landing.defaultProps = {
   repoData: {
     repoName: 'repoName',
-    branchList: [
+    logList: [
       {
         message: 'Message',
       },
@@ -58,8 +58,7 @@ Landing.defaultProps = {
 Landing.propTypes = {
   repoData: PropTypes.shape({
     repoName: PropTypes.string.isRequired,
-    branchList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))
-      .isRequired,
+    logList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   }),
   handleRepoUrlSubmit: PropTypes.func.isRequired,
 };
