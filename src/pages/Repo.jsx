@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
@@ -14,13 +14,29 @@ import { BodyWrapper, HeaderWrapper } from '../components/styles';
 
 import getBranchList from '../utils';
 import UI from '../constants/ui';
+import CommitList from '../components/CommitList';
+import { fetchDiff } from '../api/git';
 
-export default function Repo({ repoData }) {
+export default function Repo({ repoUrl, repoData }) {
   if (!repoData) {
     return <Redirect to="/" />;
   }
 
+  const [targetCommit] = useState(repoData?.logList[0].hash);
+  const [targetDiffList, setTargetDiffList] = useState(null);
+
   const branchList = getBranchList(repoData);
+
+  useEffect(() => {
+    (async function () {
+      if (repoUrl && targetCommit) {
+        const diffList = await fetchDiff(repoUrl, targetCommit);
+        console.log('diffList', diffList);
+
+        setTargetDiffList(diffList.changedFileList);
+      }
+    })();
+  }, [targetCommit]);
 
   return (
     <>
@@ -39,7 +55,9 @@ export default function Repo({ repoData }) {
           <BranchList branchList={branchList} />
         </BranchBar>
         <ContentBox>Content Box</ContentBox>
-        <CommitBar>Commit bar</CommitBar>
+        <CommitBar>
+          <CommitList targetDiffList={targetDiffList} />
+        </CommitBar>
       </BodyWrapper>
     </>
   );
@@ -64,17 +82,20 @@ const Span = styled.span`
 `;
 
 Repo.defaultProps = {
+  repoUrl: 'repoUrl',
   repoData: {
     repoName: 'repoName',
     logList: [
       {
         message: 'Message',
+        hash: 'hash',
       },
     ],
   },
 };
 
 Repo.propTypes = {
+  repoUrl: PropTypes.string,
   repoData: PropTypes.shape({
     repoName: PropTypes.string.isRequired,
     logList: PropTypes.arrayOf(
