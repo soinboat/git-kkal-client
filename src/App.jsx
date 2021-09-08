@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
+
 import loadable from '@loadable/component';
-import fetchRepoData from './api/repo';
+import fetchRepoData from './api/git';
 
 const Landing = loadable(() => import('./pages/Landing'));
 const Repo = loadable(() => import('./pages/Repo'));
@@ -20,7 +21,10 @@ function App() {
   return (
     <Switch>
       <Route exact path="/">
-        <Landing handleRepoUrlSubmit={handleRepoUrlSubmit} />
+        <Landing
+          repoData={repoData}
+          handleRepoUrlSubmit={handleRepoUrlSubmit}
+        />
       </Route>
       <Route path="/repository">
         <Repo repoData={repoData} />

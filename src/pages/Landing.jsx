@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -10,8 +11,12 @@ import { BodyWrapper, HeaderWrapper } from '../components/styles';
 
 import UI from '../constants/ui';
 
-export default function Landing({ handleRepoUrlSubmit }) {
+export default function Landing({ repoData, handleRepoUrlSubmit }) {
   const [repoUrl, setRepoUrl] = useState('');
+
+  if (repoData) {
+    return <Redirect to="/repository" />;
+  }
 
   return (
     <>
@@ -39,7 +44,23 @@ export default function Landing({ handleRepoUrlSubmit }) {
   );
 }
 
+Landing.defaultProps = {
+  repoData: {
+    repoName: 'repoName',
+    branchList: [
+      {
+        message: 'Message',
+      },
+    ],
+  },
+};
+
 Landing.propTypes = {
+  repoData: PropTypes.shape({
+    repoName: PropTypes.string.isRequired,
+    branchList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))
+      .isRequired,
+  }),
   handleRepoUrlSubmit: PropTypes.func.isRequired,
 };
 

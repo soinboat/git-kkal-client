@@ -5,9 +5,9 @@ const axiosInstance = axios.create({
 });
 
 const fetchRepoData = async (repoUrl) => {
-  const data = await axiosInstance.get(`/repository?repoUrl=${repoUrl}`);
+  const res = await axiosInstance.get(`/repository?repoUrl=${repoUrl}`);
 
-  return data;
+  return res.data;
 };
 
 export default fetchRepoData;
