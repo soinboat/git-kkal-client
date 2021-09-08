@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export default function CommitList({ targetDiffList }) {
+export default function DiffList({ targetDiffList }) {
   return (
     <Wrapper>
       <span>
@@ -22,11 +22,11 @@ const Wrapper = styled.div`
   color: ${({ theme: { font } }) => font.WHITE};
 `;
 
-CommitList.defaultProps = {
+DiffList.defaultProps = {
   targetDiffList: [],
 };
 
-CommitList.propTypes = {
+DiffList.propTypes = {
   targetDiffList: PropTypes.arrayOf(
     PropTypes.objectOf(
       PropTypes.oneOfType([

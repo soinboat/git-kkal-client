@@ -7,14 +7,14 @@ import styled from 'styled-components';
 import NavBar from '../components/layouts/NavBar';
 import BranchBar from '../components/layouts/BranchBar';
 import ContentBox from '../components/layouts/ContentBox';
-import CommitBar from '../components/layouts/CommitBar';
+import DiffBar from '../components/layouts/DiffBar';
 import BranchList from '../components/BranchList';
 import Button from '../components/Button';
 import { BodyWrapper, HeaderWrapper } from '../components/styles';
 
 import getBranchList from '../utils';
 import UI from '../constants/ui';
-import CommitList from '../components/CommitList';
+import DiffList from '../components/DiffList';
 import { fetchDiff } from '../api/git';
 
 export default function Repo({ repoUrl, repoData }) {
@@ -24,14 +24,12 @@ export default function Repo({ repoUrl, repoData }) {
 
   const [targetCommit] = useState(repoData?.logList[0].hash);
   const [targetDiffList, setTargetDiffList] = useState(null);
-
   const branchList = getBranchList(repoData);
 
   useEffect(() => {
     (async function () {
       if (repoUrl && targetCommit) {
         const diffList = await fetchDiff(repoUrl, targetCommit);
-        console.log('diffList', diffList);
 
         setTargetDiffList(diffList.changedFileList);
       }
@@ -55,9 +53,9 @@ export default function Repo({ repoUrl, repoData }) {
           <BranchList branchList={branchList} />
         </BranchBar>
         <ContentBox>Content Box</ContentBox>
-        <CommitBar>
-          <CommitList targetDiffList={targetDiffList} />
-        </CommitBar>
+        <DiffBar>
+          <DiffList targetDiffList={targetDiffList} />
+        </DiffBar>
       </BodyWrapper>
     </>
   );
