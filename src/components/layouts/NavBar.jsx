@@ -17,6 +17,10 @@ const Wrapper = styled.nav`
   color: ${({ theme: { font } }) => font.GREY};
 `;
 
+NavBar.defaultProps = {
+  children: React.createElement('div'),
+};
+
 NavBar.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 };
