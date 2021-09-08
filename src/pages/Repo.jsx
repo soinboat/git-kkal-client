@@ -10,6 +10,9 @@ import ContentBox from '../components/layouts/ContentBox';
 import CommitBar from '../components/layouts/CommitBar';
 import BranchList from '../components/BranchList';
 import Button from '../components/Button';
+
+import Graph2d from '../components/Graph2d';
+
 import { BodyWrapper, HeaderWrapper } from '../components/styles';
 
 import getBranchList from '../utils';
@@ -38,7 +41,9 @@ export default function Repo({ repoData }) {
         <BranchBar>
           <BranchList branchList={branchList} />
         </BranchBar>
-        <ContentBox>Content Box</ContentBox>
+        <ContentBox>
+          <Graph2d repoData={repoData}/>
+        </ContentBox>
         <CommitBar>Commit bar</CommitBar>
       </BodyWrapper>
     </>

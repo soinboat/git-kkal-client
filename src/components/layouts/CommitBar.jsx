@@ -8,6 +8,7 @@ export default function CommitBar({ children }) {
 
 const Wrapper = styled.div`
   min-width: 250px;
+  height: 100%;
   background-color: ${({ theme: { background } }) => background.GREY_3};
   color: ${({ theme: { font } }) => font.WHITE};
 `;
