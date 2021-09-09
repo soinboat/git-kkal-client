@@ -1,7 +1,8 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+import DiffParagraph from '../DiffParagraph';
 
 export default function Diff({ targetDiff }) {
   console.log(targetDiff);
@@ -13,7 +14,7 @@ export default function Diff({ targetDiff }) {
           <DiffTitle>
             {`${log.codeLineOffsetString} ${log.codeBeginHunk}`}
           </DiffTitle>
-          <div>{JSON.stringify(log)}</div>
+          <DiffParagraph paragraph={log} />
         </InnerWrapper>
       ))}
     </Wrapper>
