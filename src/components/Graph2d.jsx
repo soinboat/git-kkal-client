@@ -8,7 +8,7 @@ import useWindowDimensions from '../hooks/useWindowDimensions';
 import DrawLine from '../canvas/DrawLine';
 import DrawNode from '../canvas/DrawNode';
 
-export default function Graph2d({ repoData }) {
+export default function Graph2d({ repoData, handleTargetCommit }) {
   if (repoData.repoName === 'repoName') {
     return <div>데이터없음</div>;
   }
@@ -26,7 +26,12 @@ export default function Graph2d({ repoData }) {
       >
         <DrawLine logList={logList} />
         {logList.map((log, index) => (
-          <DrawNode key={log.hash} log={log} index={index} />
+          <DrawNode
+            handleTargetCommitOnClick={handleTargetCommit}
+            key={log.hash}
+            log={log}
+            index={index}
+          />
         ))}
       </Stage>
     </Wrapper>
@@ -65,4 +70,5 @@ Graph2d.propTypes = {
       ),
     ).isRequired,
   }),
+  handleTargetCommit: PropTypes.func.isRequired,
 };

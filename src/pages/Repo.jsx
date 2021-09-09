@@ -12,7 +12,6 @@ import BranchList from '../components/BranchList';
 import Button from '../components/Button';
 
 import Graph2d from '../components/Graph2d';
-
 import { BodyWrapper, HeaderWrapper } from '../components/styles';
 
 import getBranchList from '../utils';
@@ -25,7 +24,7 @@ export default function Repo({ repoUrl, repoData }) {
     return <Redirect to="/" />;
   }
 
-  const [targetCommit] = useState(repoData?.logList[0].hash);
+  const [targetCommit, setTargetCommit] = useState(repoData?.logList[0].hash);
   const [targetDiffList, setTargetDiffList] = useState(null);
   const branchList = getBranchList(repoData);
 
@@ -38,6 +37,10 @@ export default function Repo({ repoUrl, repoData }) {
       }
     })();
   }, [targetCommit]);
+
+  const handleTargetCommit = (hash) => {
+    setTargetCommit(hash);
+  };
 
   return (
     <>
@@ -56,7 +59,10 @@ export default function Repo({ repoUrl, repoData }) {
           <BranchList branchList={branchList} />
         </BranchBar>
         <ContentBox>
-          <Graph2d repoData={repoData} />
+          <Graph2d
+            repoData={repoData}
+            handleTargetCommit={handleTargetCommit}
+          />
         </ContentBox>
         <DiffBar>
           <DiffList targetDiffList={targetDiffList} />

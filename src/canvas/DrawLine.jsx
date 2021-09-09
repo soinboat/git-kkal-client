@@ -25,10 +25,12 @@ export default function DrawLine({ logList }) {
           const parentIndex = logList.findIndex(
             (targetLog) => targetLog.hash === parent,
           );
+
           const color =
             log.position > logList[parentIndex].position
               ? log.color
               : logList[parentIndex].color;
+
           lindData.push({ start: index, to: parentIndex, color });
         });
       });
@@ -54,10 +56,12 @@ export default function DrawLine({ logList }) {
           graph.lineTo(endPoint.x, endPoint.y);
         }
       });
+
       graph.endFill();
     },
     [logList],
   );
+
   return <Graphics draw={draw} />;
 }
 
