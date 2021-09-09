@@ -9,7 +9,7 @@ import BranchBar from '../components/layouts/BranchBar';
 import ContentBox from '../components/layouts/ContentBox';
 import DiffBar from '../components/layouts/DiffBar';
 import BranchList from '../components/BranchList';
-// import Diff from '../components/layouts/Diff';
+import Diff from '../components/layouts/Diff';
 import Button from '../components/Button';
 import DiffList from '../components/DiffList';
 import { BodyWrapper, HeaderWrapper } from '../components/styles';
@@ -28,7 +28,7 @@ export default function Repo({ repoUrl, repoData }) {
   const branchList = getBranchList(repoData);
 
   useEffect(() => {
-    (async function () {
+    (async () => {
       if (repoUrl && targetCommit) {
         const diffList = await fetchDiff(repoUrl, targetCommit);
 
@@ -55,9 +55,8 @@ export default function Repo({ repoUrl, repoData }) {
         <Switch>
           <Route path="/repository/diff">
             <ContentBox>
-              Hello
               {/* TODO: target diff is element of targetDiffList */}
-              {/* <Diff targetDiff={targetDiff} /> */}
+              <Diff targetDiff={targetDiffList?.[1]} />
             </ContentBox>
           </Route>
           <Route path="/repository">
