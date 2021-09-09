@@ -9,7 +9,6 @@ import DrawLine from '../canvas/DrawLine';
 import DrawNode from '../canvas/DrawNode';
 
 export default function Graph2d({ repoData }) {
-  console.log('렌더 횟수');
   if (repoData.repoName === 'repoName') {
     return <div>데이터없음</div>;
   }
@@ -17,7 +16,6 @@ export default function Graph2d({ repoData }) {
   const { logList } = repoData;
 
   const { width } = useWindowDimensions();
-  // const STAGE_SIZE = height - 60;
 
   return (
     <Wrapper>

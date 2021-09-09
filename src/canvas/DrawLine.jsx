@@ -58,6 +58,5 @@ export default function DrawLine({ logList }) {
     },
     [logList],
   );
-  // return <div></div>
   return <Graphics draw={draw} />;
 }

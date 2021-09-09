@@ -10,11 +10,7 @@ import { BodyWrapper, HeaderWrapper } from '../components/styles';
 
 import UrlForm from '../components/UrlForm';
 
-export default function Landing({ repoData, handleRepoUrlSubmit }) {
-  if (repoData) {
-    return <Redirect to="/repository" />;
-  }
-
+export default function Landing({ isLoading, repoData, handleRepoUrlSubmit }) {
   if (repoData) {
     return <Redirect to="/repository" />;
   }
@@ -27,7 +23,7 @@ export default function Landing({ repoData, handleRepoUrlSubmit }) {
       <BodyWrapper>
         <BranchBar>Branch bar</BranchBar>
         <ContentBox>
-          <UrlForm handleRepoUrlSubmit={handleRepoUrlSubmit} />
+          <UrlForm isLoading={isLoading} handleSubmit={handleRepoUrlSubmit} />
         </ContentBox>
       </BodyWrapper>
     </>
@@ -45,7 +41,12 @@ Landing.defaultProps = {
   },
 };
 
+Landing.defaultProps = {
+  isLoading: null,
+};
+
 Landing.propTypes = {
+  isLoading: PropTypes.bool,
   repoData: PropTypes.shape({
     repoName: PropTypes.string.isRequired,
     logList: PropTypes.arrayOf(
