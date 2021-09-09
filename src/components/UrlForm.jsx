@@ -2,26 +2,26 @@ import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Loading from './Loading';
+import LoadingSpinner from './LoadingSpinner';
 import UI from '../constants/ui';
 
-export default function UrlForm({ isLoading, handleRepoUrlSubmit }) {
+export default function UrlForm({ isLoading, handleSubmit }) {
   if (isLoading === true) {
-    return <Loading />;
+    return <LoadingSpinner />;
   }
 
   const [inputUrl, setInputUrl] = useState(null);
 
-  const handleInputUrlOnChange = useCallback((ev) => {
+  const handleChange = useCallback((ev) => {
     setInputUrl(ev.target.value);
   }, []);
 
   return (
-    <Form name="urlForm" onSubmit={(ev) => handleRepoUrlSubmit(ev, inputUrl)}>
+    <Form name="urlForm" onSubmit={(ev) => handleSubmit(ev, inputUrl)}>
       <Input
         type="url"
         placeholder={UI.REPOSITORY_URL}
-        onChange={handleInputUrlOnChange}
+        onChange={handleChange}
         required
       />
       <Button>{UI.ENTER_REPO_URL}</Button>
@@ -59,5 +59,5 @@ UrlForm.defaultProps = {
 
 UrlForm.propTypes = {
   isLoading: PropTypes.oneOfType([PropTypes.bool]),
-  handleRepoUrlSubmit: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };

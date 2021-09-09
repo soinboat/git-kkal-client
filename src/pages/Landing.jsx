@@ -23,10 +23,7 @@ export default function Landing({ isLoading, repoData, handleRepoUrlSubmit }) {
       <BodyWrapper>
         <BranchBar>Branch bar</BranchBar>
         <ContentBox>
-          <UrlForm
-            isLoading={isLoading}
-            handleRepoUrlSubmit={handleRepoUrlSubmit}
-          />
+          <UrlForm isLoading={isLoading} handleSubmit={handleRepoUrlSubmit} />
         </ContentBox>
       </BodyWrapper>
     </>

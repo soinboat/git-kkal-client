@@ -18,6 +18,9 @@ function App() {
 
     if (!inputUrl) {
       alert('Please input repository URL');
+
+      setIsLoading(false);
+
       return;
     }
 
