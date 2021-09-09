@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -7,12 +7,16 @@ import UI from '../constants/ui';
 export default function UrlForm({ handleRepoUrlSubmit }) {
   const [inputUrl, setInputUrl] = useState(null);
 
+  const handleInputUrlOnChange = useCallback((ev) => {
+    setInputUrl(ev.target.value);
+  }, []);
+
   return (
     <Form name="urlForm" onSubmit={(ev) => handleRepoUrlSubmit(ev, inputUrl)}>
       <Input
         type="url"
         placeholder={UI.REPOSITORY_URL}
-        onChange={(ev) => setInputUrl(ev.target.value)}
+        onChange={handleInputUrlOnChange}
         required
       />
       <Button>{UI.ENTER_REPO_URL}</Button>
