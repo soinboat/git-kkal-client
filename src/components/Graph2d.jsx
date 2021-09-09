@@ -44,6 +44,15 @@ Graph2d.defaultProps = {
 Graph2d.propTypes = {
   repoData: PropTypes.shape({
     repoName: PropTypes.string.isRequired,
-    logList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+    logList: PropTypes.arrayOf(
+      PropTypes.objectOf(
+        PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number,
+          PropTypes.bool,
+          PropTypes.arrayOf(PropTypes.string),
+        ]),
+      ),
+    ).isRequired,
   }),
 };
