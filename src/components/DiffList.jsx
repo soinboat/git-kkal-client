@@ -7,7 +7,7 @@ export default function DiffList({ targetDiffList }) {
     <Wrapper>
       <span>
         {targetDiffList?.map((diff) => (
-          <div key={diff}>{diff.fileName}</div>
+          <div key={diff.fileName}>{diff.fileName}</div>
         ))}
       </span>
     </Wrapper>
