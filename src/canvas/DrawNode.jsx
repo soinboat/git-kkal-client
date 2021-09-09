@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import React, { useCallback } from 'react';
 import { Graphics } from '@inlet/react-pixi';
 import PropTypes from 'prop-types';
@@ -10,6 +9,7 @@ export default function DrawNode({ index, log }) {
     (node) => {
       const circleSize = 10;
       const circleColor = convertColor(log.color);
+
       node.beginFill(circleColor);
       node.drawCircle(log.position * 100, index * 50 + 100, circleSize);
       node.interactive = true;
