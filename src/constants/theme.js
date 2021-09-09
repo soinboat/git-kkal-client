@@ -12,8 +12,8 @@ export const THEME = {
     WHITE: '#FFFFFF',
   },
   CODE_TEXT: {
-    '-': 'red',
-    '+': 'blue',
+    '-': 'rgba(190, 32, 32, 0.5)',
+    '+': 'rgba(39, 133, 51, 0.5)',
   },
 };
 

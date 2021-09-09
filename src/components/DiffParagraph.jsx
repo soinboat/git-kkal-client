@@ -18,8 +18,7 @@ const Wrapper = styled.div`
   width: 100%;
   margin: 10px 0 30px 0;
   box-sizing: border-box;
-  border: 1px solid white;
-  border-radius: 3px;
+  border-top: 1px solid white;
 `;
 
 DiffParagraph.propTypes = {

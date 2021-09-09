@@ -20,6 +20,7 @@ const Wrapper = styled.div`
   display: flex;
   width: 100%;
   padding: 10px;
+  font-family: 'Fira Code', monospace;
 `;
 
 CodeBox.propTypes = {

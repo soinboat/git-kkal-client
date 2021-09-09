@@ -14,6 +14,7 @@ export default function LineNumber({ line, offset }) {
 
 const Wrapper = styled.div`
   width: 40px;
+  color: ${({ theme: { FONT } }) => FONT.GREY};
 `;
 
 LineNumber.defaultProps = {

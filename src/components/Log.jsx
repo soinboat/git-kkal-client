@@ -35,10 +35,9 @@ const Sign = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 100%;
   display: flex;
+  width: 100%;
   background-color: ${({ theme, logType }) => theme.CODE_TEXT[logType.sign]};
-  opacity: ${({ logType }) => logType && 0.7};
 `;
 
 Log.defaultProps = {
