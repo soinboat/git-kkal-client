@@ -46,15 +46,8 @@ const Wrapper = styled.div`
 
 Diff.defaultProps = {
   targetDiff: {
-    before: {
-      line: 0,
-      logList: [],
-    },
-    after: {
-      line: 0,
-      logList: [],
-    },
-    codeBeginHunk: '',
+    fileName: '',
+    changedLog: [],
   },
 };
 
