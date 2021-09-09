@@ -10,9 +10,11 @@ const Repo = loadable(() => import('./pages/Repo'));
 function App() {
   const [repoUrl, setRepoUrl] = useState('');
   const [repoData, setRepoData] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
 
   const handleRepoUrlSubmit = async (ev, inputUrl) => {
     ev.preventDefault();
+    setIsLoading(true);
 
     if (!inputUrl) {
       alert('Please input repository URL');
@@ -23,12 +25,14 @@ function App() {
 
     setRepoUrl(inputUrl);
     setRepoData(fetchedRepoData);
+    setIsLoading(false);
   };
 
   return (
     <Switch>
       <Route exact path="/">
         <Landing
+          isLoading={isLoading}
           repoData={repoData}
           handleRepoUrlSubmit={handleRepoUrlSubmit}
         />

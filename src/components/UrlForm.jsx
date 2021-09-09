@@ -4,7 +4,11 @@ import styled from 'styled-components';
 
 import UI from '../constants/ui';
 
-export default function UrlForm({ handleRepoUrlSubmit }) {
+export default function UrlForm({ isLoading, handleRepoUrlSubmit }) {
+  if (isLoading === true) {
+    return <div>로딩중...</div>;
+  }
+
   const [inputUrl, setInputUrl] = useState(null);
 
   const handleInputUrlOnChange = useCallback((ev) => {
@@ -48,6 +52,11 @@ const Button = styled.button`
   }
 `;
 
+UrlForm.defaultProps = {
+  isLoading: null,
+};
+
 UrlForm.propTypes = {
+  isLoading: PropTypes.oneOfType([PropTypes.bool]),
   handleRepoUrlSubmit: PropTypes.func.isRequired,
 };
