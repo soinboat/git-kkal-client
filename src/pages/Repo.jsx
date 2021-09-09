@@ -29,7 +29,7 @@ export default function Repo({ repoUrl, repoData }) {
   const branchList = getBranchList(repoData);
 
   useEffect(() => {
-    (async function () {
+    (async () => {
       if (repoUrl && targetCommit) {
         const diffList = await fetchDiff(repoUrl, targetCommit);
 
@@ -38,7 +38,7 @@ export default function Repo({ repoUrl, repoData }) {
     })();
   }, [targetCommit]);
 
-  const handleTargetCommit = (hash) => {
+  const handleNodeClick = (hash) => {
     setTargetCommit(hash);
   };
 
@@ -59,10 +59,7 @@ export default function Repo({ repoUrl, repoData }) {
           <BranchList branchList={branchList} />
         </BranchBar>
         <ContentBox>
-          <Graph2d
-            repoData={repoData}
-            handleTargetCommit={handleTargetCommit}
-          />
+          <Graph2d repoData={repoData} handleNodeClick={handleNodeClick} />
         </ContentBox>
         <DiffBar>
           <DiffList targetDiffList={targetDiffList} />

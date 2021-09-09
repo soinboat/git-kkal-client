@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 import convertColor from '../utils/convertColor';
 
-export default function DrawNode({ index, log, handleTargetCommitOnClick }) {
-  const logNode = useCallback(
+export default function DrawNode({ index, log, handleClick }) {
+  const drawNode = useCallback(
     (node) => {
       const circleSize = 10;
       const circleColor = convertColor(log.color);
@@ -14,7 +14,7 @@ export default function DrawNode({ index, log, handleTargetCommitOnClick }) {
       node.drawCircle(log.position * 100, index * 50 + 100, circleSize);
       node.interactive = true;
       node.on('mousedown', () => {
-        handleTargetCommitOnClick(log.hash);
+        handleClick(log.hash);
       });
 
       node.endFill();
@@ -22,7 +22,7 @@ export default function DrawNode({ index, log, handleTargetCommitOnClick }) {
     [log],
   );
 
-  return <Graphics draw={logNode} />;
+  return <Graphics draw={drawNode} />;
 }
 
 DrawNode.propTypes = {
@@ -35,5 +35,5 @@ DrawNode.propTypes = {
       PropTypes.arrayOf(PropTypes.string),
     ]),
   ).isRequired,
-  handleTargetCommitOnClick: PropTypes.func.isRequired,
+  handleClick: PropTypes.func.isRequired,
 };
