@@ -15,6 +15,10 @@ export default function Landing({ repoData, handleRepoUrlSubmit }) {
     return <Redirect to="/repository" />;
   }
 
+  if (repoData) {
+    return <Redirect to="/repository" />;
+  }
+
   return (
     <>
       <HeaderWrapper>

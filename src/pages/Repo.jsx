@@ -10,6 +10,9 @@ import ContentBox from '../components/layouts/ContentBox';
 import DiffBar from '../components/layouts/DiffBar';
 import BranchList from '../components/BranchList';
 import Button from '../components/Button';
+
+import Graph2d from '../components/Graph2d';
+
 import { BodyWrapper, HeaderWrapper } from '../components/styles';
 
 import getBranchList from '../utils';
@@ -52,7 +55,9 @@ export default function Repo({ repoUrl, repoData }) {
         <BranchBar>
           <BranchList branchList={branchList} />
         </BranchBar>
-        <ContentBox>Content Box</ContentBox>
+        <ContentBox>
+          <Graph2d repoData={repoData} />
+        </ContentBox>
         <DiffBar>
           <DiffList targetDiffList={targetDiffList} />
         </DiffBar>
