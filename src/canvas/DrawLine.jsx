@@ -1,7 +1,7 @@
-/* eslint-disable react/prop-types */
 import React, { useCallback } from 'react';
 import { Graphics } from '@inlet/react-pixi';
 
+import PropTypes from 'prop-types';
 import convertColor from '../utils/convertColor';
 
 export default function DrawLine({ logList }) {
@@ -58,6 +58,18 @@ export default function DrawLine({ logList }) {
     },
     [logList],
   );
-  // return <div></div>
   return <Graphics draw={draw} />;
 }
+
+DrawLine.propTypes = {
+  logList: PropTypes.arrayOf(
+    PropTypes.objectOf(
+      PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.bool,
+        PropTypes.arrayOf(PropTypes.string),
+      ]),
+    ),
+  ).isRequired,
+};

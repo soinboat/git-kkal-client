@@ -1,11 +1,11 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable no-param-reassign */
 import React, { useCallback } from 'react';
 import { Graphics } from '@inlet/react-pixi';
+import PropTypes from 'prop-types';
 
 import convertColor from '../utils/convertColor';
 
-export default function DrawNode({ log, index }) {
+export default function DrawNode({ index, log }) {
   const logNode = useCallback(
     (node) => {
       const circleSize = 10;
@@ -23,3 +23,15 @@ export default function DrawNode({ log, index }) {
 
   return <Graphics draw={logNode} />;
 }
+
+DrawNode.propTypes = {
+  index: PropTypes.number.isRequired,
+  log: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.bool,
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
+  ).isRequired,
+};
