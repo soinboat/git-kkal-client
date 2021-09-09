@@ -11,6 +11,10 @@ export const THEME = {
     GREY: '#828282',
     WHITE: '#FFFFFF',
   },
+  CODE_TEXT: {
+    '-': 'red',
+    '+': 'blue',
+  },
 };
 
 export default THEME;

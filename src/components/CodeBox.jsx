@@ -2,10 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import LineNumber from './LineNumber';
+import LineText from './LineText';
+
 export default function CodeBox({ code }) {
+  const { line, offset, logList } = code;
+
   return (
     <Wrapper>
-      <div>{JSON.stringify(code)}</div>
+      <LineNumber line={line} offset={offset} />
+      <LineText logList={logList} />
     </Wrapper>
   );
 }
