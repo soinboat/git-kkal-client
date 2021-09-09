@@ -1,7 +1,7 @@
-/* eslint-disable react/prop-types */
 import React, { useCallback } from 'react';
 import { Graphics } from '@inlet/react-pixi';
 
+import PropTypes from 'prop-types';
 import convertColor from '../utils/convertColor';
 
 export default function DrawLine({ logList }) {
@@ -25,10 +25,12 @@ export default function DrawLine({ logList }) {
           const parentIndex = logList.findIndex(
             (targetLog) => targetLog.hash === parent,
           );
+
           const color =
             log.position > logList[parentIndex].position
               ? log.color
               : logList[parentIndex].color;
+
           lindData.push({ start: index, to: parentIndex, color });
         });
       });
@@ -54,9 +56,24 @@ export default function DrawLine({ logList }) {
           graph.lineTo(endPoint.x, endPoint.y);
         }
       });
+
       graph.endFill();
     },
     [logList],
   );
+
   return <Graphics draw={draw} />;
 }
+
+DrawLine.propTypes = {
+  logList: PropTypes.arrayOf(
+    PropTypes.objectOf(
+      PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.bool,
+        PropTypes.arrayOf(PropTypes.string),
+      ]),
+    ),
+  ).isRequired,
+};
