@@ -2,20 +2,27 @@ import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import loadable from '@loadable/component';
-import fetchRepoData from './api/git';
+import { fetchRepoData } from './api/git';
 
 const Landing = loadable(() => import('./pages/Landing'));
 const Repo = loadable(() => import('./pages/Repo'));
 
 function App() {
+  const [repoUrl, setRepoUrl] = useState('');
   const [repoData, setRepoData] = useState(null);
 
-  const handleRepoUrlSubmit = async (ev, repoUrl) => {
+  const handleRepoUrlSubmit = async (ev, inputUrl) => {
     ev.preventDefault();
 
-    const data = await fetchRepoData(repoUrl);
+    if (!inputUrl) {
+      alert('Please input repository URL');
+      return;
+    }
 
-    setRepoData(data);
+    const fetchedRepoData = await fetchRepoData(inputUrl);
+
+    setRepoUrl(inputUrl);
+    setRepoData(fetchedRepoData);
   };
 
   return (
@@ -27,7 +34,7 @@ function App() {
         />
       </Route>
       <Route path="/repository">
-        <Repo repoData={repoData} />
+        <Repo repoUrl={repoUrl} repoData={repoData} />
       </Route>
     </Switch>
   );

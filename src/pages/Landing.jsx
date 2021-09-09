@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
@@ -12,11 +12,11 @@ import { BodyWrapper, HeaderWrapper } from '../components/styles';
 import UI from '../constants/ui';
 
 export default function Landing({ repoData, handleRepoUrlSubmit }) {
-  const [repoUrl, setRepoUrl] = useState('');
-
   if (repoData) {
     return <Redirect to="/repository" />;
   }
+
+  const inputRef = useRef(null);
 
   return (
     <>
@@ -28,13 +28,13 @@ export default function Landing({ repoData, handleRepoUrlSubmit }) {
         <ContentBox>
           <Form
             name="urlForm"
-            onSubmit={(ev) => handleRepoUrlSubmit(ev, repoUrl)}
+            onSubmit={(ev) => handleRepoUrlSubmit(ev, inputRef.current.value)}
           >
             <Input
               type="url"
-              value={repoUrl}
+              ref={inputRef}
               placeholder={UI.REPOSITORY_URL}
-              onChange={(ev) => setRepoUrl(ev.target.value)}
+              required
             />
             <Button>{UI.ENTER_REPO_URL}</Button>
           </Form>
@@ -58,7 +58,16 @@ Landing.defaultProps = {
 Landing.propTypes = {
   repoData: PropTypes.shape({
     repoName: PropTypes.string.isRequired,
-    logList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+    logList: PropTypes.arrayOf(
+      PropTypes.objectOf(
+        PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number,
+          PropTypes.bool,
+          PropTypes.arrayOf(PropTypes.string),
+        ]),
+      ),
+    ).isRequired,
   }),
   handleRepoUrlSubmit: PropTypes.func.isRequired,
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export default function CommitBar({ children }) {
+export default function DiffBar({ children }) {
   return <Wrapper>{children || null}</Wrapper>;
 }
 
@@ -12,6 +12,6 @@ const Wrapper = styled.div`
   color: ${({ theme: { FONT } }) => FONT.WHITE};
 `;
 
-CommitBar.propTypes = {
+DiffBar.propTypes = {
   children: PropTypes.node.isRequired,
 };

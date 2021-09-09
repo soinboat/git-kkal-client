@@ -34,7 +34,6 @@ const Span = styled.span`
 
 const Wrapper = styled.div`
   min-width: 200px;
-  height: 100%;
   background-color: ${({ theme: { BACKGROUND } }) => BACKGROUND.GREY_3};
   margin-left: 20px;
   color: ${({ theme: { FONT } }) => FONT.WHITE};
