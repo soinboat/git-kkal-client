@@ -2,11 +2,12 @@ import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import Loading from './Loading';
 import UI from '../constants/ui';
 
 export default function UrlForm({ isLoading, handleRepoUrlSubmit }) {
   if (isLoading === true) {
-    return <div>로딩중...</div>;
+    return <Loading />;
   }
 
   const [inputUrl, setInputUrl] = useState(null);
