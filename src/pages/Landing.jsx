@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 import NavBar from '../components/layouts/NavBar';
 import BranchBar from '../components/layouts/BranchBar';
 import ContentBox from '../components/layouts/ContentBox';
 import { BodyWrapper, HeaderWrapper } from '../components/styles';
 
-import UI from '../constants/ui';
+import UrlForm from '../components/UrlForm';
 
 export default function Landing({ repoData, handleRepoUrlSubmit }) {
-  const [repoUrl, setRepoUrl] = useState('');
+  if (repoData) {
+    return <Redirect to="/repository" />;
+  }
 
   if (repoData) {
     return <Redirect to="/repository" />;
@@ -26,18 +27,7 @@ export default function Landing({ repoData, handleRepoUrlSubmit }) {
       <BodyWrapper>
         <BranchBar>Branch bar</BranchBar>
         <ContentBox>
-          <Form
-            name="urlForm"
-            onSubmit={(ev) => handleRepoUrlSubmit(ev, repoUrl)}
-          >
-            <Input
-              type="url"
-              value={repoUrl}
-              placeholder={UI.REPOSITORY_URL}
-              onChange={(ev) => setRepoUrl(ev.target.value)}
-            />
-            <Button>{UI.ENTER_REPO_URL}</Button>
-          </Form>
+          <UrlForm handleRepoUrlSubmit={handleRepoUrlSubmit} />
         </ContentBox>
       </BodyWrapper>
     </>
@@ -58,31 +48,16 @@ Landing.defaultProps = {
 Landing.propTypes = {
   repoData: PropTypes.shape({
     repoName: PropTypes.string.isRequired,
-    logList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+    logList: PropTypes.arrayOf(
+      PropTypes.objectOf(
+        PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number,
+          PropTypes.bool,
+          PropTypes.arrayOf(PropTypes.string),
+        ]),
+      ),
+    ).isRequired,
   }),
   handleRepoUrlSubmit: PropTypes.func.isRequired,
 };
-
-const Form = styled.form`
-  width: 50%;
-`;
-
-const Input = styled.input`
-  width: 100%;
-`;
-
-const Button = styled.button`
-  width: 100%;
-  color: #fff;
-  background-color: #343134;
-  border: none;
-  font-size: 18px;
-  height: 44px;
-  min-width: 100px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #171717;
-    border: none;
-  }
-`;
