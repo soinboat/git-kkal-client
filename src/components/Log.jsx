@@ -2,22 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-function getLogType(log) {
-  if (log.length <= 0) {
-    return { sign: '', log: '' };
-  }
-
-  const sliced = log.slice(1);
-
-  switch (log[0]) {
-    case '+':
-      return { sign: '+', log: sliced };
-    case '-':
-      return { sign: '-', log: sliced };
-    default:
-      return { sign: '', log };
-  }
-}
+import getLogType from '../utils/getLogType';
 
 export default function Log({ log }) {
   const logType = getLogType(log);

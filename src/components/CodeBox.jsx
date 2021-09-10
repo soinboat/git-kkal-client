@@ -2,23 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import LineNumber from './LineNumber';
-import LineText from './LineText';
+import Line from './Line';
 
 export default function CodeBox({ code }) {
-  const { line, offset, logList } = code;
+  const { line, logList } = code;
 
   return (
     <Wrapper>
-      <LineNumber line={line} offset={offset} />
-      <LineText logList={logList} />
+      <Line line={line} logList={logList} />
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
   display: flex;
-  width: 100%;
+  width: 50%;
   padding: 10px;
   font-family: 'Fira Code', monospace;
 `;

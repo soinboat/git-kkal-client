@@ -4,18 +4,18 @@ import { Link, Redirect, Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import ContentBox from '../components/layouts/ContentBox';
-import BranchBar from '../components/layouts/BranchBar';
-import DiffBar from '../components/layouts/DiffBar';
 import NavBar from '../components/layouts/NavBar';
+import ContentBox from '../components/layouts/ContentBox';
+import DiffBar from '../components/layouts/DiffBar';
+import BranchBar from '../components/layouts/BranchBar';
 import Diff from '../components/layouts/Diff';
-import BranchList from '../components/BranchList';
-import DiffList from '../components/DiffList';
-import Graph2d from '../components/Graph2d';
 import Button from '../components/Button';
+import BranchList from '../components/BranchList';
+import Graph2d from '../components/Graph2d';
+import DiffList from '../components/DiffList';
 
 import UI from '../constants/ui';
-import getBranchList from '../utils';
+import getBranchList from '../utils/git';
 import { fetchDiff } from '../api/git';
 import { BodyWrapper, HeaderWrapper } from '../components/styles';
 
@@ -63,6 +63,9 @@ export default function Repo({ repoUrl, repoData }) {
               {/* TODO: target diff is element of targetDiffList */}
               <Diff targetDiff={targetDiffList?.[0]} />
             </ContentBox>
+            <DiffBar>
+              <DiffList targetDiffList={targetDiffList} />
+            </DiffBar>
           </Route>
           <Route path="/repository">
             <BranchBar>

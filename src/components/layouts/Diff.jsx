@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import DiffParagraph from '../DiffParagraph';
 
 export default function Diff({ targetDiff }) {
-  console.log(targetDiff);
   return (
     <Wrapper>
       <DiffFileName>{targetDiff.fileName}</DiffFileName>
@@ -27,7 +26,7 @@ const DiffFileName = styled.div`
   padding: 0 10px;
   width: 100%;
   height: 40px;
-  border-top: 1px solid ${({ theme }) => theme.FONT.GERY};
+  border-top: 1px solid ${({ theme }) => theme.FONT.GREY};
   background-color: ${({ theme }) => theme.BACKGROUND.BLACK};
   color: ${({ theme }) => theme.FONT.GREY};
 `;
