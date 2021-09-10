@@ -8,16 +8,16 @@ import NavBar from '../components/layouts/NavBar';
 import BranchBar from '../components/layouts/BranchBar';
 import ContentBox from '../components/layouts/ContentBox';
 import DiffBar from '../components/layouts/DiffBar';
-import BranchList from '../components/BranchList';
-import Button from '../components/Button';
 
-import Graph2d from '../components/Graph2d';
 import { BodyWrapper, HeaderWrapper } from '../components/styles';
-
-import getBranchList from '../utils';
-import UI from '../constants/ui';
+import Button from '../components/Button';
+import BranchList from '../components/BranchList';
+import Graph2d from '../components/Graph2d';
 import DiffList from '../components/DiffList';
+
 import { fetchDiff } from '../api/git';
+import { getBranchList } from '../utils/git';
+import UI from '../constants/ui';
 
 export default function Repo({ repoUrl, repoData }) {
   if (!repoData) {

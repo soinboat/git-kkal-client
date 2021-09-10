@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 import NavBar from '../components/layouts/NavBar';
 import BranchBar from '../components/layouts/BranchBar';
 import ContentBox from '../components/layouts/ContentBox';
-import { BodyWrapper, HeaderWrapper } from '../components/styles';
 
+import { BodyWrapper, HeaderWrapper } from '../components/styles';
 import UrlForm from '../components/UrlForm';
 
 export default function Landing({ isLoading, repoData, handleRepoUrlSubmit }) {
