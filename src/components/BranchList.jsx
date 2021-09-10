@@ -34,9 +34,9 @@ const Span = styled.span`
 
 const Wrapper = styled.div`
   min-width: 200px;
-  background-color: ${({ theme: { background } }) => background.GREY_3};
+  background-color: ${({ theme: { BACKGROUND } }) => BACKGROUND.GREY_3};
   margin-left: 20px;
-  color: ${({ theme: { font } }) => font.WHITE};
+  color: ${({ theme: { FONT } }) => FONT.WHITE};
 `;
 
 const CollapseButton = styled.button`

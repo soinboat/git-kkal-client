@@ -9,8 +9,8 @@ export default function BranchBar({ children }) {
 const Wrapper = styled.div`
   min-width: 200px;
   height: 100%;
-  background-color: ${({ theme: { background } }) => background.GREY_3};
-  color: ${({ theme: { font } }) => font.WHITE};
+  background-color: ${({ theme: { BACKGROUND } }) => BACKGROUND.GREY_3};
+  color: ${({ theme: { FONT } }) => FONT.WHITE};
 `;
 
 BranchBar.propTypes = {

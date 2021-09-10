@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 import App from './App';
-import { theme } from './constants/theme';
+import { THEME } from './constants/theme';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -17,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={THEME}>
       <Router>
         <App />
       </Router>

@@ -8,8 +8,8 @@ export default function DiffBar({ children }) {
 
 const Wrapper = styled.div`
   min-width: 250px;
-  background-color: ${({ theme: { background } }) => background.GREY_3};
-  color: ${({ theme: { font } }) => font.WHITE};
+  background-color: ${({ theme: { BACKGROUND } }) => BACKGROUND.GREY_3};
+  color: ${({ theme: { FONT } }) => FONT.WHITE};
 `;
 
 DiffBar.propTypes = {
