@@ -12,6 +12,7 @@ import BranchList from '../components/BranchList';
 import Button from '../components/Button';
 
 import Graph2d from '../components/Graph2d';
+import Graph3d from '../components/Graph3d';
 
 import { BodyWrapper, HeaderWrapper } from '../components/styles';
 
@@ -25,12 +26,14 @@ export default function Repo({ repoUrl, repoData }) {
     return <Redirect to="/" />;
   }
 
-  const [targetCommit] = useState(repoData?.logList[0].hash);
+  const [targetCommit, setTargetCommit] = useState(repoData?.logList[0].hash);
   const [targetDiffList, setTargetDiffList] = useState(null);
+  const [is2dGraphMode, setIs2dGraphMode] = useState(true);
+
   const branchList = getBranchList(repoData);
 
   useEffect(() => {
-    (async function () {
+    (async () => {
       if (repoUrl && targetCommit) {
         const diffList = await fetchDiff(repoUrl, targetCommit);
 
@@ -39,6 +42,17 @@ export default function Repo({ repoUrl, repoData }) {
     })();
   }, [targetCommit]);
 
+  const handleNodeClick = (hash) => {
+    setTargetCommit(hash);
+  };
+
+  const handleGraphMode = (event) => {
+    const { id } = event.target;
+    const mode = id === UI.TWO_DIMENSION;
+
+    setIs2dGraphMode(mode);
+  }
+
   return (
     <>
       <HeaderWrapper>
@@ -46,8 +60,8 @@ export default function Repo({ repoUrl, repoData }) {
           <Wrapper>
             <Span>Repository: {repoData.repoName}</Span>
             <Span>Branch name:</Span>
-            <Button>{UI.TWO_DIMENSION}</Button>
-            <Button primary>{UI.THREE_DIMENSION}</Button>
+            <Button id={UI.TWO_DIMENSION} onClick={handleGraphMode}>{UI.TWO_DIMENSION}</Button>
+            <Button id={UI.THREE_DIMENSION} onClick={handleGraphMode}>{UI.THREE_DIMENSION}</Button>
           </Wrapper>
         </NavBar>
       </HeaderWrapper>
@@ -56,7 +70,11 @@ export default function Repo({ repoUrl, repoData }) {
           <BranchList branchList={branchList} />
         </BranchBar>
         <ContentBox>
-          <Graph2d repoData={repoData} />
+          {
+            is2dGraphMode
+              ? <Graph2d repoData={repoData} handleNodeClick={handleNodeClick} />
+              : <Graph3d repoData={repoData} handleNodeClick={handleNodeClick} />
+          }
         </ContentBox>
         <DiffBar>
           <DiffList targetDiffList={targetDiffList} />

@@ -8,8 +8,8 @@ import useWindowDimensions from '../hooks/useWindowDimensions';
 import DrawLine from '../canvas/DrawLine';
 import DrawNode from '../canvas/DrawNode';
 
-export default function Graph2d({ repoData }) {
-  if (repoData.repoName === 'repoName') {
+export default function Graph2d({ repoData, handleNodeClick }) {
+  if (!repoData.repoName) {
     return <div>데이터없음</div>;
   }
 
@@ -22,11 +22,16 @@ export default function Graph2d({ repoData }) {
       <Stage
         width={width - 467 > 200 ? width - 467 : 200}
         height={150 + logList.length * 50}
-        options={{ backgroundColor: 0xffffff }}
+        options={{ antialias: true }}
       >
         <DrawLine logList={logList} />
         {logList.map((log, index) => (
-          <DrawNode key={log.hash} log={log} index={index} />
+          <DrawNode
+            handleClick={handleNodeClick}
+            key={log.hash}
+            log={log}
+            index={index}
+          />
         ))}
       </Stage>
     </Wrapper>
@@ -42,7 +47,7 @@ const Wrapper = styled.div`
 
 Graph2d.defaultProps = {
   repoData: {
-    repoName: 'repoName',
+    repoName: '',
     logList: [
       {
         message: 'Message',
@@ -65,4 +70,5 @@ Graph2d.propTypes = {
       ),
     ).isRequired,
   }),
+  handleNodeClick: PropTypes.func.isRequired,
 };
