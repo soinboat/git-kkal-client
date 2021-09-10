@@ -12,18 +12,18 @@ import {
 } from '../constants/size';
 
 export default function Graph3d({ repoData }) {
-  const gitGraph3D = useRef(null);
+  const gitGraph3dRef = useRef(null);
   const { width, height } = useWindowDimensions();
   const { logList } = repoData;
 
   useEffect(() => {
-    if (!gitGraph3D) return;
+    if (!gitGraph3dRef) return;
 
     const { PI } = Math;
     const canvasWidth = width - (BRANCH_BAR_WIDTH + DIFF_BAR_WIDTH);
     const canvasHeight = height - NAV_BAR_HEIGHT;
 
-    const canvas = gitGraph3D.current;
+    const canvas = gitGraph3dRef.current;
     const scene = new THREE.Scene();
 
     const renderer = new THREE.WebGLRenderer({
@@ -177,9 +177,9 @@ export default function Graph3d({ repoData }) {
       window.requestAnimationFrame(animation);
     };
     animation();
-  }, [gitGraph3D]);
+  }, [gitGraph3dRef]);
 
-  return <GitGraph3D ref={gitGraph3D} />;
+  return <GitGraph3D ref={gitGraph3dRef} />;
 }
 
 const GitGraph3D = styled.canvas`

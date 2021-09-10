@@ -51,7 +51,7 @@ export default function Repo({ repoUrl, repoData }) {
     const mode = id === UI.TWO_DIMENSION;
 
     setIs2dGraphMode(mode);
-  }
+  };
 
   return (
     <>
@@ -60,8 +60,12 @@ export default function Repo({ repoUrl, repoData }) {
           <Wrapper>
             <Span>Repository: {repoData.repoName}</Span>
             <Span>Branch name:</Span>
-            <Button id={UI.TWO_DIMENSION} onClick={handleGraphMode}>{UI.TWO_DIMENSION}</Button>
-            <Button id={UI.THREE_DIMENSION} onClick={handleGraphMode}>{UI.THREE_DIMENSION}</Button>
+            <Button id={UI.TWO_DIMENSION} onClick={handleGraphMode}>
+              {UI.TWO_DIMENSION}
+            </Button>
+            <Button id={UI.THREE_DIMENSION} onClick={handleGraphMode}>
+              {UI.THREE_DIMENSION}
+            </Button>
           </Wrapper>
         </NavBar>
       </HeaderWrapper>
@@ -70,11 +74,11 @@ export default function Repo({ repoUrl, repoData }) {
           <BranchList branchList={branchList} />
         </BranchBar>
         <ContentBox>
-          {
-            is2dGraphMode
-              ? <Graph2d repoData={repoData} handleNodeClick={handleNodeClick} />
-              : <Graph3d repoData={repoData} handleNodeClick={handleNodeClick} />
-          }
+          {is2dGraphMode ? (
+            <Graph2d repoData={repoData} handleNodeClick={handleNodeClick} />
+          ) : (
+            <Graph3d repoData={repoData} handleNodeClick={handleNodeClick} />
+          )}
         </ContentBox>
         <DiffBar>
           <DiffList targetDiffList={targetDiffList} />
