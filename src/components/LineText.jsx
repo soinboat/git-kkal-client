@@ -7,8 +7,8 @@ import Log from './Log';
 export default function LineText({ logList }) {
   return (
     <Wrapper>
-      {logList.map((log) => (
-        <Log log={log} />
+      {logList.map((log, index) => (
+        <Log key={`${log + index}`} log={log} />
       ))}
     </Wrapper>
   );

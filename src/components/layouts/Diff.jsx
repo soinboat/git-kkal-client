@@ -10,7 +10,7 @@ export default function Diff({ targetDiff }) {
     <Wrapper>
       <DiffFileName>{targetDiff.fileName}</DiffFileName>
       {targetDiff.changedLog.map((log) => (
-        <InnerWrapper>
+        <InnerWrapper key={log.codeLineOffsetString}>
           <DiffTitle>
             {`${log.codeLineOffsetString} ${log.codeBeginHunk}`}
           </DiffTitle>

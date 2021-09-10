@@ -4,26 +4,27 @@ import { Link, Redirect, Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import NavBar from '../components/layouts/NavBar';
-import BranchBar from '../components/layouts/BranchBar';
 import ContentBox from '../components/layouts/ContentBox';
+import BranchBar from '../components/layouts/BranchBar';
 import DiffBar from '../components/layouts/DiffBar';
-import BranchList from '../components/BranchList';
+import NavBar from '../components/layouts/NavBar';
 import Diff from '../components/layouts/Diff';
-import Button from '../components/Button';
+import BranchList from '../components/BranchList';
 import DiffList from '../components/DiffList';
-import { BodyWrapper, HeaderWrapper } from '../components/styles';
+import Graph2d from '../components/Graph2d';
+import Button from '../components/Button';
 
 import UI from '../constants/ui';
 import getBranchList from '../utils';
 import { fetchDiff } from '../api/git';
+import { BodyWrapper, HeaderWrapper } from '../components/styles';
 
 export default function Repo({ repoUrl, repoData }) {
   if (!repoData) {
     return <Redirect to="/" />;
   }
 
-  const [targetCommit] = useState(repoData?.logList[0].hash);
+  const [targetCommit, setTargetCommit] = useState(repoData?.logList[0].hash);
   const [targetDiffList, setTargetDiffList] = useState(null);
   const branchList = getBranchList(repoData);
 
@@ -36,6 +37,10 @@ export default function Repo({ repoUrl, repoData }) {
       }
     })();
   }, [targetCommit]);
+
+  const handleNodeClick = (hash) => {
+    setTargetCommit(hash);
+  };
 
   return (
     <>
@@ -56,19 +61,21 @@ export default function Repo({ repoUrl, repoData }) {
           <Route path="/repository/diff">
             <ContentBox>
               {/* TODO: target diff is element of targetDiffList */}
-              <Diff targetDiff={targetDiffList?.[1]} />
+              <Diff targetDiff={targetDiffList?.[0]} />
             </ContentBox>
           </Route>
           <Route path="/repository">
             <BranchBar>
               <BranchList branchList={branchList} />
             </BranchBar>
-            <ContentBox>Content Box</ContentBox>
+            <ContentBox>
+              <Graph2d repoData={repoData} handleNodeClick={handleNodeClick} />
+            </ContentBox>
+            <DiffBar>
+              <DiffList targetDiffList={targetDiffList} />
+            </DiffBar>
           </Route>
         </Switch>
-        <DiffBar>
-          <DiffList targetDiffList={targetDiffList} />
-        </DiffBar>
       </BodyWrapper>
     </>
   );

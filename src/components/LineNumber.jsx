@@ -6,7 +6,7 @@ export default function LineNumber({ line, offset }) {
   return (
     <Wrapper>
       {Array.from(Array(offset).keys()).map((index) => (
-        <div>{line + index}</div>
+        <div key={index}>{line + index}</div>
       ))}
     </Wrapper>
   );

@@ -12,5 +12,9 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react'],
-  rules: {},
+  rules: {
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'no-bitwise': ['error', { allow: ['~', '|', '>>', '<<', '&'] }],
+    'no-param-reassign': [2, { props: false }],
+  },
 };
