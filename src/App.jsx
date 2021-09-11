@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import loadable from '@loadable/component';
+import { ToastContainer } from 'react-toastify';
+
 import { fetchRepoData } from './api/git';
 import { filterGitExtension } from './utils/git';
+import { notifyErr, notifyNoInput, notifySuccess } from './utils/notify';
 
 const Landing = loadable(() => import('./pages/Landing'));
 const Repo = loadable(() => import('./pages/Repo'));
@@ -18,32 +21,43 @@ function App() {
     setIsLoading(true);
 
     if (!inputUrl) {
-      alert('Please input repository URL');
-
       setIsLoading(false);
+
+      notifyNoInput();
       return;
     }
 
-    const fetchedRepoData = await fetchRepoData(inputUrl);
+    try {
+      const fetchedRepoData = await fetchRepoData(inputUrl);
 
-    setRepoUrl(filterGitExtension(inputUrl));
-    setRepoData(fetchedRepoData);
-    setIsLoading(false);
+      setRepoUrl(filterGitExtension(inputUrl));
+      setRepoData(fetchedRepoData);
+      setIsLoading(false);
+
+      notifySuccess();
+    } catch (err) {
+      setIsLoading(false);
+
+      notifyErr(err.response);
+    }
   };
 
   return (
-    <Switch>
-      <Route exact path="/">
-        <Landing
-          isLoading={isLoading}
-          repoData={repoData}
-          handleRepoUrlSubmit={handleRepoUrlSubmit}
-        />
-      </Route>
-      <Route path="/repository">
-        <Repo repoUrl={repoUrl} repoData={repoData} />
-      </Route>
-    </Switch>
+    <>
+      <Switch>
+        <Route exact path="/">
+          <Landing
+            isLoading={isLoading}
+            repoData={repoData}
+            handleRepoUrlSubmit={handleRepoUrlSubmit}
+          />
+        </Route>
+        <Route path="/repository">
+          <Repo repoUrl={repoUrl} repoData={repoData} />
+        </Route>
+      </Switch>
+      <ToastContainer />
+    </>
   );
 }
 

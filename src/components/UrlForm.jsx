@@ -6,30 +6,40 @@ import LoadingSpinner from './LoadingSpinner';
 import UI from '../constants/ui';
 
 export default function UrlForm({ isLoading, handleSubmit }) {
-  if (isLoading === true) {
-    return <LoadingSpinner />;
-  }
-
-  const [inputUrl, setInputUrl] = useState(null);
+  const [inputUrl, setInputUrl] = useState('');
 
   const handleChange = useCallback((ev) => {
     setInputUrl(ev.target.value);
   }, []);
 
   return (
-    <Form name="urlForm" onSubmit={(ev) => handleSubmit(ev, inputUrl)}>
-      <InputWrapper>
-        <Input
-          type="url"
-          placeholder={UI.REPOSITORY_URL}
-          onChange={handleChange}
-          required
-        />
-      </InputWrapper>
-      <ButtonWrapper>
-        <Button type="submit">{UI.ENTER_REPO_URL}</Button>
-      </ButtonWrapper>
-    </Form>
+    <>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <Form
+          name="urlForm"
+          onSubmit={(ev) => {
+            handleSubmit(ev, inputUrl);
+            setInputUrl('');
+          }}
+        >
+          <InputWrapper>
+            <Input
+              type="url"
+              value={inputUrl}
+              placeholder={UI.REPOSITORY_URL}
+              onChange={handleChange}
+              required
+            />
+            {isLoading && <LoadingSpinner />}
+          </InputWrapper>
+          <ButtonWrapper>
+            <Button type="submit">{UI.ENTER_REPO_URL}</Button>
+          </ButtonWrapper>
+        </Form>
+      )}
+    </>
   );
 }
 
