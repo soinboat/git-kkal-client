@@ -11,11 +11,9 @@ export default function DrawNode({ index, log, handleClick }) {
       const circleColor = convertColor(log.color);
 
       node.beginFill(circleColor);
-      node.drawCircle(log.position * 100, index * 50 + 100, circleSize);
+      node.drawCircle(log.position * 50, index * 50 + 100, circleSize);
       node.interactive = true;
-      node.on('mousedown', () => {
-        handleClick(log.hash);
-      });
+      node.click = () => handleClick(log.hash);
 
       node.endFill();
     },

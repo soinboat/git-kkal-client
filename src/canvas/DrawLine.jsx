@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { Graphics } from '@inlet/react-pixi';
-
 import PropTypes from 'prop-types';
+
 import convertColor from '../utils/convertColor';
 
 export default function DrawLine({ logList }) {
@@ -13,7 +13,7 @@ export default function DrawLine({ logList }) {
 
       const nodePositionData = logList.map((log, index) => {
         const circlePosition = {
-          x: log.position * 100,
+          x: log.position * 50,
           y: index * 50 + 100,
         };
 
@@ -44,12 +44,12 @@ export default function DrawLine({ logList }) {
         if (startPoint.x > endPoint.x) {
           graph.moveTo(startPoint.x, startPoint.y);
           graph.lineTo(startPoint.x, endPoint.y - SLOPE);
-          graph.moveTo(startPoint.x, endPoint.y - 20);
+          graph.moveTo(startPoint.x, endPoint.y - SLOPE);
           graph.lineTo(endPoint.x, endPoint.y);
         } else if (startPoint.x < endPoint.x) {
           graph.moveTo(startPoint.x, startPoint.y);
-          graph.lineTo(endPoint.x, startPoint.y + 20);
-          graph.moveTo(endPoint.x, startPoint.y + 20);
+          graph.lineTo(endPoint.x, startPoint.y + SLOPE);
+          graph.moveTo(endPoint.x, startPoint.y + SLOPE);
           graph.lineTo(endPoint.x, endPoint.y);
         } else {
           graph.moveTo(startPoint.x, startPoint.y);

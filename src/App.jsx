@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import loadable from '@loadable/component';
 import { fetchRepoData } from './api/git';
+import { filterGitExtension } from './utils/git';
 
 const Landing = loadable(() => import('./pages/Landing'));
 const Repo = loadable(() => import('./pages/Repo'));
@@ -20,13 +21,12 @@ function App() {
       alert('Please input repository URL');
 
       setIsLoading(false);
-
       return;
     }
 
     const fetchedRepoData = await fetchRepoData(inputUrl);
 
-    setRepoUrl(inputUrl);
+    setRepoUrl(filterGitExtension(inputUrl));
     setRepoData(fetchedRepoData);
     setIsLoading(false);
   };

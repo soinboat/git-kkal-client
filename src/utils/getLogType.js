@@ -4,7 +4,6 @@ export default function getLogType(log) {
   }
 
   const sliced = log.slice(1);
-  console.log(sliced);
 
   switch (log[0]) {
     case '+':

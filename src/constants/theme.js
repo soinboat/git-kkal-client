@@ -1,4 +1,4 @@
-export const THEME = {
+const theme = {
   BACKGROUND: {
     BLACK: '#000000',
     GREY_1: '#212121',
@@ -17,4 +17,4 @@ export const THEME = {
   },
 };
 
-export default THEME;
+export default theme;
