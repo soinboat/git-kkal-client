@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Line from './Line';
+import LogRenderer from './LogRenderer';
 
 export default function CodeBox({ code }) {
   const { line, logList } = code;
 
   return (
     <Wrapper>
-      <Line line={line} logList={logList} />
+      <LogRenderer line={line} logList={logList} />
     </Wrapper>
   );
 }

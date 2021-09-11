@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 import App from './App';
-import theme from './constants/theme';
+import { theme } from './constants/theme';
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -13,6 +13,8 @@ const GlobalStyle = createGlobalStyle`
     min-width: 400px;
     margin: 0;
     padding: 0;
+    background-color: ${theme.background.grey1};
+    list-style: none;
   }
 
   #root {

@@ -10,19 +10,38 @@ export default function Log({ log }) {
   return (
     <Wrapper logType={logType}>
       <Sign>{logType.sign}</Sign>
-      <div>{logType.log}</div>
+      <Text>{logType.log}</Text>
     </Wrapper>
   );
 }
 
-const Sign = styled.div`
+const Sign = styled.pre`
   width: 15px;
+  margin: 0.5rem;
+`;
+
+const Text = styled.pre`
+  margin: 0.5rem;
+  height: auto;
+  /* white-space: normal; */
+  word-break: break-all;
+  word-wrap: break-word;
 `;
 
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  background-color: ${({ theme, logType }) => theme.CODE_TEXT[logType.sign]};
+  background-color: ${({ theme, logType }) => {
+    if (logType.sign === '+') {
+      return theme.background.transparentGreen;
+    }
+
+    if (logType.sign === '-') {
+      return theme.background.transparentRed;
+    }
+
+    return '';
+  }};
 `;
 
 Log.defaultProps = {
