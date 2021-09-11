@@ -4,13 +4,13 @@ import styled from 'styled-components';
 
 import Log from './Log';
 
-export default function LogRenderer({ line, logList }) {
+export default function Line({ line, logList }) {
   return (
     <Wrapper>
       {logList.map((log, index) => (
-        <InnerWrapper>
-          <Number key={`Number-${index}`}>{line + index}</Number>
-          <Log key={`Log-${index}`} log={log} />
+        <InnerWrapper key={`Number-${index}`}>
+          <Number>{line + index}</Number>
+          <Log log={log} />
         </InnerWrapper>
       ))}
     </Wrapper>
@@ -30,7 +30,7 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-LogRenderer.propTypes = {
+Line.propTypes = {
   line: PropTypes.number.isRequired,
   logList: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

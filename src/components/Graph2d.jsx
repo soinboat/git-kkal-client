@@ -22,6 +22,7 @@ export default function Graph2d({ repoData, handleNodeClick }) {
       <Stage
         width={width - 467 > 200 ? width - 467 : 200}
         height={150 + logList.length * 50}
+        options={{ antialias: true }}
       >
         <DrawLine logList={logList} />
         {logList.map((log, index) => (
