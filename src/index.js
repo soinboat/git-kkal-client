@@ -4,13 +4,21 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 import App from './App';
-import { theme } from './constants/theme';
+import theme from './constants/theme';
 
 const GlobalStyle = createGlobalStyle`
-  body {
+  html, body {
+    display: block;
+    height: 100%;
+    min-width: 400px;
     margin: 0;
-    width: 100%;
-    height: 100vh;
+    padding: 0;
+  }
+
+  #root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 `;
 

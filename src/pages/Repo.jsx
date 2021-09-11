@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect, Route, Switch } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -7,19 +7,19 @@ import styled from 'styled-components';
 import NavBar from '../components/layouts/NavBar';
 import BranchBar from '../components/layouts/BranchBar';
 import ContentBox from '../components/layouts/ContentBox';
+import Diff from '../components/layouts/Diff';
 import DiffBar from '../components/layouts/DiffBar';
-import BranchList from '../components/BranchList';
-import Button from '../components/Button';
-
-import Graph2d from '../components/Graph2d';
-import Graph3d from '../components/Graph3d';
 
 import { BodyWrapper, HeaderWrapper } from '../components/styles';
-
-import getBranchList from '../utils';
-import UI from '../constants/ui';
+import Button from '../components/Button';
+import BranchList from '../components/BranchList';
+import Graph2d from '../components/Graph2d';
+import Graph3d from '../components/Graph3d';
 import DiffList from '../components/DiffList';
+
 import { fetchDiff } from '../api/git';
+import { getBranchList } from '../utils/git';
+import UI from '../constants/ui';
 
 export default function Repo({ repoUrl, repoData }) {
   if (!repoData) {
@@ -66,23 +66,45 @@ export default function Repo({ repoUrl, repoData }) {
             <Button id={UI.THREE_DIMENSION} onClick={handleGraphMode}>
               {UI.THREE_DIMENSION}
             </Button>
+            <Link exact="true" to="/repository/diff">
+              go to diff
+            </Link>
+            <Link to="/repository">go to repo</Link>
           </Wrapper>
         </NavBar>
       </HeaderWrapper>
       <BodyWrapper>
-        <BranchBar>
-          <BranchList branchList={branchList} />
-        </BranchBar>
-        <ContentBox>
-          {is2dGraphMode ? (
-            <Graph2d repoData={repoData} handleNodeClick={handleNodeClick} />
-          ) : (
-            <Graph3d repoData={repoData} handleNodeClick={handleNodeClick} />
-          )}
-        </ContentBox>
-        <DiffBar>
-          <DiffList targetDiffList={targetDiffList} />
-        </DiffBar>
+        <Switch>
+          <Route exact path="/repository">
+            <BranchBar>
+              <BranchList branchList={branchList} />
+            </BranchBar>
+            <ContentBox>
+              {is2dGraphMode ? (
+                <Graph2d
+                  repoData={repoData}
+                  handleNodeClick={handleNodeClick}
+                />
+              ) : (
+                <Graph3d
+                  repoData={repoData}
+                  handleNodeClick={handleNodeClick}
+                />
+              )}
+            </ContentBox>
+            <DiffBar>
+              <DiffList targetDiffList={targetDiffList} />
+            </DiffBar>
+          </Route>
+          <Route path="/repository/diff">
+            <ContentBox>
+              <Diff targetDiff={targetDiffList?.[0]} />
+            </ContentBox>
+            <DiffBar>
+              <DiffList targetDiffList={targetDiffList} />
+            </DiffBar>
+          </Route>
+        </Switch>
       </BodyWrapper>
     </>
   );
@@ -91,8 +113,8 @@ export default function Repo({ repoUrl, repoData }) {
 const Wrapper = styled.div`
   width: 100%;
   height: 60px;
-  background-color: ${({ theme: { background } }) => background.BLACK};
-  color: ${({ theme: { font } }) => font.GREY};
+  background-color: ${({ theme: { BACKGROUND } }) => BACKGROUND.BLACK};
+  color: ${({ theme: { FONT } }) => FONT.GREY};
 `;
 
 const Span = styled.span`
