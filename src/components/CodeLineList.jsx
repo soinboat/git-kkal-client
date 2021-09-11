@@ -2,22 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Log from './Log';
+import CodeString from './CodeString';
 
-export default function LogRenderer({ line, logList }) {
+export default function CodeLineList({ line, logList }) {
   return (
     <Wrapper>
       {logList.map((log, index) => (
-        <InnerWrapper key={index}>
+        <CodeLine key={index}>
           <Number key={`Number-${index}`}>{line + index}</Number>
-          <Log key={`Log-${index}`} log={log} />
-        </InnerWrapper>
+          <CodeString key={`Log-${index}`} log={log} />
+        </CodeLine>
       ))}
     </Wrapper>
   );
 }
 
-const InnerWrapper = styled.div`
+const CodeLine = styled.div`
   display: flex;
 `;
 
@@ -30,7 +30,7 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-LogRenderer.propTypes = {
+CodeLineList.propTypes = {
   line: PropTypes.number.isRequired,
   logList: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

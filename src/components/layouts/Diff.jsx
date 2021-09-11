@@ -2,19 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import DiffParagraph from '../DiffParagraph';
+import DiffParagraphCode from '../DiffParagraphCode';
 
 export default function Diff({ targetDiff }) {
   return (
     <Wrapper>
       <DiffFileName>{targetDiff.fileName}</DiffFileName>
       {targetDiff.changedLog.map((log) => (
-        <InnerWrapper key={log.codeLineOffsetString}>
+        <DiffParagraph key={log.codeLineOffsetString}>
           <DiffParagraphTitle>
             {`${log.codeLineOffsetString} ${log.codeBeginHunk}`}
           </DiffParagraphTitle>
-          <DiffParagraph paragraph={log} />
-        </InnerWrapper>
+          <DiffParagraphCode paragraph={log} />
+        </DiffParagraph>
       ))}
     </Wrapper>
   );
@@ -32,7 +32,7 @@ const DiffFileName = styled.div`
   color: ${({ theme }) => theme.font.grey};
 `;
 
-const InnerWrapper = styled.div`
+const DiffParagraph = styled.div`
   margin: 10px;
 `;
 

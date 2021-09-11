@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import getLogType from '../utils/getLogType';
 
-export default function Log({ log }) {
+export default function CodeString({ log }) {
   const logType = getLogType(log);
 
   return (
@@ -44,10 +44,10 @@ const Wrapper = styled.div`
   }};
 `;
 
-Log.defaultProps = {
+CodeString.defaultProps = {
   log: '',
 };
 
-Log.propTypes = {
+CodeString.propTypes = {
   log: PropTypes.string,
 };
