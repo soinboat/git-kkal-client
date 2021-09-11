@@ -113,8 +113,8 @@ export default function Repo({ repoUrl, repoData }) {
 const Wrapper = styled.div`
   width: 100%;
   height: 60px;
-  background-color: ${({ theme: { BACKGROUND } }) => BACKGROUND.BLACK};
-  color: ${({ theme: { FONT } }) => FONT.GREY};
+  background-color: ${({ theme: { background } }) => background.black};
+  color: ${({ theme: { font } }) => font.color.grey};
 `;
 
 const Span = styled.span`

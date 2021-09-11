@@ -15,11 +15,12 @@ export default function DiffList({ targetDiffList }) {
 }
 
 const Wrapper = styled.div`
-  min-width: 200px;
+  width: 200px;
   height: 100%;
   background-color: ${({ theme: { BACKGROUND } }) => BACKGROUND.GREY_3};
   margin-left: 20px;
-  color: ${({ theme: { FONT } }) => FONT.WHITE};
+  background-color: ${({ theme: { background } }) => background.grey3};
+  color: ${({ theme: { font } }) => font.color.white};
 `;
 
 DiffList.defaultProps = {
