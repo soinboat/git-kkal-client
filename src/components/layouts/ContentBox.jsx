@@ -15,8 +15,8 @@ const Wrapper = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme: { BACKGROUND } }) => BACKGROUND.GREY_1};
-  color: ${({ theme: { FONT } }) => FONT.WHITE};
+  background-color: ${({ theme: { background } }) => background.grey1};
+  color: ${({ theme: { font } }) => font.color.white};
 `;
 
 ContentBox.propTypes = {

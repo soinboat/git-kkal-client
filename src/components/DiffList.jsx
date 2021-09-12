@@ -5,21 +5,32 @@ import styled from 'styled-components';
 export default function DiffList({ targetDiffList }) {
   return (
     <Wrapper>
-      <span>
+      <InnerWrapper>
         {targetDiffList?.map((diff) => (
-          <div key={diff.fileName}>{diff.fileName}</div>
+          <FileName key={diff.fileName}>{diff.fileName}</FileName>
         ))}
-      </span>
+      </InnerWrapper>
     </Wrapper>
   );
 }
 
+const FileName = styled.div`
+  word-break: break-all;
+  word-wrap: break-word;
+  margin: 5px 0;
+`;
+
+const InnerWrapper = styled.div`
+  width: 100%;
+  height: auto;
+  margin: 10px 0;
+`;
+
 const Wrapper = styled.div`
-  min-width: 200px;
-  height: 100%;
-  background-color: ${({ theme: { BACKGROUND } }) => BACKGROUND.GREY_3};
+  width: 200px;
   margin-left: 20px;
-  color: ${({ theme: { FONT } }) => FONT.WHITE};
+  background-color: ${({ theme: { background } }) => background.grey3};
+  color: ${({ theme: { font } }) => font.color.white};
 `;
 
 DiffList.defaultProps = {

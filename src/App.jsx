@@ -9,7 +9,7 @@ import { filterGitExtension } from './utils/git';
 import { notifyErr, notifySuccess } from './utils/notify';
 
 const Landing = loadable(() => import('./pages/Landing'));
-const Repo = loadable(() => import('./pages/Repo'));
+const Repo = loadable(() => import('./pages/Repo/index'));
 
 function App() {
   const [repoUrl, setRepoUrl] = useState('');

@@ -2,19 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import DiffParagraph from '../DiffParagraph';
+import DiffParagraphCode from '../../components/DiffCode/DiffParagraphCode';
 
 export default function Diff({ targetDiff }) {
   return (
     <Wrapper>
       <DiffFileName>{targetDiff.fileName}</DiffFileName>
       {targetDiff.changedLog.map((log) => (
-        <InnerWrapper key={log.codeLineOffsetString}>
-          <DiffTitle>
+        <DiffParagraph key={log.codeLineOffsetString}>
+          <DiffParagraphTitle>
             {`${log.codeLineOffsetString} ${log.codeBeginHunk}`}
-          </DiffTitle>
-          <DiffParagraph paragraph={log} />
-        </InnerWrapper>
+          </DiffParagraphTitle>
+          <DiffParagraphCode paragraph={log} />
+        </DiffParagraph>
       ))}
     </Wrapper>
   );
@@ -24,18 +24,19 @@ const DiffFileName = styled.div`
   display: flex;
   align-items: center;
   padding: 0 10px;
+  box-sizing: border-box;
   width: 100%;
   height: 40px;
-  border-top: 1px solid ${({ theme }) => theme.FONT.GREY};
-  background-color: ${({ theme }) => theme.BACKGROUND.BLACK};
-  color: ${({ theme }) => theme.FONT.GREY};
+  border-top: 1px solid ${({ theme }) => theme.font.color.grey};
+  background-color: ${({ theme }) => theme.background.black};
+  color: ${({ theme }) => theme.font.color.grey};
 `;
 
-const InnerWrapper = styled.div`
+const DiffParagraph = styled.div`
   margin: 10px;
 `;
 
-const DiffTitle = styled.div``;
+const DiffParagraphTitle = styled.div``;
 
 const Wrapper = styled.div`
   width: 100%;

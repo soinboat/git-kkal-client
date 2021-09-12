@@ -11,8 +11,8 @@ export default function NavBar({ children }) {
 const Wrapper = styled.nav`
   width: 100%;
   height: ${NAV_BAR_HEIGHT};
-  background-color: ${({ theme: { BACKGROUND } }) => BACKGROUND.BLACK};
-  color: ${({ theme: { FONT } }) => FONT.GREY};
+  background-color: ${({ theme: { background } }) => background.black};
+  color: ${({ theme: { font } }) => font.color.grey};
 `;
 
 NavBar.defaultProps = {

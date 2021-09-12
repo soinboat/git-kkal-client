@@ -32,8 +32,8 @@ export default function Landing({ isLoading, repoData, handleRepoUrlSubmit }) {
 const Wrapper = styled.div`
   display: flex;
   height: 100%;
-  background-color: ${({ theme: { BACKGROUND } }) => BACKGROUND.BLACK};
-  color: ${({ theme: { FONT } }) => FONT.GREY};
+  background-color: ${({ theme: { background } }) => background.black};
+  color: ${({ theme: { font } }) => font.grey};
   flex-direction: column;
 `;
 
