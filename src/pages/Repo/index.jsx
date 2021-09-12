@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { Link, Redirect, Route, Switch } from 'react-router-dom';
 
 import loadable from '@loadable/component';
 import PropTypes from 'prop-types';
@@ -28,8 +28,6 @@ export default function Repo({ repoUrl, repoData }) {
     return <Redirect to="/" />;
   }
 
-  const history = useHistory();
-
   const [targetBranch, setTargetBranch] = useState(null);
   const [targetCommit, setTargetCommit] = useState(repoData?.logList[0].hash);
   const [targetDiffList, setTargetDiffList] = useState(null);
@@ -48,8 +46,6 @@ export default function Repo({ repoUrl, repoData }) {
 
   const handleDiffClick = (file) => {
     setTargetDiffFile(file);
-
-    history.push('/repository/diff');
   };
 
   const handleGraphMode = (event) => {

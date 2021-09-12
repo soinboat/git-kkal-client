@@ -1,13 +1,23 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 export default function DiffList({ targetDiffList, handleDiffClick }) {
+  const history = useHistory();
+
   return (
     <Wrapper>
       <InnerWrapper>
         {targetDiffList?.map((diff) => (
-          <FileName key={diff.fileName} onClick={() => handleDiffClick(diff)}>
+          <FileName
+            key={diff.fileName}
+            onClick={() => {
+              handleDiffClick(diff);
+              history.push('/repository/diff');
+            }}
+          >
             {diff.fileName}
           </FileName>
         ))}
