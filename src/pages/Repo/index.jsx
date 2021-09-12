@@ -93,7 +93,6 @@ export default function Repo({ repoUrl, repoData }) {
             <Link exact="true" to="/repository">
               go to repo
             </Link>
-            <Link to="/repository/diff">go to diff</Link>
           </Wrapper>
         </NavBar>
       </HeaderWrapper>
