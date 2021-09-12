@@ -47,6 +47,7 @@ const Wrapper = styled.div`
 
 DiffList.defaultProps = {
   targetDiffList: [],
+  handleDiffClick: () => {},
 };
 
 DiffList.propTypes = {
@@ -70,5 +71,5 @@ DiffList.propTypes = {
       ]),
     ),
   ),
-  handleDiffClick: PropTypes.func.isRequired,
+  handleDiffClick: PropTypes.func,
 };

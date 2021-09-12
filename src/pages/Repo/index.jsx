@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, Redirect, Route, Switch } from 'react-router-dom';
 
 import loadable from '@loadable/component';
@@ -34,7 +34,7 @@ export default function Repo({ repoUrl, repoData }) {
   const [targetDiffFile, setTargetDiffFile] = useState(null);
   const [is2dGraphMode, setIs2dGraphMode] = useState(true);
 
-  const branchList = getBranchList(repoData);
+  const branchList = useMemo(() => getBranchList(repoData), [repoData]);
 
   const handleBranchClick = useCallback((branch) => {
     setTargetBranch(branch);
