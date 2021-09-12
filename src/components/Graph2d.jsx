@@ -13,7 +13,7 @@ export default function Graph2d({ repoData, handleNodeClick }) {
     return <div>데이터없음</div>;
   }
 
-  const { logList } = repoData;
+  const { logList, lineList } = repoData;
 
   const { width } = useWindowDimensions();
 
@@ -24,7 +24,7 @@ export default function Graph2d({ repoData, handleNodeClick }) {
         height={150 + logList.length * 50}
         options={{ antialias: true }}
       >
-        <DrawLine logList={logList} />
+        <DrawLine lineList={lineList} />
         {logList.map((log, index) => (
           <DrawNode
             handleClick={handleNodeClick}
@@ -69,6 +69,12 @@ Graph2d.propTypes = {
         ]),
       ),
     ).isRequired,
+    lineList: PropTypes.arrayOf(
+      PropTypes.objectOf(
+        PropTypes.string,
+        PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+      ),
+    ),
   }),
   handleNodeClick: PropTypes.func.isRequired,
 };
