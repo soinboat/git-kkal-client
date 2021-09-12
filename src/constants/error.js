@@ -1,8 +1,7 @@
 const ERROR = {
   CLONE_SUCCESS_MESSAGE: 'Successfully cloned',
   INVALID_URL_INPUT_MESSAGE: 'Please input valid repository URL',
-  PRIVATE_REPO_INPUT_MESSAGE: 'Please input public repository URL',
-  EMPTY_INPUT_MESSAGE: 'Please input repository URL',
+  INTERNAL_SERVER_ERROR: 'Internal server error',
   FAIL_TO_GET_DIFF: 'Fail to get diff',
 };
 

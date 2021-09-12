@@ -12,17 +12,9 @@ export const notifySuccess = () => {
   });
 };
 
-export const notifyNoInput = () => {
-  toast(ERROR.EMPTY_INPUT_MESSAGE, {
-    position: toast.POSITION.BOTTOM_RIGHT,
-  });
-};
-
 export const notifyErr = (err) => {
   const errorMessage =
-    err.status === 400
-      ? ERROR.PRIVATE_REPO_INPUT_MESSAGE
-      : ERROR.INVALID_URL_INPUT_MESSAGE;
+    err === 500 ? ERROR.INTERNAL_SERVER_ERROR : ERROR.INVALID_URL_INPUT_MESSAGE;
 
   toast.error(errorMessage, {
     position: toast.POSITION.BOTTOM_RIGHT,

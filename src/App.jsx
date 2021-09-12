@@ -6,7 +6,7 @@ import { ToastContainer } from 'react-toastify';
 
 import { fetchRepoData } from './api/git';
 import { filterGitExtension } from './utils/git';
-import { notifyErr, notifyNoInput, notifySuccess } from './utils/notify';
+import { notifyErr, notifySuccess } from './utils/notify';
 
 const Landing = loadable(() => import('./pages/Landing'));
 const Repo = loadable(() => import('./pages/Repo'));
@@ -23,7 +23,7 @@ function App() {
     if (!inputUrl) {
       setIsLoading(false);
 
-      notifyNoInput();
+      notifyErr();
       return;
     }
 
@@ -38,7 +38,7 @@ function App() {
     } catch (err) {
       setIsLoading(false);
 
-      notifyErr(err.response);
+      notifyErr(err.response.status);
     }
   };
 
