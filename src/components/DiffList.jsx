@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export default function DiffList({ targetDiffList }) {
+export default function DiffList({ targetDiffList, handleDiffClick }) {
   return (
     <Wrapper>
       <InnerWrapper>
         {targetDiffList?.map((diff) => (
-          <FileName key={diff.fileName}>{diff.fileName}</FileName>
+          <FileName key={diff.fileName} onClick={() => handleDiffClick(diff)}>
+            {diff.fileName}
+          </FileName>
         ))}
       </InnerWrapper>
     </Wrapper>
@@ -58,4 +60,5 @@ DiffList.propTypes = {
       ]),
     ),
   ),
+  handleDiffClick: PropTypes.func.isRequired,
 };

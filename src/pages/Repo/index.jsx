@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Redirect, Route, Switch } from 'react-router-dom';
+import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 
 import loadable from '@loadable/component';
 import PropTypes from 'prop-types';
@@ -28,12 +28,36 @@ export default function Repo({ repoUrl, repoData }) {
     return <Redirect to="/" />;
   }
 
+  const history = useHistory();
+
   const [targetBranch, setTargetBranch] = useState(null);
   const [targetCommit, setTargetCommit] = useState(repoData?.logList[0].hash);
   const [targetDiffList, setTargetDiffList] = useState(null);
+  const [targetDiffFile, setTargetDiffFile] = useState(null);
   const [is2dGraphMode, setIs2dGraphMode] = useState(true);
 
   const branchList = getBranchList(repoData);
+
+  const handleBranchClick = (branch) => {
+    setTargetBranch(branch);
+  };
+
+  const handleNodeClick = (hash) => {
+    setTargetCommit(hash);
+  };
+
+  const handleDiffClick = (file) => {
+    setTargetDiffFile(file);
+
+    history.push('/repository/diff');
+  };
+
+  const handleGraphMode = (event) => {
+    const { id } = event.target;
+    const mode = id === UI.TWO_DIMENSION;
+
+    setIs2dGraphMode(mode);
+  };
 
   useEffect(() => {
     setTargetCommit(targetBranch?.hash);
@@ -49,20 +73,9 @@ export default function Repo({ repoUrl, repoData }) {
     })();
   }, [targetCommit]);
 
-  const handleTargetBranch = (branch) => {
-    setTargetBranch(branch);
-  };
-
-  const handleNodeClick = (hash) => {
-    setTargetCommit(hash);
-  };
-
-  const handleGraphMode = (event) => {
-    const { id } = event.target;
-    const mode = id === UI.TWO_DIMENSION;
-
-    setIs2dGraphMode(mode);
-  };
+  useEffect(() => {
+    setTargetDiffFile(targetDiffList?.[0]);
+  }, [targetDiffList]);
 
   return (
     <>
@@ -90,7 +103,7 @@ export default function Repo({ repoUrl, repoData }) {
             <BranchBar>
               <BranchList
                 branchList={branchList}
-                handleBranchClick={handleTargetBranch}
+                handleBranchClick={handleBranchClick}
               />
             </BranchBar>
             <ContentBox>
@@ -107,15 +120,18 @@ export default function Repo({ repoUrl, repoData }) {
               )}
             </ContentBox>
             <DiffBar>
-              <DiffList targetDiffList={targetDiffList} />
+              <DiffList
+                targetDiffList={targetDiffList}
+                handleDiffClick={handleDiffClick}
+              />
             </DiffBar>
           </Route>
           <Route path="/repository/diff">
             <ContentBox>
-              <Diff targetDiff={targetDiffList?.[0]} />
+              <Diff targetDiff={targetDiffFile} />
             </ContentBox>
             <DiffBar>
-              <DiffList targetDiffList={targetDiffList} />
+              <DiffList />
             </DiffBar>
           </Route>
         </Switch>
