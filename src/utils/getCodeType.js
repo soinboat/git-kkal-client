@@ -1,5 +1,5 @@
 export default function getCodeType(code) {
-  if (code.length <= 0) {
+  if (!code.length) {
     return { sign: '', code: '' };
   }
 

@@ -14,7 +14,7 @@ export default function CodeBox({ code }) {
           <CodeLineNumber key={`CodeLineNumber-${index}`}>
             {lineNumber + index}
           </CodeLineNumber>
-          <CodeString key={`Log-${index}`} codeLine={codeLine} />
+          <CodeString key={`Log-${index}`} codeChunk={codeLine} />
         </CodeLine>
       ))}
     </CodeLineList>

@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 import getCodeType from '../../utils/getCodeType';
 
-export default function CodeString({ codeLine }) {
-  const codeType = getCodeType(codeLine);
+export default function CodeString({ codeChunk }) {
+  const codeType = getCodeType(codeChunk);
 
   return (
     <Wrapper codeType={codeType}>
@@ -45,9 +45,9 @@ const Wrapper = styled.div`
 `;
 
 CodeString.defaultProps = {
-  codeLine: '',
+  codeChunk: '',
 };
 
 CodeString.propTypes = {
-  codeLine: PropTypes.string,
+  codeChunk: PropTypes.string,
 };

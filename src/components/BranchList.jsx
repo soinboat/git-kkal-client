@@ -7,7 +7,7 @@ import { IoMdArrowDropdown } from 'react-icons/io';
 import UI from '../constants/ui';
 
 export default function BranchList({ branchList }) {
-  const [listCollapse, setListCollapse] = useState(false);
+  const [isBranchListClosed, setListCollapse] = useState(false);
 
   const toggleCollapse = useCallback(() => {
     setListCollapse((prev) => !prev);
@@ -16,13 +16,13 @@ export default function BranchList({ branchList }) {
   return (
     <Wrapper>
       <BranchTitle>
-        <CollapseButton rotate={listCollapse} onClick={toggleCollapse}>
+        <CollapseButton rotate={isBranchListClosed} onClick={toggleCollapse}>
           <IoMdArrowDropdown />
         </CollapseButton>
         <TitleText>{UI.BRANCH}</TitleText>
       </BranchTitle>
-      <BranchNameList listCollapse={listCollapse}>
-        {!listCollapse &&
+      <BranchNameList isBranchListClosed={isBranchListClosed}>
+        {!isBranchListClosed &&
           branchList?.map((branch) => (
             <BranchName key={branch}>{branch}</BranchName>
           ))}
@@ -41,8 +41,8 @@ const fadeIn = keyframes`
 `;
 
 const BranchNameList = styled.ul`
-  animation: ${({ listCollapse }) =>
-    !listCollapse &&
+  animation: ${({ isBranchListClosed }) =>
+    !isBranchListClosed &&
     css`
       ${fadeIn} 300ms ease-in-out forwards
     `};
