@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import UrlForm from '../components/UrlForm';
 import UI from '../constants/ui';
 
-export default function Landing({ isLoading, repoData, handleRepoUrlSubmit }) {
+export default function Landing({ repoData, handleRepoUrlSubmit }) {
   if (repoData) {
     return <Redirect to="/repository" />;
   }
@@ -22,7 +22,7 @@ export default function Landing({ isLoading, repoData, handleRepoUrlSubmit }) {
         </TitleWrapper>
       </TopWrapper>
       <InputWrapper>
-        <UrlForm isLoading={isLoading} handleSubmit={handleRepoUrlSubmit} />
+        <UrlForm handleSubmit={handleRepoUrlSubmit} />
       </InputWrapper>
       <BottomWrapper />
     </Wrapper>
@@ -118,12 +118,7 @@ Landing.defaultProps = {
   },
 };
 
-Landing.defaultProps = {
-  isLoading: null,
-};
-
 Landing.propTypes = {
-  isLoading: PropTypes.bool,
   repoData: PropTypes.shape({
     repoName: PropTypes.string.isRequired,
     logList: PropTypes.arrayOf(

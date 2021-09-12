@@ -14,15 +14,11 @@ const Repo = loadable(() => import('./pages/Repo/index'));
 function App() {
   const [repoUrl, setRepoUrl] = useState('');
   const [repoData, setRepoData] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
 
   const handleRepoUrlSubmit = async (ev, inputUrl) => {
     ev.preventDefault();
-    setIsLoading(true);
 
     if (!inputUrl) {
-      setIsLoading(false);
-
       notifyErr();
       return;
     }
@@ -32,12 +28,9 @@ function App() {
 
       setRepoUrl(filterGitExtension(inputUrl));
       setRepoData(fetchedRepoData);
-      setIsLoading(false);
 
       notifySuccess();
     } catch (err) {
-      setIsLoading(false);
-
       notifyErr(err.response.status);
     }
   };
@@ -47,7 +40,6 @@ function App() {
       <Switch>
         <Route exact path="/">
           <Landing
-            isLoading={isLoading}
             repoData={repoData}
             handleRepoUrlSubmit={handleRepoUrlSubmit}
           />

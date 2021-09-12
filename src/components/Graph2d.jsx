@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Stage } from '@inlet/react-pixi';
 import styled from 'styled-components';
 
+import { Stage } from '@inlet/react-pixi';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 
 import DrawLine from '../canvas/DrawLine';

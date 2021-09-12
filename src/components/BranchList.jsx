@@ -16,7 +16,7 @@ export default function BranchList({ branchList }) {
   return (
     <Wrapper>
       <BranchTitle>
-        <CollapseButton rotate={isBranchListClosed} onClick={toggleCollapse}>
+        <CollapseButton $rotate={isBranchListClosed} onClick={toggleCollapse}>
           <IoMdArrowDropdown />
         </CollapseButton>
         <TitleText>{UI.BRANCH}</TitleText>

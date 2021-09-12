@@ -1,45 +1,50 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import LoadingSpinner from './LoadingSpinner';
 import UI from '../constants/ui';
 
-export default function UrlForm({ isLoading, handleSubmit }) {
+export default function UrlForm({ handleSubmit }) {
   const [inputUrl, setInputUrl] = useState('');
+  const [isLoading, setIsLoading] = useState(null);
 
   const handleChange = useCallback((ev) => {
     setInputUrl(ev.target.value);
   }, []);
 
+  useEffect(() => () => setIsLoading(false), []);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
   return (
-    <>
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <Form
-          name="urlForm"
-          onSubmit={(ev) => {
-            handleSubmit(ev, inputUrl);
-            setInputUrl('');
-          }}
-        >
-          <InputWrapper>
-            <Input
-              type="url"
-              value={inputUrl}
-              placeholder={UI.REPOSITORY_URL}
-              onChange={handleChange}
-              required
-            />
-            {isLoading && <LoadingSpinner />}
-          </InputWrapper>
-          <ButtonWrapper>
-            <Button type="submit">{UI.ENTER_REPO_URL}</Button>
-          </ButtonWrapper>
-        </Form>
-      )}
-    </>
+    <Form
+      name="urlForm"
+      onSubmit={async (ev) => {
+        setIsLoading(true);
+
+        await handleSubmit(ev, inputUrl);
+
+        setInputUrl('');
+      }}
+    >
+      <InputWrapper>
+        <Input
+          type="url"
+          value={inputUrl}
+          placeholder={UI.REPOSITORY_URL}
+          onChange={handleChange}
+          required
+        />
+        {isLoading && <LoadingSpinner />}
+      </InputWrapper>
+      <ButtonWrapper>
+        <Button type="submit">{UI.ENTER_REPO_URL}</Button>
+      </ButtonWrapper>
+    </Form>
   );
 }
 
@@ -106,11 +111,6 @@ const Button = styled.button`
   }
 `;
 
-UrlForm.defaultProps = {
-  isLoading: null,
-};
-
 UrlForm.propTypes = {
-  isLoading: PropTypes.oneOfType([PropTypes.bool]),
   handleSubmit: PropTypes.func.isRequired,
 };

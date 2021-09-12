@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
-import { Graphics } from '@inlet/react-pixi';
 import PropTypes from 'prop-types';
 
+import { Graphics } from '@inlet/react-pixi';
 import convertColor from '../utils/convertColor';
 
 export default function DrawLine({ logList }) {
