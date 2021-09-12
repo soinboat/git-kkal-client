@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link, Redirect, Route, Switch } from 'react-router-dom';
 
 import loadable from '@loadable/component';
@@ -36,24 +36,24 @@ export default function Repo({ repoUrl, repoData }) {
 
   const branchList = getBranchList(repoData);
 
-  const handleBranchClick = (branch) => {
+  const handleBranchClick = useCallback((branch) => {
     setTargetBranch(branch);
-  };
+  });
 
-  const handleNodeClick = (hash) => {
+  const handleNodeClick = useCallback((hash) => {
     setTargetCommit(hash);
-  };
+  });
 
-  const handleDiffClick = (file) => {
+  const handleDiffClick = useCallback((file) => {
     setTargetDiffFile(file);
-  };
+  });
 
-  const handleGraphMode = (event) => {
+  const handleGraphMode = useCallback((event) => {
     const { id } = event.target;
     const mode = id === UI.TWO_DIMENSION;
 
     setIs2dGraphMode(mode);
-  };
+  });
 
   useEffect(() => {
     setTargetCommit(targetBranch?.hash);
