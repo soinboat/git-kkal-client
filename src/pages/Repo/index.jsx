@@ -4,22 +4,22 @@ import { Link, Redirect, Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import NavBar from '../components/layouts/NavBar';
-import BranchBar from '../components/layouts/BranchBar';
-import ContentBox from '../components/layouts/ContentBox';
-import Diff from '../components/layouts/Diff';
-import DiffBar from '../components/layouts/DiffBar';
+import NavBar from '../../components/layouts/NavBar';
+import BranchBar from '../../components/layouts/BranchBar';
+import ContentBox from '../../components/layouts/ContentBox';
+import Diff from './Diff';
+import DiffBar from '../../components/layouts/DiffBar';
 
-import { BodyWrapper, HeaderWrapper } from '../components/styles';
-import Button from '../components/Button';
-import BranchList from '../components/BranchList';
-import Graph2d from '../components/Graph2d';
-import Graph3d from '../components/Graph3d';
-import DiffList from '../components/DiffList';
+import { BodyWrapper, HeaderWrapper } from '../../components/styles';
+import Button from '../../components/Button';
+import BranchList from '../../components/BranchList';
+import Graph2d from '../../components/Graph2d';
+import Graph3d from '../../components/Graph3d';
+import DiffList from '../../components/DiffList';
 
-import { fetchDiff } from '../api/git';
-import { getBranchList } from '../utils/git';
-import UI from '../constants/ui';
+import { fetchDiff } from '../../api/git';
+import { getBranchList } from '../../utils/git';
+import UI from '../../constants/ui';
 
 export default function Repo({ repoUrl, repoData }) {
   if (!repoData) {

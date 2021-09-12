@@ -6,7 +6,7 @@ import { fetchRepoData } from './api/git';
 import { filterGitExtension } from './utils/git';
 
 const Landing = loadable(() => import('./pages/Landing'));
-const Repo = loadable(() => import('./pages/Repo'));
+const Repo = loadable(() => import('./pages/Repo/index'));
 
 function App() {
   const [repoUrl, setRepoUrl] = useState('');
