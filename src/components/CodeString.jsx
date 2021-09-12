@@ -2,28 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import getLogType from '../utils/getLogType';
+import getCodeType from '../utils/getCodeType';
 
-export default function CodeString({ log }) {
-  const logType = getLogType(log);
+export default function CodeString({ codeLine }) {
+  const codeType = getCodeType(codeLine);
 
   return (
-    <Wrapper logType={logType}>
-      <Sign>{logType.sign}</Sign>
-      <Text>{logType.log}</Text>
+    <Wrapper codeType={codeType}>
+      <Sign>{codeType.sign}</Sign>
+      <CodeText>{codeType.code}</CodeText>
     </Wrapper>
   );
 }
 
-const Sign = styled.pre`
+const Sign = styled.div`
   width: 15px;
-  margin: 0.5rem;
+  margin: 3px 5px;
 `;
 
-const Text = styled.pre`
-  margin: 0.5rem;
+const CodeText = styled.div`
   height: auto;
-  /* white-space: normal; */
+  margin: 3px 5px;
+  white-space: pre-wrap;
   word-break: break-all;
   word-wrap: break-word;
 `;
@@ -31,12 +31,12 @@ const Text = styled.pre`
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  background-color: ${({ theme, logType }) => {
-    if (logType.sign === '+') {
+  background-color: ${({ theme, codeType }) => {
+    if (codeType.sign === '+') {
       return theme.background.transparentGreen;
     }
 
-    if (logType.sign === '-') {
+    if (codeType.sign === '-') {
       return theme.background.transparentRed;
     }
 
@@ -45,9 +45,9 @@ const Wrapper = styled.div`
 `;
 
 CodeString.defaultProps = {
-  log: '',
+  codeLine: '',
 };
 
 CodeString.propTypes = {
-  log: PropTypes.string,
+  codeLine: PropTypes.string,
 };

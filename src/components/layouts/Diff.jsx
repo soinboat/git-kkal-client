@@ -27,9 +27,9 @@ const DiffFileName = styled.div`
   box-sizing: border-box;
   width: 100%;
   height: 40px;
-  border-top: 1px solid ${({ theme }) => theme.font.grey};
+  border-top: 1px solid ${({ theme }) => theme.font.color.grey};
   background-color: ${({ theme }) => theme.background.black};
-  color: ${({ theme }) => theme.font.grey};
+  color: ${({ theme }) => theme.font.color.grey};
 `;
 
 const DiffParagraph = styled.div`

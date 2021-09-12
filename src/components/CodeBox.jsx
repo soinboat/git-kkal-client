@@ -2,23 +2,43 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import CodeLineList from './CodeLineList';
+import CodeString from './CodeString';
 
 export default function CodeBox({ code }) {
-  const { line, logList } = code;
+  const { line: lineNumber, logList: codeLineList } = code;
 
   return (
-    <Wrapper>
-      <CodeLineList line={line} logList={logList} />
-    </Wrapper>
+    <CodeLineList>
+      {codeLineList.map((codeLine, index) => (
+        <CodeLine key={index}>
+          <CodeLineNumber key={`CodeLineNumber-${index}`}>
+            {lineNumber + index}
+          </CodeLineNumber>
+          <CodeString key={`Log-${index}`} codeLine={codeLine} />
+        </CodeLine>
+      ))}
+    </CodeLineList>
   );
 }
 
-const Wrapper = styled.div`
+const CodeLineList = styled.ul`
   display: flex;
+  flex-direction: column;
   width: 50%;
   padding: 10px;
   font-family: 'Fira Code', monospace;
+  list-style: none;
+  margin: 0;
+`;
+
+const CodeLine = styled.li`
+  display: flex;
+`;
+
+const CodeLineNumber = styled.pre`
+  width: auto;
+  margin: 8px 10px;
+  color: ${({ theme: { font } }) => font.color.grey};
 `;
 
 CodeBox.propTypes = {
