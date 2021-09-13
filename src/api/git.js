@@ -5,7 +5,7 @@ const axiosInstance = axios.create({
 });
 
 export const fetchRepoData = async (repoUrl) => {
-  const res = await axiosInstance.get(`/repository?repoUrl=${repoUrl}`);
+  const res = await axiosInstance.get(`/repository?repoUrl=${repoUrl.trim()}`);
 
   return res.data;
 };

@@ -5,26 +5,25 @@ import { Graphics } from '@inlet/react-pixi';
 import convertColor from '../utils/convertColor';
 
 export default function DrawLine({ lineList }) {
-  const draw = useCallback(
+  const lineGraphics = useCallback(
     (graph) => {
-      // const SLOPE = 20;
       const calcPosition = (linePosition) => {
         const modifiedPosition = {
           x: linePosition[0] + 50,
-          y: linePosition[1] + 100,
+          y: linePosition[1] + 25,
         };
 
         return modifiedPosition;
       };
-      graph.clear();
 
+      graph.clear();
       lineList.forEach((line) => {
         const color = convertColor(line.color);
-        const firstPoint = line.points.shift();
+        const points = [...line.points];
+        const firstPoint = points.shift();
         const firstPosition = calcPosition(firstPoint);
         graph.lineStyle(2, color);
         graph.moveTo(firstPosition.x, firstPosition.y);
-
         line.points.forEach((point) => {
           const pointPosition = calcPosition(point);
           graph.lineTo(pointPosition.x, pointPosition.y);
@@ -35,7 +34,7 @@ export default function DrawLine({ lineList }) {
     [lineList],
   );
 
-  return <Graphics draw={draw} />;
+  return <Graphics draw={lineGraphics} />;
 }
 
 DrawLine.propTypes = {

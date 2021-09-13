@@ -1,48 +1,81 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Stage } from '@inlet/react-pixi';
-import useWindowDimensions from '../hooks/useWindowDimensions';
+import DrawGraph from '../canvas/DrawGraph';
+import Description from './Description';
+import getWindowDimensions from '../hooks/useWindowDimensions';
 
-import DrawLine from '../canvas/DrawLine';
-import DrawNode from '../canvas/DrawNode';
+import { CLICKED_COLOR, BACKGROUND_COLOR } from '../constants/graph2dColor';
+import {
+  BRANCH_BAR_WIDTH,
+  DIFF_BAR_WIDTH,
+  CONTENT_BOX_MIN_WIDTH,
+} from '../constants/size';
 
 export default function Graph2d({ repoData, handleNodeClick }) {
-  if (!repoData.repoName) {
+  if (!repoData.repoName || !repoData.logList) {
     return <div>데이터없음</div>;
   }
 
   const { logList, lineList } = repoData;
+  const [colorList, setColorList] = useState(() => {
+    const newColorList = new Array(logList.length).fill(BACKGROUND_COLOR);
+    newColorList[0] = CLICKED_COLOR;
+    return newColorList;
+  });
 
-  const { width } = useWindowDimensions();
+  const [clicked, setClicked] = useState(0);
+  const { width } = getWindowDimensions();
+
+  const handleCommitClick = (index) => {
+    const newColorList = new Array(repoData.logList.length).fill(
+      BACKGROUND_COLOR,
+    );
+    newColorList[index] = CLICKED_COLOR;
+    setColorList(newColorList);
+  };
+
+  const onClickHandler = (index, hash) => {
+    setClicked(index);
+    handleCommitClick(index);
+    handleNodeClick(hash);
+  };
 
   return (
-    <Wrapper>
-      <Stage
-        width={width - 467 > 200 ? width - 467 : 200}
-        height={150 + logList.length * 50}
-        options={{ antialias: true }}
-      >
-        <DrawLine lineList={lineList} />
-        {logList.map((log, index) => (
-          <DrawNode
-            handleClick={handleNodeClick}
-            key={log.hash}
-            log={log}
-            index={index}
-          />
-        ))}
-      </Stage>
-    </Wrapper>
+    <GraphWrapper
+      style={{
+        width:
+          width - (BRANCH_BAR_WIDTH + DIFF_BAR_WIDTH) < CONTENT_BOX_MIN_WIDTH
+            ? CONTENT_BOX_MIN_WIDTH
+            : width - (BRANCH_BAR_WIDTH + DIFF_BAR_WIDTH),
+      }}
+    >
+      <Graph>
+        <DrawGraph
+          logList={logList}
+          lineList={lineList}
+          clicked={clicked}
+          onClickHandler={onClickHandler}
+        />
+      </Graph>
+      <Description
+        logList={logList}
+        colorList={colorList}
+        onClickHandler={onClickHandler}
+      />
+    </GraphWrapper>
   );
 }
 
-const Wrapper = styled.div`
-  width: 100%;
+const GraphWrapper = styled.div`
+  display: flex;
   height: 100%;
   overflow-y: scroll;
-  overflow-x: hidden;
+`;
+
+const Graph = styled.div`
+  display: inline;
 `;
 
 Graph2d.defaultProps = {
@@ -69,12 +102,14 @@ Graph2d.propTypes = {
         ]),
       ),
     ).isRequired,
-    lineList: PropTypes.arrayOf(
+    lineList: PropTypes.arrayOf([
       PropTypes.objectOf(
-        PropTypes.string,
-        PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+        PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.arrayOf(PropTypes.Number),
+        ]),
       ),
-    ),
+    ]),
   }),
   handleNodeClick: PropTypes.func.isRequired,
 };
