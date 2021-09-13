@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Link, Redirect, Route, Switch } from 'react-router-dom';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import { Route, Redirect, Switch } from 'react-router-dom';
 
 import loadable from '@loadable/component';
 import PropTypes from 'prop-types';
@@ -106,9 +106,6 @@ export default function Repo({ repoUrl, repoData }) {
             <Button id={UI.THREE_DIMENSION} onClick={handleGraphMode}>
               {UI.THREE_DIMENSION}
             </Button>
-            <Link exact="true" to="/repository">
-              go to repo
-            </Link>
           </Wrapper>
         </NavBar>
       </HeaderWrapper>
@@ -146,7 +143,10 @@ export default function Repo({ repoUrl, repoData }) {
               <Diff targetDiff={targetDiffFile} />
             </ContentBox>
             <DiffBar>
-              <DiffList />
+              <DiffList
+                targetDiffList={targetDiffList}
+                handleDiffClick={handleDiffClick}
+              />
             </DiffBar>
           </Route>
         </Switch>
