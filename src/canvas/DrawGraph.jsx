@@ -4,27 +4,20 @@ import PropTypes from 'prop-types';
 
 import DrawNode from './DrawNode';
 import DrawLine from './DrawLine';
-import DrawButton from './DrawButton';
+import DrawButtonList from './DrawButtonList';
 
 function DrawGraph({ logList, lineList, clicked, onClickHandler }) {
-  const DrawButtonList = () =>
-    lineList.map((log, index) => (
-      <DrawButton
-        key={`button${index}${log.hash}`}
-        log={log}
-        index={index}
-        clicked={clicked}
-        onClickHandler={onClickHandler}
-      />
-    ));
-
   return (
     <Stage
       width={300}
       height={logList.length * 50}
       options={{ antialias: true }}
     >
-      <DrawButtonList />
+      <DrawButtonList
+        lineList={lineList}
+        clicked={clicked}
+        onClickHandler={onClickHandler}
+      />
       <DrawLine lineList={lineList} />
       <DrawNode logList={logList} />
     </Stage>
