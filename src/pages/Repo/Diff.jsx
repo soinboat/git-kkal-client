@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import DiffParagraphCode from '../../components/DiffCode/DiffParagraphCode';
+import DiffParagraphCode from '../../components/diffCode/DiffParagraphCode';
 
 export default function Diff({ targetDiff }) {
   return (

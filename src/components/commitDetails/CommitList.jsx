@@ -12,8 +12,8 @@ export default function CommitList({ logList, colorList, onClickHandler }) {
           key={`CommitWrapper${index}${log.hash}`}
           onClick={() => onClickHandler(log.index, log.hash)}
         >
-          {log.branchName1
-            ? log.branchName1.map((branch) => (
+          {log.branchNames
+            ? log.branchNames.map((branch) => (
                 <CommitTag
                   key={`CommitTag${index}${branch}`}
                   style={{ backgroundColor: log.color }}

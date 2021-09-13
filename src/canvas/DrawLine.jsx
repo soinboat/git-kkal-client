@@ -5,7 +5,7 @@ import { Graphics } from '@inlet/react-pixi';
 import convertColor from '../utils/convertColor';
 
 export default function DrawLine({ lineList }) {
-  const lineGraphics = useCallback(
+  const drawLine = useCallback(
     (graph) => {
       const calcPosition = (linePosition) => {
         const modifiedPosition = {
@@ -34,7 +34,7 @@ export default function DrawLine({ lineList }) {
     [lineList],
   );
 
-  return <Graphics draw={lineGraphics} />;
+  return <Graphics draw={drawLine} />;
 }
 
 DrawLine.propTypes = {
