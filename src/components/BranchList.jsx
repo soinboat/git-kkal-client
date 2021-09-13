@@ -8,10 +8,15 @@ import UI from '../constants/ui';
 
 export default function BranchList({ branchList, handleBranchClick }) {
   const [isBranchListClosed, setListCollapse] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const toggleCollapse = useCallback(() => {
     setListCollapse((prev) => !prev);
   }, []);
+
+  const handleListItemClick = (index) => {
+    setSelectedIndex(index);
+  };
 
   return (
     <Wrapper>
@@ -23,10 +28,14 @@ export default function BranchList({ branchList, handleBranchClick }) {
       </BranchTitle>
       <BranchNameList isBranchListClosed={isBranchListClosed}>
         {!isBranchListClosed &&
-          branchList?.map(({ branchName, hash }) => (
+          branchList?.map(({ branchName, hash }, index) => (
             <BranchName
               key={hash}
-              onClick={() => handleBranchClick({ branchName, hash })}
+              className={`${selectedIndex === index ? 'selected' : ''}`}
+              onClick={() => {
+                handleListItemClick(index);
+                handleBranchClick({ branchName, hash });
+              }}
             >
               {branchName}
             </BranchName>
@@ -46,18 +55,28 @@ const fadeIn = keyframes`
 `;
 
 const BranchNameList = styled.ul`
+  transform-origin: top center;
+  list-style: none;
+  padding-left: 20px;
   animation: ${({ isBranchListClosed }) =>
     !isBranchListClosed &&
     css`
       ${fadeIn} 300ms ease-in-out forwards
     `};
-  transform-origin: top center;
-  list-style: none;
-  padding-left: 20px;
+
+  .selected {
+    color: black;
+    background-color: #ffffff9c;
+  }
 `;
 
 const BranchName = styled.li`
-  font-size: 0.8rem;
+  font-size: 1rem;
+  cursor: pointer;
+
+  :hover {
+    background-color: #ffffff1f;
+  }
 `;
 
 const BranchTitle = styled.div`
@@ -77,6 +96,7 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   background-color: ${({ theme: { background } }) => background.grey3};
   color: ${({ theme: { font } }) => font.color.white};
+  font-family: Arial, Helvetica, sans-serif;
 `;
 
 const CollapseButton = styled.div`
