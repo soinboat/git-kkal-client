@@ -46,14 +46,14 @@ export default function Graph2d({ repoData, handleNodeClick }) {
 
   return (
     <GraphWrapper width={responsiveWidth}>
-      <Graph>
+      <div>
         <DrawGraph
           logList={logList}
           lineList={lineList}
           clicked={clicked}
           onClickHandler={onClickHandler}
         />
-      </Graph>
+      </div>
       <Description
         logList={logList}
         colorList={colorList}
@@ -68,10 +68,6 @@ const GraphWrapper = styled.div`
   display: flex;
   height: 100%;
   overflow-y: scroll;
-`;
-
-const Graph = styled.div`
-  display: inline;
 `;
 
 Graph2d.defaultProps = {
