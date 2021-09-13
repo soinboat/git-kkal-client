@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import DrawGraph from '../canvas/DrawGraph';
-import Description from './Description';
+import Description from './commitDetails/Description';
 import getWindowDimensions from '../hooks/useWindowDimensions';
 
 import { CLICKED_COLOR, BACKGROUND_COLOR } from '../constants/graph2dColor';
