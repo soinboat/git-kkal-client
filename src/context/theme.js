@@ -8,6 +8,7 @@ const theme = {
     purple: '#6746C3',
     transparentRed: 'rgba(190, 32, 32, 0.5)',
     transparentGreen: 'rgba(39, 133, 51, 0.5)',
+    aqua: 'aqua',
   },
   font: {
     color: {
@@ -15,6 +16,10 @@ const theme = {
       white: '#FFFFFF',
     },
     size: {},
+  },
+  border: {
+    white: 'white',
+    black: 'black',
   },
 };
 

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
-import { BACKGROUND_COLOR, BORDER_COLOR } from '../../constants/graph2dColor';
+import theme from '../../context/theme';
 
 export default function CommitList({ logList, colorList, onClickHandler }) {
   return (
@@ -33,9 +33,9 @@ const CommitWrapper = styled.li`
   display: flex;
   width: 100%;
   height: 49px;
-  background-color: ${BACKGROUND_COLOR};
-  border-left: 1px solid ${BORDER_COLOR};
-  border-bottom: 1px solid ${BORDER_COLOR};
+  background-color: ${theme.background.aqua};
+  border-left: 1px solid ${theme.border.white};
+  border-bottom: 1px solid ${theme.border.white};
   align-items: center;
 `;
 

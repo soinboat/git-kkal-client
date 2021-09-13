@@ -6,12 +6,12 @@ import DrawGraph from '../canvas/DrawGraph';
 import Description from './commitDetails/Description';
 import getWindowDimensions from '../hooks/useWindowDimensions';
 
-import { CLICKED_COLOR, BACKGROUND_COLOR } from '../constants/graph2dColor';
 import {
   BRANCH_BAR_WIDTH,
   DIFF_BAR_WIDTH,
   CONTENT_BOX_MIN_WIDTH,
 } from '../constants/size';
+import theme from '../context/theme';
 
 export default function Graph2d({ repoData, handleNodeClick }) {
   if (!repoData.repoName || !repoData.logList) {
@@ -20,8 +20,8 @@ export default function Graph2d({ repoData, handleNodeClick }) {
 
   const { logList, lineList } = repoData;
   const [colorList, setColorList] = useState(() => {
-    const newColorList = new Array(logList.length).fill(BACKGROUND_COLOR);
-    newColorList[0] = CLICKED_COLOR;
+    const newColorList = new Array(logList.length).fill(theme.border.black);
+    newColorList[0] = theme.background.aqua;
     return newColorList;
   });
 
@@ -30,9 +30,9 @@ export default function Graph2d({ repoData, handleNodeClick }) {
 
   const handleCommitClick = (index) => {
     const newColorList = new Array(repoData.logList.length).fill(
-      BACKGROUND_COLOR,
+      theme.border.black,
     );
-    newColorList[index] = CLICKED_COLOR;
+    newColorList[index] = theme.background.aqua;
     setColorList(newColorList);
   };
 
