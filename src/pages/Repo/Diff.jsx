@@ -1,13 +1,27 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import DiffParagraphCode from '../../components/diffCode/DiffParagraphCode';
+import Button from '../../components/Button';
 
 export default function Diff({ targetDiff }) {
+  const history = useHistory();
+
   return (
     <Wrapper>
-      <DiffFileName>{targetDiff.fileName}</DiffFileName>
+      <FileNameWrapper>
+        <DiffFileName>{targetDiff.fileName}</DiffFileName>
+        <Button
+          onClick={() => {
+            history.push('/repository');
+          }}
+        >
+          Repo
+        </Button>
+      </FileNameWrapper>
       {targetDiff.changedLog.map((log) => (
         <DiffParagraph key={log.codeLineOffsetString}>
           <DiffParagraphTitle>
@@ -20,9 +34,10 @@ export default function Diff({ targetDiff }) {
   );
 }
 
-const DiffFileName = styled.div`
+const FileNameWrapper = styled.div`
   display: flex;
   align-items: center;
+  vertical-align: middle;
   padding: 0 10px;
   box-sizing: border-box;
   width: 100%;
@@ -30,6 +45,15 @@ const DiffFileName = styled.div`
   border-top: 1px solid ${({ theme }) => theme.font.color.grey};
   background-color: ${({ theme }) => theme.background.black};
   color: ${({ theme }) => theme.font.color.grey};
+
+  button {
+    margin-left: 80%;
+    float: right;
+  }
+`;
+
+const DiffFileName = styled.div`
+  float: left;
 `;
 
 const DiffParagraph = styled.div`

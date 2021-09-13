@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Link, Redirect, Route, Switch } from 'react-router-dom';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import { Route, Redirect, Switch } from 'react-router-dom';
 
+import loadable from '@loadable/component';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import NavBar from '../../components/layouts/NavBar';
 import BranchBar from '../../components/layouts/BranchBar';
 import ContentBox from '../../components/layouts/ContentBox';
-import Diff from './Diff';
 import DiffBar from '../../components/layouts/DiffBar';
 
 import { BodyWrapper, HeaderWrapper } from '../../components/styles';
@@ -21,16 +21,59 @@ import { fetchDiff } from '../../api/git';
 import { getBranchList } from '../../utils/git';
 import UI from '../../constants/ui';
 
+const Diff = loadable(() => import('./Diff'));
+
 export default function Repo({ repoUrl, repoData }) {
   if (!repoData) {
     return <Redirect to="/" />;
   }
 
-  const [targetCommit, setTargetCommit] = useState(repoData?.logList[0].hash);
+  const [targetBranch, setTargetBranch] = useState(null);
+  const [targetCommit, setTargetCommit] = useState(repoData.logList[0].hash);
   const [targetDiffList, setTargetDiffList] = useState(null);
+  const [targetDiffFile, setTargetDiffFile] = useState(null);
   const [is2dGraphMode, setIs2dGraphMode] = useState(true);
 
-  const branchList = getBranchList(repoData);
+  const branchList = useMemo(() => getBranchList(repoData), [repoData]);
+
+  const handleBranchClick = useCallback(
+    (branch) => {
+      setTargetBranch(branch);
+    },
+    [setTargetBranch],
+  );
+
+  const handleNodeClick = useCallback(
+    (hash) => {
+      setTargetCommit(hash);
+    },
+    [setTargetCommit],
+  );
+
+  const handleDiffClick = useCallback(
+    (file) => {
+      setTargetDiffFile(file);
+    },
+    [setTargetDiffFile],
+  );
+
+  const handleGraphMode = useCallback(
+    (event) => {
+      const { name } = event.target;
+      const mode = name === UI.TWO_DIMENSION;
+
+      setIs2dGraphMode(mode);
+    },
+    [setIs2dGraphMode],
+  );
+
+  useEffect(() => {
+    if (!targetBranch) {
+      setTargetCommit(null);
+    } else {
+      setTargetCommit(targetBranch.hash);
+    }
+  }, [targetBranch]);
 
   useEffect(() => {
     (async () => {
@@ -42,34 +85,33 @@ export default function Repo({ repoUrl, repoData }) {
     })();
   }, [targetCommit]);
 
-  const handleNodeClick = (hash) => {
-    setTargetCommit(hash);
-  };
-
-  const handleGraphMode = (event) => {
-    const { id } = event.target;
-    const mode = id === UI.TWO_DIMENSION;
-
-    setIs2dGraphMode(mode);
-  };
+  useEffect(() => {
+    if (!targetDiffList) {
+      setTargetDiffFile(null);
+    } else {
+      setTargetDiffFile(targetDiffList[0]);
+    }
+  }, [targetDiffList]);
 
   return (
     <>
       <HeaderWrapper>
         <NavBar>
           <Wrapper>
-            <Span>Repository: {repoData.repoName}</Span>
-            <Span>Branch name:</Span>
-            <Button id={UI.TWO_DIMENSION} onClick={handleGraphMode}>
-              {UI.TWO_DIMENSION}
-            </Button>
-            <Button id={UI.THREE_DIMENSION} onClick={handleGraphMode}>
-              {UI.THREE_DIMENSION}
-            </Button>
-            <Link exact="true" to="/repository/diff">
-              go to diff
-            </Link>
-            <Link to="/repository">go to repo</Link>
+            <div>
+              <Span>Repository: {repoData.repoName}</Span>
+            </div>
+            <div>
+              <ButtonWrapper>
+                <Button name={UI.TWO_DIMENSION} onClick={handleGraphMode}>
+                  {UI.TWO_DIMENSION}
+                </Button>
+                <Button name={UI.THREE_DIMENSION} onClick={handleGraphMode}>
+                  {UI.THREE_DIMENSION}
+                </Button>
+              </ButtonWrapper>
+            </div>
+            <div />
           </Wrapper>
         </NavBar>
       </HeaderWrapper>
@@ -77,7 +119,10 @@ export default function Repo({ repoUrl, repoData }) {
         <Switch>
           <Route exact path="/repository">
             <BranchBar>
-              <BranchList branchList={branchList} />
+              <BranchList
+                branchList={branchList}
+                handleBranchClick={handleBranchClick}
+              />
             </BranchBar>
             <ContentBox>
               {is2dGraphMode ? (
@@ -93,15 +138,21 @@ export default function Repo({ repoUrl, repoData }) {
               )}
             </ContentBox>
             <DiffBar>
-              <DiffList targetDiffList={targetDiffList} />
+              <DiffList
+                targetDiffList={targetDiffList}
+                handleDiffClick={handleDiffClick}
+              />
             </DiffBar>
           </Route>
           <Route path="/repository/diff">
             <ContentBox>
-              <Diff targetDiff={targetDiffList?.[0]} />
+              <Diff targetDiff={targetDiffFile} />
             </ContentBox>
             <DiffBar>
-              <DiffList targetDiffList={targetDiffList} />
+              <DiffList
+                targetDiffList={targetDiffList}
+                handleDiffClick={handleDiffClick}
+              />
             </DiffBar>
           </Route>
         </Switch>
@@ -111,21 +162,33 @@ export default function Repo({ repoUrl, repoData }) {
 }
 
 const Wrapper = styled.div`
+  display: flex;
   width: 100%;
   height: 60px;
   background-color: ${({ theme: { background } }) => background.black};
   color: ${({ theme: { font } }) => font.color.grey};
+
+  div {
+    flex: 1;
+  }
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const Span = styled.span`
-  background: ${({ primary }) => (primary ? 'palevioletred' : 'white')};
-  color: ${({ primary }) => (primary ? 'white' : 'palevioletred')};
-
+  display: inline-block;
+  flex: 1;
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
-  border: 2px solid palevioletred;
-  border-radius: 3px;
+  border: 2px solid #ffffffb1;
+  background-color: #ffffff5a;
+  color: white;
+  text-align: center;
+  text-decoration: none;
 `;
 
 Repo.defaultProps = {
