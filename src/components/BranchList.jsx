@@ -6,7 +6,7 @@ import { IoMdArrowDropdown } from 'react-icons/io';
 
 import UI from '../constants/ui';
 
-export default function BranchList({ branchList }) {
+export default function BranchList({ branchList, handleBranchClick }) {
   const [isBranchListClosed, setListCollapse] = useState(false);
 
   const toggleCollapse = useCallback(() => {
@@ -23,8 +23,13 @@ export default function BranchList({ branchList }) {
       </BranchTitle>
       <BranchNameList isBranchListClosed={isBranchListClosed}>
         {!isBranchListClosed &&
-          branchList?.map((branch) => (
-            <BranchName key={branch}>{branch}</BranchName>
+          branchList?.map(({ branchName, hash }) => (
+            <BranchName
+              key={hash}
+              onClick={() => handleBranchClick({ branchName, hash })}
+            >
+              {branchName}
+            </BranchName>
           ))}
       </BranchNameList>
     </Wrapper>
@@ -80,7 +85,7 @@ const CollapseButton = styled.div`
   transform: rotate(0deg);
   overflow: hidden;
   transition: all 0.3s ease-out;
-  transform: ${(props) => (props.rotate ? `rotate(-90deg)` : '')};
+  transform: ${(props) => (props.$rotate ? `rotate(-90deg)` : '')};
 `;
 
 BranchList.defaultProps = {
@@ -88,5 +93,6 @@ BranchList.defaultProps = {
 };
 
 BranchList.propTypes = {
-  branchList: PropTypes.arrayOf(PropTypes.string),
+  branchList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+  handleBranchClick: PropTypes.func.isRequired,
 };

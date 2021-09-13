@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, Redirect, Route, Switch } from 'react-router-dom';
 
+import loadable from '@loadable/component';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import NavBar from '../../components/layouts/NavBar';
 import BranchBar from '../../components/layouts/BranchBar';
 import ContentBox from '../../components/layouts/ContentBox';
-import Diff from './Diff';
 import DiffBar from '../../components/layouts/DiffBar';
 
 import { BodyWrapper, HeaderWrapper } from '../../components/styles';
@@ -21,16 +21,43 @@ import { fetchDiff } from '../../api/git';
 import { getBranchList } from '../../utils/git';
 import UI from '../../constants/ui';
 
+const Diff = loadable(() => import('./Diff'));
+
 export default function Repo({ repoUrl, repoData }) {
   if (!repoData) {
     return <Redirect to="/" />;
   }
 
+  const [targetBranch, setTargetBranch] = useState(null);
   const [targetCommit, setTargetCommit] = useState(repoData?.logList[0].hash);
   const [targetDiffList, setTargetDiffList] = useState(null);
+  const [targetDiffFile, setTargetDiffFile] = useState(null);
   const [is2dGraphMode, setIs2dGraphMode] = useState(true);
 
-  const branchList = getBranchList(repoData);
+  const branchList = useMemo(() => getBranchList(repoData), [repoData]);
+
+  const handleBranchClick = useCallback((branch) => {
+    setTargetBranch(branch);
+  });
+
+  const handleNodeClick = useCallback((hash) => {
+    setTargetCommit(hash);
+  });
+
+  const handleDiffClick = useCallback((file) => {
+    setTargetDiffFile(file);
+  });
+
+  const handleGraphMode = useCallback((event) => {
+    const { id } = event.target;
+    const mode = id === UI.TWO_DIMENSION;
+
+    setIs2dGraphMode(mode);
+  });
+
+  useEffect(() => {
+    setTargetCommit(targetBranch?.hash);
+  }, [targetBranch]);
 
   useEffect(() => {
     (async () => {
@@ -42,16 +69,9 @@ export default function Repo({ repoUrl, repoData }) {
     })();
   }, [targetCommit]);
 
-  const handleNodeClick = (hash) => {
-    setTargetCommit(hash);
-  };
-
-  const handleGraphMode = (event) => {
-    const { id } = event.target;
-    const mode = id === UI.TWO_DIMENSION;
-
-    setIs2dGraphMode(mode);
-  };
+  useEffect(() => {
+    setTargetDiffFile(targetDiffList?.[0]);
+  }, [targetDiffList]);
 
   return (
     <>
@@ -66,10 +86,9 @@ export default function Repo({ repoUrl, repoData }) {
             <Button id={UI.THREE_DIMENSION} onClick={handleGraphMode}>
               {UI.THREE_DIMENSION}
             </Button>
-            <Link exact="true" to="/repository/diff">
-              go to diff
+            <Link exact="true" to="/repository">
+              go to repo
             </Link>
-            <Link to="/repository">go to repo</Link>
           </Wrapper>
         </NavBar>
       </HeaderWrapper>
@@ -77,7 +96,10 @@ export default function Repo({ repoUrl, repoData }) {
         <Switch>
           <Route exact path="/repository">
             <BranchBar>
-              <BranchList branchList={branchList} />
+              <BranchList
+                branchList={branchList}
+                handleBranchClick={handleBranchClick}
+              />
             </BranchBar>
             <ContentBox>
               {is2dGraphMode ? (
@@ -93,15 +115,18 @@ export default function Repo({ repoUrl, repoData }) {
               )}
             </ContentBox>
             <DiffBar>
-              <DiffList targetDiffList={targetDiffList} />
+              <DiffList
+                targetDiffList={targetDiffList}
+                handleDiffClick={handleDiffClick}
+              />
             </DiffBar>
           </Route>
           <Route path="/repository/diff">
             <ContentBox>
-              <Diff targetDiff={targetDiffList?.[0]} />
+              <Diff targetDiff={targetDiffFile} />
             </ContentBox>
             <DiffBar>
-              <DiffList targetDiffList={targetDiffList} />
+              <DiffList />
             </DiffBar>
           </Route>
         </Switch>
