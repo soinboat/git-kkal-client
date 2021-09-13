@@ -6,11 +6,6 @@ import DrawGraph from '../canvas/DrawGraph';
 import Description from './commitDetails/Description';
 import getWindowDimensions from '../hooks/useWindowDimensions';
 
-import {
-  BRANCH_BAR_WIDTH,
-  DIFF_BAR_WIDTH,
-  CONTENT_BOX_MIN_WIDTH,
-} from '../constants/size';
 import theme from '../context/theme';
 import initColorList from '../utils/graphDraw';
 
@@ -44,9 +39,10 @@ export default function Graph2d({ repoData, handleNodeClick }) {
   };
 
   const responsiveWidth =
-    width - (BRANCH_BAR_WIDTH + DIFF_BAR_WIDTH) < CONTENT_BOX_MIN_WIDTH
-      ? CONTENT_BOX_MIN_WIDTH
-      : width - (BRANCH_BAR_WIDTH + DIFF_BAR_WIDTH);
+    width - (theme.size.branchBarWidth + theme.size.diffBarWidth) <
+    theme.size.contentBoxMinWidth
+      ? theme.size.contentBoxMinWidth
+      : width - (theme.size.branchBarWidth + theme.size.diffBarWidth);
 
   return (
     <GraphWrapper width={responsiveWidth}>

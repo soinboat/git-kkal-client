@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { BRANCH_BAR_WIDTH } from '../../constants/size';
+import theme from '../../context/theme';
 
 export default function BranchBar({ children }) {
   return <Wrapper>{children || null}</Wrapper>;
 }
 
 const Wrapper = styled.div`
-  min-width: ${BRANCH_BAR_WIDTH};
+  min-width: ${theme.size.branchBarWidth};
   height: 100%;
   background-color: ${({ theme: { background } }) => background.grey3};
   color: ${({ theme: { font } }) => font.color.white};

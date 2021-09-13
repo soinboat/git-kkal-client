@@ -21,6 +21,12 @@ const theme = {
     white: 'white',
     black: 'black',
   },
+  size: {
+    navBarHeight: 60,
+    branchBarWidth: 200,
+    diffBarWidth: 250,
+    contentBoxMinWidth: 200,
+  },
 };
 
 export default theme;
