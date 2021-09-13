@@ -59,8 +59,8 @@ export default function Repo({ repoUrl, repoData }) {
 
   const handleGraphMode = useCallback(
     (event) => {
-      const { id } = event.target;
-      const mode = id === UI.TWO_DIMENSION;
+      const { name } = event.target;
+      const mode = name === UI.TWO_DIMENSION;
 
       setIs2dGraphMode(mode);
     },
@@ -98,14 +98,20 @@ export default function Repo({ repoUrl, repoData }) {
       <HeaderWrapper>
         <NavBar>
           <Wrapper>
-            <Span>Repository: {repoData.repoName}</Span>
-            <Span>Branch name:</Span>
-            <Button id={UI.TWO_DIMENSION} onClick={handleGraphMode}>
-              {UI.TWO_DIMENSION}
-            </Button>
-            <Button id={UI.THREE_DIMENSION} onClick={handleGraphMode}>
-              {UI.THREE_DIMENSION}
-            </Button>
+            <div>
+              <Span>Repository: {repoData.repoName}</Span>
+            </div>
+            <div>
+              <ButtonWrapper>
+                <Button name={UI.TWO_DIMENSION} onClick={handleGraphMode}>
+                  {UI.TWO_DIMENSION}
+                </Button>
+                <Button name={UI.THREE_DIMENSION} onClick={handleGraphMode}>
+                  {UI.THREE_DIMENSION}
+                </Button>
+              </ButtonWrapper>
+            </div>
+            <div />
           </Wrapper>
         </NavBar>
       </HeaderWrapper>
@@ -156,21 +162,33 @@ export default function Repo({ repoUrl, repoData }) {
 }
 
 const Wrapper = styled.div`
+  display: flex;
   width: 100%;
   height: 60px;
   background-color: ${({ theme: { background } }) => background.black};
   color: ${({ theme: { font } }) => font.color.grey};
+
+  div {
+    flex: 1;
+  }
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const Span = styled.span`
-  background: ${({ primary }) => (primary ? 'palevioletred' : 'white')};
-  color: ${({ primary }) => (primary ? 'white' : 'palevioletred')};
-
+  display: inline-block;
+  flex: 1;
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
-  border: 2px solid palevioletred;
-  border-radius: 3px;
+  border: 2px solid #ffffffb1;
+  background-color: #ffffff5a;
+  color: white;
+  text-align: center;
+  text-decoration: none;
 `;
 
 Repo.defaultProps = {

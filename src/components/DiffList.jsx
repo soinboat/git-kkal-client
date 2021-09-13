@@ -8,8 +8,10 @@ export default function DiffList({ targetDiffList, handleDiffClick }) {
   const history = useHistory();
   const [selectedIndex, setSelectedIndex] = useState(null);
 
-  const handleListItemClick = (index) => {
+  const handleClick = (diff, index) => {
+    handleDiffClick(diff);
     setSelectedIndex(index);
+    history.push('/repository/diff');
   };
 
   return (
@@ -20,9 +22,7 @@ export default function DiffList({ targetDiffList, handleDiffClick }) {
             key={diff.fileName}
             className={`${selectedIndex === index ? 'selected' : ''}`}
             onClick={() => {
-              handleDiffClick(diff);
-              handleListItemClick(index);
-              history.push('/repository/diff');
+              handleClick(diff, index);
             }}
           >
             {diff.fileName}

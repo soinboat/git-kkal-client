@@ -7,14 +7,15 @@ import { IoMdArrowDropdown } from 'react-icons/io';
 import UI from '../constants/ui';
 
 export default function BranchList({ branchList, handleBranchClick }) {
-  const [isBranchListClosed, setListCollapse] = useState(false);
+  const [isBranchListClosed, setIsBranchListClosed] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const toggleCollapse = useCallback(() => {
-    setListCollapse((prev) => !prev);
+    setIsBranchListClosed((prev) => !prev);
   }, []);
 
-  const handleListItemClick = (index) => {
+  const handleClick = (branch, index) => {
+    handleBranchClick(branch);
     setSelectedIndex(index);
   };
 
@@ -33,8 +34,7 @@ export default function BranchList({ branchList, handleBranchClick }) {
               key={hash}
               className={`${selectedIndex === index ? 'selected' : ''}`}
               onClick={() => {
-                handleListItemClick(index);
-                handleBranchClick({ branchName, hash });
+                handleClick({ branchName, hash }, index);
               }}
             >
               {branchName}
@@ -106,6 +106,7 @@ const CollapseButton = styled.div`
   overflow: hidden;
   transition: all 0.3s ease-out;
   transform: ${(props) => (props.$rotate ? `rotate(-90deg)` : '')};
+  cursor: pointer;
 `;
 
 BranchList.defaultProps = {
