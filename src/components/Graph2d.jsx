@@ -12,6 +12,7 @@ import {
   CONTENT_BOX_MIN_WIDTH,
 } from '../constants/size';
 import theme from '../context/theme';
+import initColorList from '../utils/graphDraw';
 
 export default function Graph2d({ repoData, handleNodeClick }) {
   if (!repoData.repoName || !repoData.logList) {
@@ -20,8 +21,9 @@ export default function Graph2d({ repoData, handleNodeClick }) {
 
   const { logList, lineList } = repoData;
   const [colorList, setColorList] = useState(() => {
-    const newColorList = new Array(logList.length).fill(theme.border.black);
+    const newColorList = initColorList(logList, theme.border.black);
     newColorList[0] = theme.background.aqua;
+
     return newColorList;
   });
 
@@ -29,9 +31,8 @@ export default function Graph2d({ repoData, handleNodeClick }) {
   const { width } = getWindowDimensions();
 
   const handleCommitClick = (index) => {
-    const newColorList = new Array(repoData.logList.length).fill(
-      theme.border.black,
-    );
+    const newColorList = initColorList(logList, theme.border.black);
+
     newColorList[index] = theme.background.aqua;
     setColorList(newColorList);
   };
