@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import getCodeType from '../../utils/getCodeType';
+import { getCodeType } from '../../utils/diff';
 
 export default function CodeString({ codeChunk }) {
   const codeType = getCodeType(codeChunk);

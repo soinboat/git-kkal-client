@@ -1,4 +1,4 @@
-export default function getCodeType(code) {
+export function getCodeType(code) {
   if (!code.length) {
     return { sign: '', code: '' };
   }
@@ -14,3 +14,20 @@ export default function getCodeType(code) {
       return { sign: '', code };
   }
 }
+
+export function getNumberLength(number) {
+  if (typeof number !== 'number') {
+    return 0;
+  }
+
+  if (number < 0) {
+    return 0;
+  }
+
+  return number.toString().length;
+}
+
+export default {
+  getCodeType,
+  getNumberLength,
+};
