@@ -43,15 +43,13 @@ export default function Graph2d({ repoData, handleNodeClick }) {
     handleNodeClick(hash);
   };
 
+  const responsiveWidth =
+    width - (BRANCH_BAR_WIDTH + DIFF_BAR_WIDTH) < CONTENT_BOX_MIN_WIDTH
+      ? CONTENT_BOX_MIN_WIDTH
+      : width - (BRANCH_BAR_WIDTH + DIFF_BAR_WIDTH);
+
   return (
-    <GraphWrapper
-      style={{
-        width:
-          width - (BRANCH_BAR_WIDTH + DIFF_BAR_WIDTH) < CONTENT_BOX_MIN_WIDTH
-            ? CONTENT_BOX_MIN_WIDTH
-            : width - (BRANCH_BAR_WIDTH + DIFF_BAR_WIDTH),
-      }}
-    >
+    <GraphWrapper width={responsiveWidth}>
       <Graph>
         <DrawGraph
           logList={logList}
@@ -70,6 +68,7 @@ export default function Graph2d({ repoData, handleNodeClick }) {
 }
 
 const GraphWrapper = styled.div`
+  width: ${({ width }) => `${width}px`};
   display: flex;
   height: 100%;
   overflow-y: scroll;
