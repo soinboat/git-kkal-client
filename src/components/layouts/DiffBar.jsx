@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { DIFF_BAR_WIDTH } from '../../constants/size';
+import theme from '../../context/theme';
 
 export default function DiffBar({ children }) {
   return <Wrapper>{children || null}</Wrapper>;
@@ -10,7 +10,7 @@ export default function DiffBar({ children }) {
 
 const Wrapper = styled.div`
   min-width: 250px;
-  height: ${DIFF_BAR_WIDTH};
+  height: ${theme.size.diffBarWidth};
   background-color: ${({ theme: { background } }) => background.grey3};
   color: ${({ theme: { font } }) => font.color.white};
 `;

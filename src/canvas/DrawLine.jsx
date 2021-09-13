@@ -4,75 +4,49 @@ import PropTypes from 'prop-types';
 import { Graphics } from '@inlet/react-pixi';
 import convertColor from '../utils/convertColor';
 
-export default function DrawLine({ logList }) {
-  const draw = useCallback(
+export default function DrawLine({ lineList }) {
+  const drawLine = useCallback(
     (graph) => {
-      const lindData = [];
-      const SLOPE = 20;
-      graph.clear();
-
-      const nodePositionData = logList.map((log, index) => {
-        const circlePosition = {
-          x: log.position * 50,
-          y: index * 50 + 100,
+      const calcPosition = (linePosition) => {
+        const modifiedPosition = {
+          x: linePosition[0] + 50,
+          y: linePosition[1] + 25,
         };
 
-        return circlePosition;
-      });
+        return modifiedPosition;
+      };
 
-      logList.forEach((log, index) => {
-        log.parents.forEach((parent) => {
-          const parentIndex = logList.findIndex(
-            (targetLog) => targetLog.hash === parent,
-          );
+      graph.clear();
+      lineList.forEach((line) => {
+        const color = convertColor(line.color);
+        const points = [...line.points];
+        const firstPoint = points.shift();
+        const firstPosition = calcPosition(firstPoint);
 
-          const color =
-            log.position > logList[parentIndex].position
-              ? log.color
-              : logList[parentIndex].color;
+        graph.lineStyle(2, color);
+        graph.moveTo(firstPosition.x, firstPosition.y);
 
-          lindData.push({ start: index, to: parentIndex, color });
+        line.points.forEach((point) => {
+          const pointPosition = calcPosition(point);
+
+          graph.lineTo(pointPosition.x, pointPosition.y);
         });
-      });
-
-      lindData.forEach((line) => {
-        const startPoint = nodePositionData[line.start];
-        const endPoint = nodePositionData[line.to];
-        const circleColor = convertColor(line.color);
-        graph.lineStyle(2, circleColor);
-
-        if (startPoint.x > endPoint.x) {
-          graph.moveTo(startPoint.x, startPoint.y);
-          graph.lineTo(startPoint.x, endPoint.y - SLOPE);
-          graph.moveTo(startPoint.x, endPoint.y - SLOPE);
-          graph.lineTo(endPoint.x, endPoint.y);
-        } else if (startPoint.x < endPoint.x) {
-          graph.moveTo(startPoint.x, startPoint.y);
-          graph.lineTo(endPoint.x, startPoint.y + SLOPE);
-          graph.moveTo(endPoint.x, startPoint.y + SLOPE);
-          graph.lineTo(endPoint.x, endPoint.y);
-        } else {
-          graph.moveTo(startPoint.x, startPoint.y);
-          graph.lineTo(endPoint.x, endPoint.y);
-        }
       });
 
       graph.endFill();
     },
-    [logList],
+    [lineList],
   );
 
-  return <Graphics draw={draw} />;
+  return <Graphics draw={drawLine} />;
 }
 
 DrawLine.propTypes = {
-  logList: PropTypes.arrayOf(
+  lineList: PropTypes.arrayOf(
     PropTypes.objectOf(
       PropTypes.oneOfType([
         PropTypes.string,
-        PropTypes.number,
-        PropTypes.bool,
-        PropTypes.arrayOf(PropTypes.string),
+        PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
       ]),
     ),
   ).isRequired,

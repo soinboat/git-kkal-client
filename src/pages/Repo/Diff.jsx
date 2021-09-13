@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import DiffParagraphCode from '../../components/DiffCode/DiffParagraphCode';
+import DiffParagraphCode from '../../components/diffCode/DiffParagraphCode';
 import Button from '../../components/Button';
 
 export default function Diff({ targetDiff }) {

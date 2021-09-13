@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-import { NAV_BAR_HEIGHT } from '../../constants/size';
+import theme from '../../context/theme';
 
 export default function NavBar({ children }) {
   return <Wrapper>{children}</Wrapper>;
@@ -10,7 +9,7 @@ export default function NavBar({ children }) {
 
 const Wrapper = styled.nav`
   width: 100%;
-  height: ${NAV_BAR_HEIGHT};
+  height: ${theme.size.navBarHeight};
   background-color: ${({ theme: { background } }) => background.black};
   color: ${({ theme: { font } }) => font.color.grey};
 `;

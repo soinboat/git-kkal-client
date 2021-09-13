@@ -7,11 +7,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import useWindowDimensions from '../hooks/useWindowDimensions';
-import {
-  NAV_BAR_HEIGHT,
-  BRANCH_BAR_WIDTH,
-  DIFF_BAR_WIDTH,
-} from '../constants/size';
+import theme from '../context/theme';
 import { notifyErr } from '../utils/notify';
 import {
   getSphereList,
@@ -28,8 +24,9 @@ export default function Graph3d({ repoData }) {
   useEffect(() => {
     if (!gitGraph3dRef) return;
 
-    const canvasWidth = width - (BRANCH_BAR_WIDTH + DIFF_BAR_WIDTH);
-    const canvasHeight = height - NAV_BAR_HEIGHT;
+    const canvasWidth =
+      width - (theme.size.branchBarWidth + theme.size.diffBarWidth);
+    const canvasHeight = height - theme.size.navBarHeight;
 
     const canvas = gitGraph3dRef.current;
     const scene = new THREE.Scene();
