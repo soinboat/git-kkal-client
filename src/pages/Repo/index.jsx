@@ -29,34 +29,50 @@ export default function Repo({ repoUrl, repoData }) {
   }
 
   const [targetBranch, setTargetBranch] = useState(null);
-  const [targetCommit, setTargetCommit] = useState(repoData?.logList[0].hash);
+  const [targetCommit, setTargetCommit] = useState(repoData.logList[0].hash);
   const [targetDiffList, setTargetDiffList] = useState(null);
   const [targetDiffFile, setTargetDiffFile] = useState(null);
   const [is2dGraphMode, setIs2dGraphMode] = useState(true);
 
   const branchList = useMemo(() => getBranchList(repoData), [repoData]);
 
-  const handleBranchClick = useCallback((branch) => {
-    setTargetBranch(branch);
-  });
+  const handleBranchClick = useCallback(
+    (branch) => {
+      setTargetBranch(branch);
+    },
+    [setTargetBranch],
+  );
 
-  const handleNodeClick = useCallback((hash) => {
-    setTargetCommit(hash);
-  });
+  const handleNodeClick = useCallback(
+    (hash) => {
+      setTargetCommit(hash);
+    },
+    [setTargetCommit],
+  );
 
-  const handleDiffClick = useCallback((file) => {
-    setTargetDiffFile(file);
-  });
+  const handleDiffClick = useCallback(
+    (file) => {
+      setTargetDiffFile(file);
+    },
+    [setTargetDiffFile],
+  );
 
-  const handleGraphMode = useCallback((event) => {
-    const { id } = event.target;
-    const mode = id === UI.TWO_DIMENSION;
+  const handleGraphMode = useCallback(
+    (event) => {
+      const { id } = event.target;
+      const mode = id === UI.TWO_DIMENSION;
 
-    setIs2dGraphMode(mode);
-  });
+      setIs2dGraphMode(mode);
+    },
+    [setIs2dGraphMode],
+  );
 
   useEffect(() => {
-    setTargetCommit(targetBranch?.hash);
+    if (!targetBranch) {
+      setTargetCommit(null);
+    } else {
+      setTargetCommit(targetBranch.hash);
+    }
   }, [targetBranch]);
 
   useEffect(() => {
@@ -70,7 +86,11 @@ export default function Repo({ repoUrl, repoData }) {
   }, [targetCommit]);
 
   useEffect(() => {
-    setTargetDiffFile(targetDiffList?.[0]);
+    if (!targetDiffList) {
+      setTargetDiffFile(null);
+    } else {
+      setTargetDiffFile(targetDiffList[0]);
+    }
   }, [targetDiffList]);
 
   return (
