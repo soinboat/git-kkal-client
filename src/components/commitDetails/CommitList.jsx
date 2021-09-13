@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import theme from '../../context/theme';
 
 export default function CommitList({ logList, colorList, onClickHandler }) {
@@ -51,3 +51,18 @@ const CommitMessage = styled.div`
   margin-left: 10px;
   white-space: nowrap;
 `;
+
+CommitList.propTypes = {
+  logList: PropTypes.arrayOf(
+    PropTypes.objectOf(
+      PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.bool,
+        PropTypes.arrayOf(PropTypes.string),
+      ]),
+    ),
+  ).isRequired,
+  colorList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onClickHandler: PropTypes.func.isRequired,
+};

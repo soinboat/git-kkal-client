@@ -10,7 +10,7 @@ import theme from '../context/theme';
 import initColorList from '../utils/graphDraw';
 
 export default function Graph2d({ repoData, handleNodeClick }) {
-  if (!repoData.repoName || !repoData.logList) {
+  if (!repoData.repoName) {
     return <div>데이터없음</div>;
   }
 
@@ -98,14 +98,14 @@ Graph2d.propTypes = {
         ]),
       ),
     ).isRequired,
-    lineList: PropTypes.arrayOf([
+    lineList: PropTypes.arrayOf(
       PropTypes.objectOf(
         PropTypes.oneOfType([
           PropTypes.string,
-          PropTypes.arrayOf(PropTypes.Number),
+          PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
         ]),
       ),
-    ]),
+    ).isRequired,
   }),
   handleNodeClick: PropTypes.func.isRequired,
 };

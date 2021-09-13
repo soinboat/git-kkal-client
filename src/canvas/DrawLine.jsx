@@ -22,13 +22,17 @@ export default function DrawLine({ lineList }) {
         const points = [...line.points];
         const firstPoint = points.shift();
         const firstPosition = calcPosition(firstPoint);
+
         graph.lineStyle(2, color);
         graph.moveTo(firstPosition.x, firstPosition.y);
+
         line.points.forEach((point) => {
           const pointPosition = calcPosition(point);
+
           graph.lineTo(pointPosition.x, pointPosition.y);
         });
       });
+
       graph.endFill();
     },
     [lineList],
@@ -40,8 +44,10 @@ export default function DrawLine({ lineList }) {
 DrawLine.propTypes = {
   lineList: PropTypes.arrayOf(
     PropTypes.objectOf(
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+      PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+      ]),
     ),
   ).isRequired,
 };

@@ -28,9 +28,7 @@ DrawButton.propTypes = {
   log: PropTypes.objectOf(
     PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.number,
-      PropTypes.bool,
-      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
     ]),
   ).isRequired,
   clicked: PropTypes.number.isRequired,

@@ -37,14 +37,14 @@ DrawGraph.propTypes = {
       ]),
     ),
   ).isRequired,
-  lineList: PropTypes.arrayOf([
+  lineList: PropTypes.arrayOf(
     PropTypes.objectOf(
       PropTypes.oneOfType([
         PropTypes.string,
-        PropTypes.arrayOf(PropTypes.Number),
+        PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
       ]),
     ),
-  ]).isRequired,
+  ).isRequired,
   clicked: PropTypes.number.isRequired,
   onClickHandler: PropTypes.func.isRequired,
 };
