@@ -9,8 +9,8 @@ export default function DrawLine({ lineList }) {
     (graph) => {
       const calcPosition = (linePosition) => {
         const modifiedPosition = {
-          x: linePosition[0] * 50 + 50,
-          y: linePosition[1] * 50 + 25,
+          x: linePosition[0] + 100,
+          y: linePosition[1] + 25,
         };
 
         return modifiedPosition;
