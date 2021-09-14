@@ -184,7 +184,7 @@ const Span = styled.span`
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
-  border: 2px solid #ffffffb1;
+  border: 2px solid #ffffff43;
   background-color: #ffffff5a;
   color: white;
   text-align: center;
