@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ['plugin:react/recommended', 'airbnb'],
+  extends: ['plugin:react/recommended', 'airbnb', 'prettier'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -12,5 +12,11 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react'],
-  rules: {},
+  rules: {
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'no-bitwise': ['error', { allow: ['~', '|', '>>', '<<', '&'] }],
+    'no-param-reassign': [2, { props: false }],
+    'react/no-array-index-key': [0],
+    'jsx-a11y/anchor-is-valid': 'off',
+  },
 };

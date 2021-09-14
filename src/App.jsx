@@ -1,27 +1,55 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Switch, Route } from 'react-router-dom';
+
+import loadable from '@loadable/component';
+import { ToastContainer } from 'react-toastify';
+
+import { fetchRepoData } from './api/git';
+import { filterGitExtension } from './utils/git';
+import { notifyErr, notifySuccess } from './utils/notify';
+
+const Landing = loadable(() => import('./pages/Landing'));
+const Repo = loadable(() => import('./pages/Repo/index'));
 
 function App() {
+  const [repoUrl, setRepoUrl] = useState('');
+  const [repoData, setRepoData] = useState(null);
+
+  const handleRepoUrlSubmit = async (ev, inputUrl) => {
+    ev.preventDefault();
+
+    if (!inputUrl) {
+      notifyErr();
+      return;
+    }
+
+    try {
+      const fetchedRepoData = await fetchRepoData(inputUrl);
+
+      setRepoUrl(filterGitExtension(inputUrl));
+      setRepoData(fetchedRepoData);
+
+      notifySuccess();
+    } catch (err) {
+      notifyErr(err.response.status);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code>src/App.js</code>
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Switch>
+        <Route exact path="/">
+          <Landing
+            repoData={repoData}
+            handleRepoUrlSubmit={handleRepoUrlSubmit}
+          />
+        </Route>
+        <Route path="/repository">
+          <Repo repoUrl={repoUrl} repoData={repoData} />
+        </Route>
+      </Switch>
+      <ToastContainer />
+    </>
   );
 }
 

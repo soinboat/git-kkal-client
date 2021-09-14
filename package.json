@@ -3,12 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@inlet/react-pixi": "^6.6.5",
+    "@loadable/component": "^5.15.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "axios": "^0.21.4",
+    "lodash": "^4.17.21",
+    "pixi.js": "^6.1.2",
+    "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-icons": "^4.2.0",
+    "react-loader-spinner": "^4.0.0",
+    "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
+    "react-toastify": "^8.0.2",
+    "string-to-color": "^2.2.2",
+    "styled-components": "^5.3.1",
+    "three": "^0.132.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -17,7 +30,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "pre-commit": "lint-staged && rm -rf .git/hooks && ln -s ../.husky .git/hooks"
+    "pre-commit": "lint-staged",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -38,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "cypress": "^8.3.1",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
