@@ -14,7 +14,7 @@ export default function Graph2d({ repoData, handleNodeClick }) {
     return <div>데이터없음</div>;
   }
 
-  const { logList, lineList } = repoData;
+  const { logList, lineList, maxPipeCount } = repoData;
   const [colorList, setColorList] = useState(() => {
     const newColorList = initColorList(logList, theme.border.black);
     newColorList[0] = theme.background.transparentAqua;
@@ -49,8 +49,9 @@ export default function Graph2d({ repoData, handleNodeClick }) {
       <div>
         <DrawGraph
           logList={logList}
-          lineList={lineList.flat()}
+          lineList={lineList}
           clicked={clicked}
+          maxPipeCount={maxPipeCount}
           onClickHandler={onClickHandler}
         />
       </div>
@@ -84,6 +85,7 @@ Graph2d.defaultProps = {
 Graph2d.propTypes = {
   repoData: PropTypes.shape({
     repoName: PropTypes.string.isRequired,
+    maxPipeCount: PropTypes.number.isRequired,
     logList: PropTypes.arrayOf(
       PropTypes.objectOf(
         PropTypes.oneOfType([

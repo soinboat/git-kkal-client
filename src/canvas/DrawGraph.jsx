@@ -6,10 +6,16 @@ import DrawNode from './DrawNode';
 import DrawLine from './DrawLine';
 import DrawButtonList from './DrawButtonList';
 
-function DrawGraph({ logList, lineList, clicked, onClickHandler }) {
+function DrawGraph({
+  logList,
+  lineList,
+  maxPipeCount,
+  clicked,
+  onClickHandler,
+}) {
   return (
     <Stage
-      width={300}
+      width={(maxPipeCount + 1) * 50}
       height={logList.length * 50}
       options={{ antialias: true }}
     >
@@ -37,6 +43,7 @@ DrawGraph.propTypes = {
       ]),
     ),
   ).isRequired,
+  maxPipeCount: PropTypes.number.isRequired,
   lineList: PropTypes.arrayOf(
     PropTypes.objectOf(
       PropTypes.oneOfType([
