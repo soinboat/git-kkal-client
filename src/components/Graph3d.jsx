@@ -68,6 +68,7 @@ export default function Graph3d({ repoData }) {
         0.1,
         2000,
       );
+
       camera.position.set(40, 0, 0);
 
       renderer.setSize(canvasWidth, canvasHeight);
@@ -77,6 +78,7 @@ export default function Graph3d({ repoData }) {
       const animation = () => {
         controls.enableZoom = true;
         controls.maxDistance = 400;
+
         controls.update();
         renderer.render(scene, camera);
         window.requestAnimationFrame(animation);
@@ -93,7 +95,7 @@ export default function Graph3d({ repoData }) {
       },
       undefined,
       (err) => {
-        notifyErr('💩', err);
+        notifyErr(err);
       },
     );
   }, [gitGraph3dRef]);

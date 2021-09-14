@@ -7,6 +7,7 @@ export function getSphereList(logList, texture, geometry, THREE) {
       clearcoat: 0.8,
       clearcoatRoughness: 0,
     });
+
     const sphere = new THREE.Mesh(geometry, material);
     const zPosition = log.position;
 
