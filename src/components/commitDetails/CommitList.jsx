@@ -1,28 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import theme from '../../context/theme';
+// import theme from '../../context/theme';
 
 export default function CommitList({ logList, colorList, onClickHandler }) {
   return (
     <>
       {logList.map((log, index) => (
         <CommitWrapper
-          color={colorList[index]}
           key={`CommitWrapper${index}${log.hash}`}
           onClick={() => onClickHandler(log.index, log.hash)}
         >
-          {log.branchNames
-            ? log.branchNames.map((branch) => (
-                <CommitTag
-                  key={`CommitTag${index}${branch}`}
-                  style={{ backgroundColor: log.color }}
-                >
-                  {branch}
-                </CommitTag>
-              ))
-            : null}
-          <CommitMessage>{log.message}</CommitMessage>
+          <CommitInnerWrapper color={colorList[index]}>
+            {log.branchNames
+              ? log.branchNames.map((branch) => (
+                  <CommitTag
+                    key={`CommitTag${index}${branch}`}
+                    style={{ backgroundColor: log.color }}
+                  >
+                    {branch}
+                  </CommitTag>
+                ))
+              : null}
+            <CommitMessage>{log.message}</CommitMessage>
+          </CommitInnerWrapper>
         </CommitWrapper>
       ))}
     </>
@@ -32,11 +33,18 @@ export default function CommitList({ logList, colorList, onClickHandler }) {
 const CommitWrapper = styled.li`
   display: flex;
   width: 100%;
-  height: 49px;
-  border-left: 1px solid ${theme.border.white};
-  border-bottom: 1px solid ${theme.border.white};
+  height: 50px;
   align-items: center;
-  background-color: ${({ color }) => color};
+`;
+
+const CommitInnerWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 60%;
+  box-sizing: border-box;
+  border-left: 3px solid ${({ color }) => color};
+  /* background-color: ${({ color }) => color}; */
 `;
 
 const CommitTag = styled.div`

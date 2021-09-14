@@ -7,7 +7,7 @@ import Description from './commitDetails/Description';
 import getWindowDimensions from '../hooks/useWindowDimensions';
 
 import theme from '../context/theme';
-import initColorList from '../utils/graphDraw';
+import { initColorList } from '../utils/graphDraw';
 
 export default function Graph2d({ repoData, handleNodeClick }) {
   if (!repoData.repoName) {
@@ -17,7 +17,7 @@ export default function Graph2d({ repoData, handleNodeClick }) {
   const { logList, lineList } = repoData;
   const [colorList, setColorList] = useState(() => {
     const newColorList = initColorList(logList, theme.border.black);
-    newColorList[0] = theme.background.aqua;
+    newColorList[0] = theme.background.transparentAqua;
 
     return newColorList;
   });
@@ -49,7 +49,7 @@ export default function Graph2d({ repoData, handleNodeClick }) {
       <div>
         <DrawGraph
           logList={logList}
-          lineList={lineList}
+          lineList={lineList.flat()}
           clicked={clicked}
           onClickHandler={onClickHandler}
         />

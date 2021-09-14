@@ -1,9 +1,17 @@
 import stc from 'string-to-color';
 
 const convertColor = (string) => {
-  const color = stc(string);
-  const colorNumber = (parseInt(color.substr(1), 16) << 8) / 256;
-  return colorNumber;
+  if (typeof string !== 'string') {
+    return 0;
+  }
+
+  if (!string.length) {
+    return 0;
+  }
+
+  const color = string[0] !== '#' ? stc(string) : string;
+
+  return parseInt(color.slice(1), 16);
 };
 
 export default convertColor;

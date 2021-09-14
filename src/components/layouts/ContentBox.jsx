@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme: { background } }) => background.grey1};
+  background-color: ${({ theme: { background } }) => background.black};
   color: ${({ theme: { font } }) => font.color.white};
 `;
 
