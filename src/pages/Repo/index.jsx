@@ -98,9 +98,7 @@ export default function Repo({ repoUrl, repoData }) {
       <HeaderWrapper>
         <NavBar>
           <Wrapper>
-            <div>
-              <Span>Repository: {repoData.repoName}</Span>
-            </div>
+            <RepositoryName>Repository: {repoData.repoName}</RepositoryName>
             <div>
               <ButtonWrapper>
                 <Button name={UI.TWO_DIMENSION} onClick={handleGraphMode}>
@@ -111,7 +109,6 @@ export default function Repo({ repoUrl, repoData }) {
                 </Button>
               </ButtonWrapper>
             </div>
-            <div />
           </Wrapper>
         </NavBar>
       </HeaderWrapper>
@@ -163,14 +160,11 @@ export default function Repo({ repoUrl, repoData }) {
 
 const Wrapper = styled.div`
   display: flex;
+  justify-content: space-between;
   width: 100%;
   height: 60px;
   background-color: ${({ theme: { background } }) => background.black};
   color: ${({ theme: { font } }) => font.color.grey};
-
-  div {
-    flex: 1;
-  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -178,12 +172,11 @@ const ButtonWrapper = styled.div`
   justify-content: center;
 `;
 
-const Span = styled.span`
-  display: inline-block;
-  flex: 1;
+const RepositoryName = styled.div`
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
+  min-width: 200px;
   border: 2px solid #ffffff43;
   background-color: #ffffff5a;
   color: white;
