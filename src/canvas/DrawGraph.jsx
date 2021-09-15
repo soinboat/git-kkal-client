@@ -6,15 +6,23 @@ import DrawNode from './DrawNode';
 import DrawLine from './DrawLine';
 import DrawButtonList from './DrawButtonList';
 
-function DrawGraph({ logList, lineList, clicked, onClickHandler }) {
+import theme from '../context/theme';
+
+function DrawGraph({
+  logList,
+  lineList,
+  maxPipeCount,
+  clicked,
+  onClickHandler,
+}) {
   return (
     <Stage
-      width={300}
-      height={logList.length * 50}
+      width={(maxPipeCount + 1) * theme.size.graph2dNodeSpacing}
+      height={theme.limit.maxNodeCount * theme.size.graph2dNodeSpacing}
       options={{ antialias: true }}
     >
       <DrawButtonList
-        lineList={lineList}
+        logList={logList}
         clicked={clicked}
         onClickHandler={onClickHandler}
       />
@@ -37,12 +45,15 @@ DrawGraph.propTypes = {
       ]),
     ),
   ).isRequired,
+  maxPipeCount: PropTypes.number.isRequired,
   lineList: PropTypes.arrayOf(
-    PropTypes.objectOf(
-      PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
-      ]),
+    PropTypes.arrayOf(
+      PropTypes.objectOf(
+        PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+        ]),
+      ),
     ),
   ).isRequired,
   clicked: PropTypes.number.isRequired,
