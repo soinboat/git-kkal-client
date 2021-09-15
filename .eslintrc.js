@@ -3,7 +3,12 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ['plugin:react/recommended', 'airbnb', 'prettier'],
+  extends: [
+    'plugin:react/recommended',
+    'airbnb',
+    'prettier',
+    'plugin:cypress/recommended',
+  ],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -18,5 +23,6 @@ module.exports = {
     'no-param-reassign': [2, { props: false }],
     'react/no-array-index-key': [0],
     'jsx-a11y/anchor-is-valid': 'off',
+    'cypress/no-unnecessary-waiting': 'off',
   },
 };
