@@ -8,9 +8,7 @@ describe('Diff Page', () => {
     );
     cy.get('.sc-eCstlR').click();
 
-    cy.get('.sc-lmoMya > :nth-child(1)').click();
-    cy.get('.sc-eggMyH').should('be.visible');
-    cy.get('.sc-lmoMya > :nth-child(2)').click();
+    cy.get('.sc-cxFLGX').click();
     cy.get('.sc-eggMyH').should('be.visible');
   });
 });
