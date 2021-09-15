@@ -55,23 +55,6 @@ export default function Graph3d({ repoData }) {
     scene.add(new SpotLight(0xffffff, [1000, 1000, 100], THREE).light);
     scene.add(new SpotLight(0xffffff, [1000, -100, 100], THREE).light);
 
-    ///
-    // const setCameraAndControls = () => {
-    //   renderer.setSize(canvasWidth, canvasHeight);
-    //   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-    //   const controls = new OrbitControls(camera, renderer.domElement);
-    //   const animation = () => {
-    //     controls.enableZoom = true;
-    //     controls.maxDistance = 400;
-
-    //     controls.update();
-    //     renderer.render(scene, camera);
-    //     window.requestAnimationFrame(animation);
-    //   };
-    //   animation();
-    // };
-
     const camera = new THREE.PerspectiveCamera(
       75,
       canvasWidth / canvasHeight,
