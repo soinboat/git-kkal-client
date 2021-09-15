@@ -10,12 +10,7 @@ export default function DrawNode({ logList }) {
   const draw = useCallback(
     (node) => {
       node.clear();
-      // let limit = false;
-      // const MAX_NODE_COUNT = theme.limit.maxNodeCount;
       logList.forEach((log, index) => {
-        // if (limit) return;
-        // limit = index > MAX_NODE_COUNT;
-        // console.log(index, MAX_NODE_COUNT);
         const color = convertColor(log.color);
         node.beginFill(color);
         node.drawCircle(

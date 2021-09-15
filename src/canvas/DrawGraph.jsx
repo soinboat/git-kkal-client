@@ -22,7 +22,7 @@ function DrawGraph({
       options={{ antialias: true }}
     >
       <DrawButtonList
-        lineList={lineList}
+        logList={logList}
         clicked={clicked}
         onClickHandler={onClickHandler}
       />

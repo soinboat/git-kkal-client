@@ -30,7 +30,6 @@ export default function DrawLine({ lineList }) {
 
           line.points.forEach((point) => {
             const pointPosition = calcPosition(point);
-
             graph.lineTo(pointPosition.x, pointPosition.y);
           });
         });
