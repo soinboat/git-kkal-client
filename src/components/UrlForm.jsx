@@ -29,6 +29,7 @@ export default function UrlForm({ handleSubmit }) {
         await handleSubmit(ev, inputUrl);
 
         setInputUrl('');
+        setIsLoading(false);
       }}
     >
       <InputWrapper>
