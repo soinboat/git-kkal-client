@@ -33,7 +33,6 @@ Description.propTypes = {
       ]),
     ),
   ).isRequired,
-  // responsiveWidth: PropTypes.number.isRequired,
   colorList: PropTypes.arrayOf(PropTypes.string).isRequired,
   onClickHandler: PropTypes.func.isRequired,
 };

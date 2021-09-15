@@ -10,8 +10,8 @@ export default function DrawButton({ log, index, clicked, onClickHandler }) {
   const buttonGraphics = useCallback(
     (button) => {
       button.clear();
-      button.alpha = index === clicked ? 1 : 0;
-      button.beginFill(convertColor(log.color), 0.5);
+      button.alpha = index === clicked ? 0.5 : 0;
+      button.beginFill(convertColor(log.color));
       button.drawRect(
         0,
         index * theme.size.graph2dNodeSpacing +
