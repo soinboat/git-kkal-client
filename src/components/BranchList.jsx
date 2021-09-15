@@ -54,6 +54,15 @@ const fadeIn = keyframes`
     }
 `;
 
+const Wrapper = styled.div`
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: ${({ theme: { background } }) => background.grey3};
+  color: ${({ theme: { font } }) => font.color.white};
+  font-family: Arial, Helvetica, sans-serif;
+`;
+
 const BranchNameList = styled.ul`
   transform-origin: top center;
   list-style: none;
@@ -88,15 +97,6 @@ const BranchTitle = styled.div`
 const TitleText = styled.div`
   vertical-align: bottom;
   line-height: 1;
-`;
-
-const Wrapper = styled.div`
-  width: 200px;
-  padding: 20px;
-  box-sizing: border-box;
-  background-color: ${({ theme: { background } }) => background.grey3};
-  color: ${({ theme: { font } }) => font.color.white};
-  font-family: Arial, Helvetica, sans-serif;
 `;
 
 const CollapseButton = styled.div`

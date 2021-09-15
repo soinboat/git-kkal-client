@@ -33,6 +33,15 @@ export default function DiffList({ targetDiffList, handleDiffClick }) {
   );
 }
 
+const Wrapper = styled.div`
+  width: 80%;
+  box-sizing: border-box;
+  margin-left: 20px;
+  background-color: ${({ theme: { background } }) => background.grey3};
+  color: ${({ theme: { font } }) => font.color.white};
+  font-family: Arial, Helvetica, sans-serif;
+`;
+
 const FileName = styled.div`
   word-break: break-all;
   word-wrap: break-word;
@@ -53,14 +62,6 @@ const InnerWrapper = styled.div`
     color: black;
     background-color: #ffffff9c;
   }
-`;
-
-const Wrapper = styled.div`
-  width: 200px;
-  margin-left: 20px;
-  background-color: ${({ theme: { background } }) => background.grey3};
-  color: ${({ theme: { font } }) => font.color.white};
-  font-family: Arial, Helvetica, sans-serif;
 `;
 
 DiffList.defaultProps = {
