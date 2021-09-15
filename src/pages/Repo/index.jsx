@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import NavBar from '../../components/layouts/NavBar';
 import BranchBar from '../../components/layouts/BranchBar';
 import ContentBox from '../../components/layouts/ContentBox';
+import DiffBox from '../../components/layouts/DiffBox';
 import DiffBar from '../../components/layouts/DiffBar';
 
 import { BodyWrapper, HeaderWrapper } from '../../components/styles';
@@ -142,9 +143,9 @@ export default function Repo({ repoUrl, repoData }) {
             </DiffBar>
           </Route>
           <Route path="/repository/diff">
-            <ContentBox>
+            <DiffBox>
               <Diff targetDiff={targetDiffFile} />
-            </ContentBox>
+            </DiffBox>
             <DiffBar>
               <DiffList
                 targetDiffList={targetDiffList}

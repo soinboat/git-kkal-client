@@ -24,8 +24,7 @@ export default function Graph3d({ repoData }) {
   useEffect(() => {
     if (!gitGraph3dRef) return;
 
-    const canvasWidth =
-      width - (theme.size.branchBarWidth + theme.size.diffBarWidth);
+    const canvasWidth = parseInt((width * 55) / 100, 10); // FIXME: 55는 ContentBox의 퍼센트 width를 의미. theme에 추가할 것.
     const canvasHeight = height - theme.size.navBarHeight;
 
     const canvas = gitGraph3dRef.current;

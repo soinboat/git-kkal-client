@@ -4,18 +4,22 @@ import styled from 'styled-components';
 
 import theme from '../../context/theme';
 
-export default function BranchBar({ children }) {
+export default function DiffBox({ children }) {
+  console.log(children);
   return <Wrapper>{children || null}</Wrapper>;
 }
 
 const Wrapper = styled.div`
-  min-width: ${theme.size.branchBarWidth};
-  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: ${theme.size.contentBoxMinWidth};
+  width: 75%;
   height: 100%;
-  background-color: ${({ theme: { background } }) => background.grey3};
+  background-color: ${({ theme: { background } }) => background.black};
   color: ${({ theme: { font } }) => font.color.white};
 `;
 
-BranchBar.propTypes = {
+DiffBox.propTypes = {
   children: PropTypes.node.isRequired,
 };
