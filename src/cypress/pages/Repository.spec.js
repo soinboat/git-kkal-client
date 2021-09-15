@@ -1,4 +1,4 @@
-describe('Landing Page', () => {
+describe('Repository Page', () => {
   it('should change diff file list on click branch', () => {
     cy.visit('');
 
