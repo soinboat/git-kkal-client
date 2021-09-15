@@ -37,6 +37,14 @@ export default function Graph3d({ repoData }) {
       logarithmicDepthBuffer: true,
     });
 
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      canvasWidth / canvasHeight,
+      0.1,
+      2000,
+    );
+    camera.position.set(40, 0, 0);
+
     const draw = (texture) => {
       const geometry = new THREE.SphereGeometry(0.3, 32, 16);
 
@@ -62,15 +70,6 @@ export default function Graph3d({ repoData }) {
     };
 
     const setCameraAndControls = () => {
-      const camera = new THREE.PerspectiveCamera(
-        75,
-        canvasWidth / canvasHeight,
-        0.1,
-        2000,
-      );
-
-      camera.position.set(40, 0, 0);
-
       renderer.setSize(canvasWidth, canvasHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 

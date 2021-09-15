@@ -218,5 +218,15 @@ Repo.propTypes = {
         ]),
       ),
     ).isRequired,
+    lineList: PropTypes.arrayOf(
+      PropTypes.arrayOf(
+        PropTypes.shape({
+          color: PropTypes.string.isRequired,
+          points: PropTypes.arrayOf(
+            PropTypes.arrayOf(PropTypes.number.isRequired),
+          ),
+        }),
+      ),
+    ),
   }),
 };

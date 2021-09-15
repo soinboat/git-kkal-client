@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Graphics } from '@inlet/react-pixi';
 
-import convertColor from '../utils/convertColor';
+import { convertColor } from '../utils/color';
 import theme from '../context/theme';
 import { getHalf } from '../utils/calcLayout';
 
@@ -11,7 +11,7 @@ export default function DrawButton({ log, index, clicked, onClickHandler }) {
     (button) => {
       button.clear();
       button.alpha = index === clicked ? 1 : 0;
-      button.beginFill(convertColor(theme.background.purple));
+      button.beginFill(convertColor(log.color), 0.5);
       button.drawRect(
         0,
         index * theme.size.graph2dNodeSpacing +
@@ -33,13 +33,13 @@ export default function DrawButton({ log, index, clicked, onClickHandler }) {
 
 DrawButton.propTypes = {
   index: PropTypes.number.isRequired,
-  log: PropTypes.arrayOf(
-    PropTypes.objectOf(
-      PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
-      ]),
-    ),
+  log: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.bool,
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
   ).isRequired,
   clicked: PropTypes.number.isRequired,
   onClickHandler: PropTypes.func.isRequired,

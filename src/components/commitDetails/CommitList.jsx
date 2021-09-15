@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { selectFontColor } from '../../utils/color';
 
 export default function CommitList({ logList, colorList, onClickHandler }) {
   return (
@@ -10,13 +11,14 @@ export default function CommitList({ logList, colorList, onClickHandler }) {
           key={`CommitWrapper${index}${log.hash}`}
           onClick={() => onClickHandler(log.index, log.hash)}
         >
-          <CommitHash>{log.hash.slice(0, 7)}</CommitHash>
           <CommitInnerWrapper color={colorList[index]}>
+            <CommitHash>{log.hash.slice(0, 7)}</CommitHash>
             {log.branchNames
               ? log.branchNames.map((branch) => (
                   <CommitTag
                     key={`CommitTag${index}${branch}`}
-                    style={{ backgroundColor: log.color }}
+                    backgroundColor={log.color}
+                    color={selectFontColor(log.color)}
                   >
                     {branch}
                   </CommitTag>
@@ -30,6 +32,11 @@ export default function CommitList({ logList, colorList, onClickHandler }) {
   );
 }
 
+const CommitHash = styled.div`
+  width: 100px;
+  margin-left: 10px;
+`;
+
 const CommitWrapper = styled.li`
   display: flex;
   width: 100%;
@@ -40,14 +47,10 @@ const CommitWrapper = styled.li`
 const CommitInnerWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
+  /* width: 100%; */
   height: 60%;
   box-sizing: border-box;
   border-left: 3px solid ${({ color }) => color};
-`;
-
-const CommitHash = styled.div`
-  width: 100px;
 `;
 
 const CommitTag = styled.div`
@@ -56,6 +59,8 @@ const CommitTag = styled.div`
   border-radius: 10px;
   letter-spacing: 1px;
   white-space: nowrap;
+  background-color: ${({ backgroundColor }) => backgroundColor || 'black'};
+  color: ${({ color }) => color || 'white'};
 `;
 
 const CommitMessage = styled.div`

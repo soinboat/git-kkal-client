@@ -33,7 +33,7 @@ const theme = {
     graph2dNodeSpacing: 50,
   },
   limit: {
-    maxNodeCount: 100,
+    maxNodeCount: 200,
   },
 };
 

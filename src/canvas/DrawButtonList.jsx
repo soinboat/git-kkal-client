@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DrawButton from './DrawButton';
 
-export default function DrawButtonList({ lineList, clicked, onClickHandler }) {
+export default function DrawButtonList({ logList, clicked, onClickHandler }) {
   return (
     <>
-      {lineList.map((log, index) => (
+      {logList.map((log, index) => (
         <DrawButton
           key={`button${index}${log.hash}`}
           log={log}
@@ -19,14 +19,14 @@ export default function DrawButtonList({ lineList, clicked, onClickHandler }) {
 }
 
 DrawButtonList.propTypes = {
-  lineList: PropTypes.arrayOf(
-    PropTypes.arrayOf(
-      PropTypes.objectOf(
-        PropTypes.oneOfType([
-          PropTypes.string,
-          PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
-        ]),
-      ),
+  logList: PropTypes.arrayOf(
+    PropTypes.objectOf(
+      PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.bool,
+        PropTypes.arrayOf(PropTypes.string),
+      ]),
     ),
   ).isRequired,
   clicked: PropTypes.number.isRequired,

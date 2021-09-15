@@ -51,7 +51,7 @@ export default function Graph2d({ repoData, handleNodeClick }) {
     <GraphWrapper width={responsiveWidth}>
       <DrawGraph
         logList={limitedLogList}
-        lineList={limitedLineList}
+        lineList={limitedLineList.flat()}
         clicked={clicked}
         maxPipeCount={maxPipeCount}
         onClickHandler={onClickHandler}
@@ -99,14 +99,14 @@ Graph2d.propTypes = {
     ).isRequired,
     lineList: PropTypes.arrayOf(
       PropTypes.arrayOf(
-        PropTypes.objectOf(
-          PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
-          ]),
-        ),
+        PropTypes.shape({
+          color: PropTypes.string.isRequired,
+          points: PropTypes.arrayOf(
+            PropTypes.arrayOf(PropTypes.number.isRequired),
+          ),
+        }),
       ),
-    ).isRequired,
+    ),
   }),
   handleNodeClick: PropTypes.func.isRequired,
 };
