@@ -33,14 +33,21 @@ export default function DrawButton({ log, index, clicked, onClickHandler }) {
 
 DrawButton.propTypes = {
   index: PropTypes.number.isRequired,
-  log: PropTypes.objectOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-      PropTypes.bool,
-      PropTypes.arrayOf(PropTypes.string),
-    ]),
-  ).isRequired,
+  log: PropTypes.shape({
+    message: PropTypes.string,
+    author: PropTypes.string,
+    authoredTime: PropTypes.string,
+    committer: PropTypes.string,
+    committedTime: PropTypes.string,
+    parents: PropTypes.arrayOf(PropTypes.string),
+    hash: PropTypes.string,
+    branchNames: PropTypes.arrayOf(PropTypes.string),
+    branchName2: PropTypes.string,
+    head: PropTypes.bool,
+    index: PropTypes.number,
+    position: PropTypes.number,
+    color: PropTypes.string,
+  }).isRequired,
   clicked: PropTypes.number.isRequired,
   onClickHandler: PropTypes.func.isRequired,
 };
