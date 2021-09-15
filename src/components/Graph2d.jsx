@@ -15,8 +15,11 @@ export default function Graph2d({ repoData, handleNodeClick }) {
   }
 
   const { logList, lineList, maxPipeCount } = repoData;
+  const limitedLogList = logList.slice(0, theme.limit.maxNodeCount);
+  const limitedLineList = lineList.slice(0, theme.limit.maxNodeCount);
+
   const [colorList, setColorList] = useState(() => {
-    const newColorList = initColorList(logList, theme.border.black);
+    const newColorList = initColorList(limitedLogList, theme.border.black);
     newColorList[0] = theme.background.transparentAqua;
 
     return newColorList;
@@ -26,7 +29,7 @@ export default function Graph2d({ repoData, handleNodeClick }) {
   const { width } = getWindowDimensions();
 
   const handleCommitClick = (index) => {
-    const newColorList = initColorList(logList, theme.border.black);
+    const newColorList = initColorList(limitedLogList, theme.border.black);
 
     newColorList[index] = theme.background.aqua;
     setColorList(newColorList);
@@ -46,17 +49,15 @@ export default function Graph2d({ repoData, handleNodeClick }) {
 
   return (
     <GraphWrapper width={responsiveWidth}>
-      <div>
-        <DrawGraph
-          logList={logList}
-          lineList={lineList}
-          clicked={clicked}
-          maxPipeCount={maxPipeCount}
-          onClickHandler={onClickHandler}
-        />
-      </div>
+      <DrawGraph
+        logList={limitedLogList}
+        lineList={limitedLineList}
+        clicked={clicked}
+        maxPipeCount={maxPipeCount}
+        onClickHandler={onClickHandler}
+      />
       <Description
-        logList={logList}
+        logList={limitedLogList}
         colorList={colorList}
         onClickHandler={onClickHandler}
       />
@@ -97,11 +98,13 @@ Graph2d.propTypes = {
       ),
     ).isRequired,
     lineList: PropTypes.arrayOf(
-      PropTypes.objectOf(
-        PropTypes.oneOfType([
-          PropTypes.string,
-          PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
-        ]),
+      PropTypes.arrayOf(
+        PropTypes.objectOf(
+          PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+          ]),
+        ),
       ),
     ).isRequired,
   }),
