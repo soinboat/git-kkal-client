@@ -32,6 +32,9 @@ const theme = {
     graph2dSmallNodeRadius: 10,
     graph2dNodeSpacing: 50,
   },
+  limit: {
+    maxNodeCount: 100,
+  },
 };
 
 export default theme;

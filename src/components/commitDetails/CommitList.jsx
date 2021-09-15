@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-// import theme from '../../context/theme';
 
 export default function CommitList({ logList, colorList, onClickHandler }) {
   return (
@@ -11,6 +10,7 @@ export default function CommitList({ logList, colorList, onClickHandler }) {
           key={`CommitWrapper${index}${log.hash}`}
           onClick={() => onClickHandler(log.index, log.hash)}
         >
+          <CommitHash>{log.hash.slice(0, 7)}</CommitHash>
           <CommitInnerWrapper color={colorList[index]}>
             {log.branchNames
               ? log.branchNames.map((branch) => (
@@ -44,7 +44,10 @@ const CommitInnerWrapper = styled.div`
   height: 60%;
   box-sizing: border-box;
   border-left: 3px solid ${({ color }) => color};
-  /* background-color: ${({ color }) => color}; */
+`;
+
+const CommitHash = styled.div`
+  width: 100px;
 `;
 
 const CommitTag = styled.div`
