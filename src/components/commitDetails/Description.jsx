@@ -17,7 +17,6 @@ export default function Description({ logList, colorList, onClickHandler }) {
 }
 
 const CommitListWrapper = styled.ul`
-  display: inline;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -34,6 +33,7 @@ Description.propTypes = {
       ]),
     ),
   ).isRequired,
+  // responsiveWidth: PropTypes.number.isRequired,
   colorList: PropTypes.arrayOf(PropTypes.string).isRequired,
   onClickHandler: PropTypes.func.isRequired,
 };

@@ -10,7 +10,6 @@ export default function ContentBox({ children }) {
 
 const Wrapper = styled.div`
   display: flex;
-  width: 100%;
   min-width: ${theme.size.contentBoxMinWidth};
   height: 100%;
   justify-content: center;

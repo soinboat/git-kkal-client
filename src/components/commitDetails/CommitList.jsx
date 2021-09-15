@@ -7,11 +7,11 @@ export default function CommitList({ logList, colorList, onClickHandler }) {
   return (
     <>
       {logList.map((log, index) => (
-        <CommitWrapper
+        <Log
           key={`CommitWrapper${index}${log.hash}`}
           onClick={() => onClickHandler(log.index, log.hash)}
         >
-          <CommitInnerWrapper color={colorList[index]}>
+          <Commit color={colorList[index]}>
             <CommitHash>{log.hash.slice(0, 7)}</CommitHash>
             {log.branchNames
               ? log.branchNames.map((branch) => (
@@ -25,32 +25,30 @@ export default function CommitList({ logList, colorList, onClickHandler }) {
                 ))
               : null}
             <CommitMessage>{log.message}</CommitMessage>
-          </CommitInnerWrapper>
-        </CommitWrapper>
+          </Commit>
+        </Log>
       ))}
     </>
   );
 }
 
-const CommitHash = styled.div`
-  width: 100px;
-  margin-left: 10px;
-`;
-
-const CommitWrapper = styled.li`
+const Log = styled.li`
   display: flex;
-  width: 100%;
   height: 50px;
   align-items: center;
 `;
 
-const CommitInnerWrapper = styled.div`
+const Commit = styled.div`
   display: flex;
   align-items: center;
-  /* width: 100%; */
   height: 60%;
   box-sizing: border-box;
   border-left: 3px solid ${({ color }) => color};
+`;
+
+const CommitHash = styled.div`
+  width: 100px;
+  margin-left: 10px;
 `;
 
 const CommitTag = styled.div`
