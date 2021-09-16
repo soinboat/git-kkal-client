@@ -20,14 +20,21 @@ export default function DrawButtonList({ logList, clicked, onClickHandler }) {
 
 DrawButtonList.propTypes = {
   logList: PropTypes.arrayOf(
-    PropTypes.objectOf(
-      PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-        PropTypes.bool,
-        PropTypes.arrayOf(PropTypes.string),
-      ]),
-    ),
+    PropTypes.shape({
+      message: PropTypes.string,
+      author: PropTypes.string,
+      authoredTime: PropTypes.string,
+      committer: PropTypes.string,
+      committedTime: PropTypes.string,
+      parents: PropTypes.arrayOf(PropTypes.string),
+      hash: PropTypes.string,
+      branchNames: PropTypes.arrayOf(PropTypes.string),
+      branchName2: PropTypes.string,
+      head: PropTypes.bool,
+      index: PropTypes.number,
+      position: PropTypes.number,
+      color: PropTypes.string,
+    }),
   ).isRequired,
   clicked: PropTypes.number.isRequired,
   onClickHandler: PropTypes.func.isRequired,
