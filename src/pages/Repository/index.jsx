@@ -24,7 +24,7 @@ import UI from '../../constants/ui';
 
 const Diff = loadable(() => import('./Diff'));
 
-export default function Repo({ repoUrl, repoData }) {
+export default function Repository({ repoUrl, repoData }) {
   if (!repoData) {
     return <Redirect to="/" />;
   }
@@ -185,7 +185,7 @@ const RepositoryName = styled.div`
   text-decoration: none;
 `;
 
-Repo.defaultProps = {
+Repository.defaultProps = {
   repoUrl: 'repoUrl',
   repoData: {
     repoName: 'repoName',
@@ -198,7 +198,7 @@ Repo.defaultProps = {
   },
 };
 
-Repo.propTypes = {
+Repository.propTypes = {
   repoUrl: PropTypes.string,
   repoData: PropTypes.shape({
     repoName: PropTypes.string.isRequired,
