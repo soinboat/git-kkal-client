@@ -9,8 +9,9 @@ export default function DiffBar({ children }) {
 }
 
 const Wrapper = styled.div`
-  min-width: 250px;
-  height: ${theme.size.diffBarWidth};
+  min-width: ${theme.size.diffBarWidth};
+  width: 25%;
+  height: 100%;
   background-color: ${({ theme: { background } }) => background.grey3};
   color: ${({ theme: { font } }) => font.color.white};
 `;

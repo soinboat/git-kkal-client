@@ -1,3 +1,6 @@
-const initColorList = (logList, color) => new Array(logList.length).fill(color);
+export const initColorList = (logList, color) =>
+  new Array(logList.length).fill(color);
 
-export default initColorList;
+export default {
+  initColorList,
+};

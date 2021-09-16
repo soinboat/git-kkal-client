@@ -2,15 +2,18 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { Graphics } from '@inlet/react-pixi';
-import convertColor from '../utils/convertColor';
+import { convertColor } from '../utils/color';
+
+const INITIAL_POSITION_X = 100;
+const INITIAL_POSITION_Y = 25;
 
 export default function DrawLine({ lineList }) {
   const drawLine = useCallback(
     (graph) => {
       const calcPosition = (linePosition) => {
         const modifiedPosition = {
-          x: linePosition[0] + 50,
-          y: linePosition[1] + 25,
+          x: linePosition[0] + INITIAL_POSITION_X,
+          y: linePosition[1] + INITIAL_POSITION_Y,
         };
 
         return modifiedPosition;
@@ -28,7 +31,6 @@ export default function DrawLine({ lineList }) {
 
         line.points.forEach((point) => {
           const pointPosition = calcPosition(point);
-
           graph.lineTo(pointPosition.x, pointPosition.y);
         });
       });
@@ -43,11 +45,9 @@ export default function DrawLine({ lineList }) {
 
 DrawLine.propTypes = {
   lineList: PropTypes.arrayOf(
-    PropTypes.objectOf(
-      PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
-      ]),
-    ),
+    PropTypes.shape({
+      color: PropTypes.string.isRequired,
+      points: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number.isRequired)),
+    }),
   ).isRequired,
 };

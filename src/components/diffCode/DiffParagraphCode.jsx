@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import CodeBox from './CodeBox';
 
-export default function DiffParagraph({ paragraph }) {
+export default function DiffParagraphCode({ paragraph }) {
   return (
     <Wrapper>
       <CodeBox code={paragraph.before} />
@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   border-top: 1px solid white;
 `;
 
-DiffParagraph.propTypes = {
+DiffParagraphCode.propTypes = {
   paragraph: PropTypes.objectOf(
     PropTypes.oneOfType([
       PropTypes.string,

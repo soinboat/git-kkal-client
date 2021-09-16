@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import NavBar from '../../components/layouts/NavBar';
 import BranchBar from '../../components/layouts/BranchBar';
 import ContentBox from '../../components/layouts/ContentBox';
+import DiffBox from '../../components/layouts/DiffBox';
 import DiffBar from '../../components/layouts/DiffBar';
 
 import { BodyWrapper, HeaderWrapper } from '../../components/styles';
@@ -23,7 +24,7 @@ import UI from '../../constants/ui';
 
 const Diff = loadable(() => import('./Diff'));
 
-export default function Repo({ repoUrl, repoData }) {
+export default function Repository({ repoUrl, repoData }) {
   if (!repoData) {
     return <Redirect to="/" />;
   }
@@ -98,9 +99,7 @@ export default function Repo({ repoUrl, repoData }) {
       <HeaderWrapper>
         <NavBar>
           <Wrapper>
-            <div>
-              <Span>Repository: {repoData.repoName}</Span>
-            </div>
+            <RepositoryName>Repository: {repoData.repoName}</RepositoryName>
             <div>
               <ButtonWrapper>
                 <Button name={UI.TWO_DIMENSION} onClick={handleGraphMode}>
@@ -111,7 +110,6 @@ export default function Repo({ repoUrl, repoData }) {
                 </Button>
               </ButtonWrapper>
             </div>
-            <div />
           </Wrapper>
         </NavBar>
       </HeaderWrapper>
@@ -145,9 +143,9 @@ export default function Repo({ repoUrl, repoData }) {
             </DiffBar>
           </Route>
           <Route path="/repository/diff">
-            <ContentBox>
+            <DiffBox>
               <Diff targetDiff={targetDiffFile} />
-            </ContentBox>
+            </DiffBox>
             <DiffBar>
               <DiffList
                 targetDiffList={targetDiffList}
@@ -163,14 +161,11 @@ export default function Repo({ repoUrl, repoData }) {
 
 const Wrapper = styled.div`
   display: flex;
+  justify-content: space-between;
   width: 100%;
   height: 60px;
   background-color: ${({ theme: { background } }) => background.black};
   color: ${({ theme: { font } }) => font.color.grey};
-
-  div {
-    flex: 1;
-  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -178,12 +173,11 @@ const ButtonWrapper = styled.div`
   justify-content: center;
 `;
 
-const Span = styled.span`
-  display: inline-block;
-  flex: 1;
+const RepositoryName = styled.div`
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
+  min-width: 200px;
   border: 2px solid #ffffff43;
   background-color: #ffffff5a;
   color: white;
@@ -191,7 +185,7 @@ const Span = styled.span`
   text-decoration: none;
 `;
 
-Repo.defaultProps = {
+Repository.defaultProps = {
   repoUrl: 'repoUrl',
   repoData: {
     repoName: 'repoName',
@@ -204,7 +198,7 @@ Repo.defaultProps = {
   },
 };
 
-Repo.propTypes = {
+Repository.propTypes = {
   repoUrl: PropTypes.string,
   repoData: PropTypes.shape({
     repoName: PropTypes.string.isRequired,
@@ -218,5 +212,15 @@ Repo.propTypes = {
         ]),
       ),
     ).isRequired,
+    lineList: PropTypes.arrayOf(
+      PropTypes.arrayOf(
+        PropTypes.shape({
+          color: PropTypes.string.isRequired,
+          points: PropTypes.arrayOf(
+            PropTypes.arrayOf(PropTypes.number.isRequired),
+          ),
+        }),
+      ),
+    ),
   }),
 };

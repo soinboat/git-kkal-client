@@ -9,7 +9,7 @@ import { filterGitExtension } from './utils/git';
 import { notifyErr, notifySuccess } from './utils/notify';
 
 const Landing = loadable(() => import('./pages/Landing'));
-const Repo = loadable(() => import('./pages/Repo/index'));
+const Repository = loadable(() => import('./pages/Repository/index'));
 
 function App() {
   const [repoUrl, setRepoUrl] = useState('');
@@ -45,7 +45,7 @@ function App() {
           />
         </Route>
         <Route path="/repository">
-          <Repo repoUrl={repoUrl} repoData={repoData} />
+          <Repository repoUrl={repoUrl} repoData={repoData} />
         </Route>
       </Switch>
       <ToastContainer />

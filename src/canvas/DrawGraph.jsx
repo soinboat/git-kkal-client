@@ -6,15 +6,23 @@ import DrawNode from './DrawNode';
 import DrawLine from './DrawLine';
 import DrawButtonList from './DrawButtonList';
 
-function DrawGraph({ logList, lineList, clicked, onClickHandler }) {
+import theme from '../context/theme';
+
+function DrawGraph({
+  logList,
+  lineList,
+  maxPipeCount,
+  clicked,
+  onClickHandler,
+}) {
   return (
     <Stage
-      width={300}
-      height={logList.length * 50}
+      width={(maxPipeCount + 1) * theme.size.graph2dNodeSpacing}
+      height={logList.length * theme.size.graph2dNodeSpacing}
       options={{ antialias: true }}
     >
       <DrawButtonList
-        lineList={lineList}
+        logList={logList}
         clicked={clicked}
         onClickHandler={onClickHandler}
       />
@@ -28,22 +36,28 @@ export default memo(DrawGraph);
 
 DrawGraph.propTypes = {
   logList: PropTypes.arrayOf(
-    PropTypes.objectOf(
-      PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-        PropTypes.bool,
-        PropTypes.arrayOf(PropTypes.string),
-      ]),
-    ),
+    PropTypes.shape({
+      message: PropTypes.string,
+      author: PropTypes.string,
+      authoredTime: PropTypes.string,
+      committer: PropTypes.string,
+      committedTime: PropTypes.string,
+      parents: PropTypes.arrayOf(PropTypes.string),
+      hash: PropTypes.string,
+      branchNames: PropTypes.arrayOf(PropTypes.string),
+      branchName2: PropTypes.string,
+      head: PropTypes.bool,
+      index: PropTypes.number,
+      position: PropTypes.number,
+      color: PropTypes.string,
+    }),
   ).isRequired,
+  maxPipeCount: PropTypes.number.isRequired,
   lineList: PropTypes.arrayOf(
-    PropTypes.objectOf(
-      PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
-      ]),
-    ),
+    PropTypes.shape({
+      color: PropTypes.string.isRequired,
+      points: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number.isRequired)),
+    }),
   ).isRequired,
   clicked: PropTypes.number.isRequired,
   onClickHandler: PropTypes.func.isRequired,
