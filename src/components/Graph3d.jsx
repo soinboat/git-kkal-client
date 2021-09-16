@@ -1,10 +1,8 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import * as THREE from 'three';
-import { Canvas, unmountComponentAtNode } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import { Text, OrbitControls } from '@react-three/drei';
 
 const Sphere = ({ log, setClickedNode }) => (
@@ -50,6 +48,7 @@ const Line = ({ line }) => {
     </line>
   );
 };
+
 const LineList = ({ lineList }) =>
   lineList
     .flat()
@@ -92,15 +91,6 @@ export default function Graph3d({ repoData, handleNodeClick }) {
     handleNodeClick(clickedNode);
   }, [clickedNode]);
 
-  // useEffect(
-  //   () => () => {
-  //     if (canvasRef.current) {
-  //       document.removeChild(canvasRef.current);
-  //     }
-  //   },
-  //   [],
-  // );
-
   return (
     <Canvas
       ref={canvasRef}
@@ -117,6 +107,104 @@ export default function Graph3d({ repoData, handleNodeClick }) {
     </Canvas>
   );
 }
+
+Sphere.propTypes = {
+  log: PropTypes.shape({
+    message: PropTypes.string,
+    author: PropTypes.string,
+    authoredTime: PropTypes.string,
+    committer: PropTypes.string,
+    committedTime: PropTypes.string,
+    parents: PropTypes.arrayOf(PropTypes.string),
+    hash: PropTypes.string,
+    branchNames: PropTypes.arrayOf(PropTypes.string),
+    branchName2: PropTypes.string,
+    head: PropTypes.bool,
+    index: PropTypes.number,
+    position: PropTypes.number,
+    color: PropTypes.string,
+  }).isRequired,
+  setClickedNode: PropTypes.func.isRequired,
+};
+
+SphereList.propTypes = {
+  logList: PropTypes.arrayOf(
+    PropTypes.shape({
+      message: PropTypes.string,
+      author: PropTypes.string,
+      authoredTime: PropTypes.string,
+      committer: PropTypes.string,
+      committedTime: PropTypes.string,
+      parents: PropTypes.arrayOf(PropTypes.string),
+      hash: PropTypes.string,
+      branchNames: PropTypes.arrayOf(PropTypes.string),
+      branchName2: PropTypes.string,
+      head: PropTypes.bool,
+      index: PropTypes.number,
+      position: PropTypes.number,
+      color: PropTypes.string,
+    }),
+  ).isRequired,
+  setClickedNode: PropTypes.func.isRequired,
+};
+
+Line.propTypes = {
+  line: PropTypes.shape({
+    color: PropTypes.string,
+    points: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+  }).isRequired,
+};
+
+LineList.propTypes = {
+  lineList: PropTypes.arrayOf(
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        color: PropTypes.string,
+        points: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+      }),
+    ),
+  ).isRequired,
+};
+
+Commit.propTypes = {
+  log: PropTypes.shape({
+    message: PropTypes.string,
+    author: PropTypes.string,
+    authoredTime: PropTypes.string,
+    committer: PropTypes.string,
+    committedTime: PropTypes.string,
+    parents: PropTypes.arrayOf(PropTypes.string),
+    hash: PropTypes.string,
+    branchNames: PropTypes.arrayOf(PropTypes.string),
+    branchName2: PropTypes.string,
+    head: PropTypes.bool,
+    index: PropTypes.number,
+    position: PropTypes.number,
+    color: PropTypes.string,
+  }).isRequired,
+  maxPipeCount: PropTypes.number.isRequired,
+};
+
+CommitList.propTypes = {
+  logList: PropTypes.arrayOf(
+    PropTypes.shape({
+      message: PropTypes.string,
+      author: PropTypes.string,
+      authoredTime: PropTypes.string,
+      committer: PropTypes.string,
+      committedTime: PropTypes.string,
+      parents: PropTypes.arrayOf(PropTypes.string),
+      hash: PropTypes.string,
+      branchNames: PropTypes.arrayOf(PropTypes.string),
+      branchName2: PropTypes.string,
+      head: PropTypes.bool,
+      index: PropTypes.number,
+      position: PropTypes.number,
+      color: PropTypes.string,
+    }),
+  ).isRequired,
+  maxPipeCount: PropTypes.number.isRequired,
+};
 
 Graph3d.propTypes = {
   repoData: PropTypes.shape({
