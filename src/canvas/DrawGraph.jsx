@@ -12,7 +12,6 @@ function DrawGraph({
   logList,
   lineList,
   maxPipeCount,
-  clicked,
   targetCommit,
   onClickHandler,
 }) {
@@ -24,7 +23,6 @@ function DrawGraph({
     >
       <DrawButtonList
         logList={logList}
-        clicked={clicked}
         targetCommit={targetCommit}
         onClickHandler={onClickHandler}
       />
@@ -65,7 +63,6 @@ DrawGraph.propTypes = {
       points: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number.isRequired)),
     }),
   ).isRequired,
-  clicked: PropTypes.number.isRequired,
   targetCommit: PropTypes.string,
   onClickHandler: PropTypes.func.isRequired,
 };

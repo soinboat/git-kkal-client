@@ -4,7 +4,6 @@ import DrawButton from './DrawButton';
 
 export default function DrawButtonList({
   logList,
-  clicked,
   targetCommit,
   onClickHandler,
 }) {
@@ -15,7 +14,6 @@ export default function DrawButtonList({
           key={`button${index}${log.hash}`}
           log={log}
           index={index}
-          clicked={clicked}
           targetCommit={targetCommit}
           onClickHandler={onClickHandler}
         />
@@ -46,7 +44,6 @@ DrawButtonList.propTypes = {
       color: PropTypes.string,
     }),
   ).isRequired,
-  clicked: PropTypes.number.isRequired,
   targetCommit: PropTypes.string,
   onClickHandler: PropTypes.func.isRequired,
 };
