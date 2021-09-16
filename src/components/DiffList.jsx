@@ -58,6 +58,9 @@ const FileName = styled.div`
   word-wrap: break-word;
   margin: 10px 0;
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   :hover {
     background-color: #ffffff1f;

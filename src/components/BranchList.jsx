@@ -106,6 +106,9 @@ const BranchName = styled.li`
   font-size: 1rem;
   cursor: pointer;
   margin: 10px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   :hover {
     background-color: #ffffff1f;
