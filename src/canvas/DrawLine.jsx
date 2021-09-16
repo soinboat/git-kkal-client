@@ -20,20 +20,18 @@ export default function DrawLine({ lineList }) {
       };
 
       graph.clear();
-      lineList.forEach((lines) => {
-        lines.forEach((line) => {
-          const color = convertColor(line.color);
-          const points = [...line.points];
-          const firstPoint = points.shift();
-          const firstPosition = calcPosition(firstPoint);
+      lineList.forEach((line) => {
+        const color = convertColor(line.color);
+        const points = [...line.points];
+        const firstPoint = points.shift();
+        const firstPosition = calcPosition(firstPoint);
 
-          graph.lineStyle(2, color);
-          graph.moveTo(firstPosition.x, firstPosition.y);
+        graph.lineStyle(2, color);
+        graph.moveTo(firstPosition.x, firstPosition.y);
 
-          line.points.forEach((point) => {
-            const pointPosition = calcPosition(point);
-            graph.lineTo(pointPosition.x, pointPosition.y);
-          });
+        line.points.forEach((point) => {
+          const pointPosition = calcPosition(point);
+          graph.lineTo(pointPosition.x, pointPosition.y);
         });
       });
 
