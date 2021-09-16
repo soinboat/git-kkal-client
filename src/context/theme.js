@@ -25,15 +25,15 @@ const theme = {
   },
   size: {
     navBarHeight: 60,
-    branchBarWidth: 200,
-    diffBarWidth: 250,
+    branchBarWidth: 250,
+    diffBarWidth: 300,
     contentBoxMinWidth: 200,
     graph2dNodeRadius: 15,
     graph2dSmallNodeRadius: 10,
     graph2dNodeSpacing: 50,
   },
   limit: {
-    maxNodeCount: 100,
+    maxNodeCount: 200,
   },
 };
 

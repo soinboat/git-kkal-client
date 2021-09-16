@@ -18,7 +18,7 @@ function DrawGraph({
   return (
     <Stage
       width={(maxPipeCount + 1) * theme.size.graph2dNodeSpacing}
-      height={theme.limit.maxNodeCount * theme.size.graph2dNodeSpacing}
+      height={logList.length * theme.size.graph2dNodeSpacing}
       options={{ antialias: true }}
     >
       <DrawButtonList
@@ -54,12 +54,10 @@ DrawGraph.propTypes = {
   ).isRequired,
   maxPipeCount: PropTypes.number.isRequired,
   lineList: PropTypes.arrayOf(
-    PropTypes.arrayOf(
-      PropTypes.shape({
-        color: PropTypes.string,
-        points: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
-      }),
-    ),
+    PropTypes.shape({
+      color: PropTypes.string.isRequired,
+      points: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number.isRequired)),
+    }),
   ).isRequired,
   clicked: PropTypes.number.isRequired,
   onClickHandler: PropTypes.func.isRequired,

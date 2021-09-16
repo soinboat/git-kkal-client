@@ -1,42 +1,54 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import theme from '../../context/theme';
+import { selectFontColor } from '../../utils/color';
 
 export default function CommitList({ logList, colorList, onClickHandler }) {
   return (
     <>
       {logList.map((log, index) => (
-        <CommitWrapper
-          color={colorList[index]}
+        <Log
           key={`CommitWrapper${index}${log.hash}`}
           onClick={() => onClickHandler(log.index, log.hash)}
         >
-          {log.branchNames
-            ? log.branchNames.map((branch) => (
-                <CommitTag
-                  key={`CommitTag${index}${branch}`}
-                  style={{ backgroundColor: log.color }}
-                >
-                  {branch}
-                </CommitTag>
-              ))
-            : null}
-          <CommitMessage>{log.message}</CommitMessage>
-        </CommitWrapper>
+          <Commit color={colorList[index]}>
+            <CommitHash>{log.hash.slice(0, 7)}</CommitHash>
+            {log.branchNames
+              ? log.branchNames.map((branch) => (
+                  <CommitTag
+                    key={`CommitTag${index}${branch}`}
+                    backgroundColor={log.color}
+                    color={selectFontColor(log.color)}
+                  >
+                    {branch}
+                  </CommitTag>
+                ))
+              : null}
+            <CommitMessage>{log.message}</CommitMessage>
+          </Commit>
+        </Log>
       ))}
     </>
   );
 }
 
-const CommitWrapper = styled.li`
+const Log = styled.li`
   display: flex;
-  width: 100%;
-  height: 49px;
-  border-left: 1px solid ${theme.border.white};
-  border-bottom: 1px solid ${theme.border.white};
+  height: 50px;
   align-items: center;
-  background-color: ${({ color }) => color};
+`;
+
+const Commit = styled.div`
+  display: flex;
+  align-items: center;
+  height: 60%;
+  box-sizing: border-box;
+  border-left: 3px solid ${({ color }) => color};
+`;
+
+const CommitHash = styled.div`
+  width: 100px;
+  margin-left: 10px;
 `;
 
 const CommitTag = styled.div`
@@ -45,6 +57,8 @@ const CommitTag = styled.div`
   border-radius: 10px;
   letter-spacing: 1px;
   white-space: nowrap;
+  background-color: ${({ backgroundColor }) => backgroundColor || 'black'};
+  color: ${({ color }) => color || 'white'};
 `;
 
 const CommitMessage = styled.div`

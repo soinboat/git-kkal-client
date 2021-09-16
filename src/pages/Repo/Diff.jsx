@@ -36,8 +36,10 @@ export default function Diff({ targetDiff }) {
 
 const FileNameWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  vertical-align: middle;
+  position: sticky;
+  top: 0px;
   padding: 0 10px;
   box-sizing: border-box;
   width: 100%;
@@ -45,16 +47,9 @@ const FileNameWrapper = styled.div`
   border-top: 1px solid ${({ theme }) => theme.font.color.grey};
   background-color: ${({ theme }) => theme.background.black};
   color: ${({ theme }) => theme.font.color.grey};
-
-  button {
-    margin-left: 80%;
-    float: right;
-  }
 `;
 
-const DiffFileName = styled.div`
-  float: left;
-`;
+const DiffFileName = styled.div``;
 
 const DiffParagraph = styled.div`
   margin: 10px;

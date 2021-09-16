@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import DrawGraph from '../canvas/DrawGraph';
 import Description from './commitDetails/Description';
-import getWindowDimensions from '../hooks/useWindowDimensions';
 
 import theme from '../context/theme';
 import { initColorList } from '../utils/graphDraw';
@@ -26,7 +25,6 @@ export default function Graph2d({ repoData, handleNodeClick }) {
   });
 
   const [clicked, setClicked] = useState(0);
-  const { width } = getWindowDimensions();
 
   const handleCommitClick = (index) => {
     const newColorList = initColorList(limitedLogList, theme.border.black);
@@ -41,17 +39,11 @@ export default function Graph2d({ repoData, handleNodeClick }) {
     handleNodeClick(hash);
   };
 
-  const responsiveWidth =
-    width - (theme.size.branchBarWidth + theme.size.diffBarWidth) <
-    theme.size.contentBoxMinWidth
-      ? theme.size.contentBoxMinWidth
-      : width - (theme.size.branchBarWidth + theme.size.diffBarWidth);
-
   return (
-    <GraphWrapper width={responsiveWidth}>
+    <GraphWrapper>
       <DrawGraph
         logList={limitedLogList}
-        lineList={limitedLineList}
+        lineList={limitedLineList.flat()}
         clicked={clicked}
         maxPipeCount={maxPipeCount}
         onClickHandler={onClickHandler}
@@ -66,10 +58,10 @@ export default function Graph2d({ repoData, handleNodeClick }) {
 }
 
 const GraphWrapper = styled.div`
-  width: ${({ width }) => `${width}px`};
+  width: 100%;
   display: flex;
   height: 100%;
-  overflow-y: scroll;
+  overflow: scroll;
 `;
 
 Graph2d.defaultProps = {
@@ -99,14 +91,14 @@ Graph2d.propTypes = {
     ).isRequired,
     lineList: PropTypes.arrayOf(
       PropTypes.arrayOf(
-        PropTypes.objectOf(
-          PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
-          ]),
-        ),
+        PropTypes.shape({
+          color: PropTypes.string.isRequired,
+          points: PropTypes.arrayOf(
+            PropTypes.arrayOf(PropTypes.number.isRequired),
+          ),
+        }),
       ),
-    ).isRequired,
+    ),
   }),
   handleNodeClick: PropTypes.func.isRequired,
 };
