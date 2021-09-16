@@ -32,7 +32,7 @@ const theme = {
     branchBarWidth: '10%',
     diffBarWidth: '25%',
     contentBoxWidth: '65%',
-    diffBoxWidth: '80%',
+    diffBoxWidth: '75%',
     graph2dNodeRadius: 15,
     graph2dSmallNodeRadius: 10,
     graph2dNodeSpacing: 50,

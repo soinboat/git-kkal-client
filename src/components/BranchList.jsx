@@ -105,6 +105,7 @@ const BranchNameList = styled.ul`
 const BranchName = styled.li`
   font-size: 1rem;
   cursor: pointer;
+  margin: 10px 0;
 
   :hover {
     background-color: #ffffff1f;
