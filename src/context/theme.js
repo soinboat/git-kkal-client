@@ -31,6 +31,7 @@ const theme = {
     graph2dNodeRadius: 15,
     graph2dSmallNodeRadius: 10,
     graph2dNodeSpacing: 50,
+    graph2dButtonAlpha: 0.5,
   },
   limit: {
     maxNodeCount: 200,

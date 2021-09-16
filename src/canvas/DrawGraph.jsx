@@ -13,6 +13,7 @@ function DrawGraph({
   lineList,
   maxPipeCount,
   clicked,
+  targetCommit,
   onClickHandler,
 }) {
   return (
@@ -24,6 +25,7 @@ function DrawGraph({
       <DrawButtonList
         logList={logList}
         clicked={clicked}
+        targetCommit={targetCommit}
         onClickHandler={onClickHandler}
       />
       <DrawLine lineList={lineList} />
@@ -33,6 +35,10 @@ function DrawGraph({
 }
 
 export default memo(DrawGraph);
+
+DrawGraph.defaultProps = {
+  targetCommit: '',
+};
 
 DrawGraph.propTypes = {
   logList: PropTypes.arrayOf(
@@ -60,5 +66,6 @@ DrawGraph.propTypes = {
     }),
   ).isRequired,
   clicked: PropTypes.number.isRequired,
+  targetCommit: PropTypes.string,
   onClickHandler: PropTypes.func.isRequired,
 };

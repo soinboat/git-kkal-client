@@ -8,7 +8,7 @@ import Description from './commitDetails/Description';
 import theme from '../context/theme';
 import { initColorList } from '../utils/graphDraw';
 
-export default function Graph2d({ repoData, handleNodeClick }) {
+export default function Graph2d({ repoData, targetCommit, handleNodeClick }) {
   if (!repoData.repoName) {
     return <div>데이터없음</div>;
   }
@@ -45,6 +45,7 @@ export default function Graph2d({ repoData, handleNodeClick }) {
         logList={limitedLogList}
         lineList={limitedLineList.flat()}
         clicked={clicked}
+        targetCommit={targetCommit}
         maxPipeCount={maxPipeCount}
         onClickHandler={onClickHandler}
       />
@@ -73,6 +74,7 @@ Graph2d.defaultProps = {
       },
     ],
   },
+  targetCommit: '',
 };
 
 Graph2d.propTypes = {
@@ -100,5 +102,6 @@ Graph2d.propTypes = {
       ),
     ),
   }),
+  targetCommit: PropTypes.string,
   handleNodeClick: PropTypes.func.isRequired,
 };
