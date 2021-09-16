@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import theme from '../../context/theme';
 
 export default function DiffBox({ children }) {
-  console.log(children);
   return <Wrapper>{children || null}</Wrapper>;
 }
 

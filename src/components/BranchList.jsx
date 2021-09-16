@@ -63,6 +63,27 @@ const Wrapper = styled.div`
   font-family: Arial, Helvetica, sans-serif;
 `;
 
+const BranchTitle = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+`;
+
+const CollapseButton = styled.div`
+  display: flex;
+  align-items: center;
+  transform: rotate(0deg);
+  overflow: hidden;
+  transition: all 0.3s ease-out;
+  transform: ${(props) => (props.$rotate ? `rotate(-90deg)` : '')};
+  cursor: pointer;
+`;
+
+const TitleText = styled.div`
+  vertical-align: bottom;
+  line-height: 1;
+`;
+
 const BranchNameList = styled.ul`
   transform-origin: top center;
   list-style: none;
@@ -86,27 +107,6 @@ const BranchName = styled.li`
   :hover {
     background-color: #ffffff1f;
   }
-`;
-
-const BranchTitle = styled.div`
-  display: flex;
-  width: 100%;
-  align-items: center;
-`;
-
-const TitleText = styled.div`
-  vertical-align: bottom;
-  line-height: 1;
-`;
-
-const CollapseButton = styled.div`
-  display: flex;
-  align-items: center;
-  transform: rotate(0deg);
-  overflow: hidden;
-  transition: all 0.3s ease-out;
-  transform: ${(props) => (props.$rotate ? `rotate(-90deg)` : '')};
-  cursor: pointer;
 `;
 
 BranchList.defaultProps = {

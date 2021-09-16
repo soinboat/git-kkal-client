@@ -42,17 +42,6 @@ const Wrapper = styled.div`
   font-family: Arial, Helvetica, sans-serif;
 `;
 
-const FileName = styled.div`
-  word-break: break-all;
-  word-wrap: break-word;
-  margin: 5px 0;
-  cursor: pointer;
-
-  :hover {
-    background-color: #ffffff1f;
-  }
-`;
-
 const InnerWrapper = styled.div`
   width: 100%;
   height: auto;
@@ -61,6 +50,17 @@ const InnerWrapper = styled.div`
   .selected {
     color: black;
     background-color: #ffffff9c;
+  }
+`;
+
+const FileName = styled.div`
+  word-break: break-all;
+  word-wrap: break-word;
+  margin: 5px 0;
+  cursor: pointer;
+
+  :hover {
+    background-color: #ffffff1f;
   }
 `;
 
