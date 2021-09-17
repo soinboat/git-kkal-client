@@ -2,16 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import theme from '../../context/theme';
-
 export default function ContentBox({ children }) {
   return <Wrapper>{children || null}</Wrapper>;
 }
 
 const Wrapper = styled.div`
   display: flex;
-  min-width: ${theme.size.contentBoxMinWidth};
-  width: 55%;
+  min-width: ${({ theme: { size } }) => size.contentBoxMinWidth};
+  width: ${({ theme: { size } }) => size.contentBoxWidth};
   height: 100%;
   justify-content: center;
   align-items: center;

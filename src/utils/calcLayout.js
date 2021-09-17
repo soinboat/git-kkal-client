@@ -1,4 +1,4 @@
-export const getHalf = (number) => {
+export const calcHalf = (number) => {
   if (typeof number !== 'number') {
     return 0;
   }
@@ -16,6 +16,16 @@ export const getHalf = (number) => {
   return result;
 };
 
+export const calcRectInfos = (index, nodeSpace, nodeRadius) => {
+  const x = 0;
+  const y = index * nodeSpace + (calcHalf(nodeSpace) - nodeRadius);
+  const width = 1000;
+  const height = nodeRadius * 2;
+
+  return [x, y, width, height];
+};
+
 export default {
-  getHalf,
+  calcHalf,
+  calcRectInfos,
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -6,9 +6,8 @@ import DrawGraph from '../canvas/DrawGraph';
 import Description from './commitDetails/Description';
 
 import theme from '../context/theme';
-import { initColorList } from '../utils/graphDraw';
 
-export default function Graph2d({ repoData, handleNodeClick }) {
+export default function Graph2d({ repoData, targetCommit, handleNodeClick }) {
   if (!repoData.repoName) {
     return <div>데이터없음</div>;
   }
@@ -17,25 +16,7 @@ export default function Graph2d({ repoData, handleNodeClick }) {
   const limitedLogList = logList.slice(0, theme.limit.maxNodeCount);
   const limitedLineList = lineList.slice(0, theme.limit.maxNodeCount);
 
-  const [colorList, setColorList] = useState(() => {
-    const newColorList = initColorList(limitedLogList, theme.border.black);
-    newColorList[0] = theme.background.transparentAqua;
-
-    return newColorList;
-  });
-
-  const [clicked, setClicked] = useState(0);
-
-  const handleCommitClick = (index) => {
-    const newColorList = initColorList(limitedLogList, theme.border.black);
-
-    newColorList[index] = theme.background.aqua;
-    setColorList(newColorList);
-  };
-
   const onClickHandler = (index, hash) => {
-    setClicked(index);
-    handleCommitClick(index);
     handleNodeClick(hash);
   };
 
@@ -44,13 +25,13 @@ export default function Graph2d({ repoData, handleNodeClick }) {
       <DrawGraph
         logList={limitedLogList}
         lineList={limitedLineList.flat()}
-        clicked={clicked}
+        targetCommit={targetCommit}
         maxPipeCount={maxPipeCount}
         onClickHandler={onClickHandler}
       />
       <Description
         logList={limitedLogList}
-        colorList={colorList}
+        targetCommit={targetCommit}
         onClickHandler={onClickHandler}
       />
     </GraphWrapper>
@@ -73,6 +54,7 @@ Graph2d.defaultProps = {
       },
     ],
   },
+  targetCommit: '',
 };
 
 Graph2d.propTypes = {
@@ -100,5 +82,6 @@ Graph2d.propTypes = {
       ),
     ),
   }),
+  targetCommit: PropTypes.string,
   handleNodeClick: PropTypes.func.isRequired,
 };
