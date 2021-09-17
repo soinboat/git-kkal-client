@@ -8,8 +8,7 @@ export default function ContentBox({ children }) {
 
 const Wrapper = styled.div`
   display: flex;
-  min-width: ${({ theme: { size } }) => size.contentBoxMinWidth};
-  width: ${({ theme: { size } }) => size.contentBoxWidth};
+  width: ${({ theme: { size } }) => `calc(100% - ${size.branchBarWidth})`};
   height: 100%;
   justify-content: center;
   align-items: center;

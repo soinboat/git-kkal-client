@@ -2,17 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export default function BranchBar({ children }) {
+export default function GraphBox({ children }) {
   return <Wrapper>{children || null}</Wrapper>;
 }
 
 const Wrapper = styled.div`
-  width: ${({ theme: { size } }) => size.branchBarWidth};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: ${({ theme: { size } }) => `calc(100% - ${size.branchBarWidth})`};
   height: 100%;
-  background-color: ${({ theme: { background } }) => background.grey3};
+  background-color: ${({ theme: { background } }) => background.black};
   color: ${({ theme: { font } }) => font.color.white};
 `;
 
-BranchBar.propTypes = {
+GraphBox.propTypes = {
   children: PropTypes.node.isRequired,
 };

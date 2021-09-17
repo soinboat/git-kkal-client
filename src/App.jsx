@@ -40,6 +40,11 @@ function App() {
     }
   };
 
+  const handleResetRepository = () => {
+    setRepoUrl('');
+    setRepoData(null);
+  };
+
   return (
     <>
       <Switch>
@@ -55,7 +60,11 @@ function App() {
         </Route>
         <Route path="/repository">
           {repoData ? (
-            <Repository repoUrl={repoUrl} repoData={repoData} />
+            <Repository
+              repoUrl={repoUrl}
+              repoData={repoData}
+              handleResetRepository={handleResetRepository}
+            />
           ) : (
             <Redirect to="/" />
           )}

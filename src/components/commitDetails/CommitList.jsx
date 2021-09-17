@@ -36,6 +36,7 @@ const Log = styled.li`
   display: flex;
   height: 50px;
   align-items: center;
+  cursor: pointer;
 
   .selected {
     border-left: 3px solid aqua;
@@ -47,7 +48,6 @@ const Commit = styled.div`
   align-items: center;
   height: 60%;
   box-sizing: border-box;
-  /* border-left: 3px solid ${({ color }) => color}; */
 `;
 
 const CommitHash = styled.div`
