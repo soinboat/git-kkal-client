@@ -60,7 +60,7 @@ const NavBar = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  height: 30px;
+  height: ${(props) => props.theme.size.graphNavBarHeight};
   background-color: ${(props) => props.theme.background.grey2};
   color: ${(props) => props.theme.font.grey};
 `;
@@ -76,7 +76,7 @@ const Item = styled.div`
 const Content = styled.div`
   display: flex;
   width: 100%;
-  height: calc(100% - 60px);
+  height: ${(props) => `calc(100% - ${props.theme.size.graphNavBarHeight});`};
   overflow: scroll;
 `;
 

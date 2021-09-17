@@ -20,7 +20,7 @@ export default function Diff({ targetDiff, handleDiffMode }) {
     <Wrapper>
       <FileNameWrapper>
         <DiffFileName>{targetDiff.fileName}</DiffFileName>
-        <Button onClick={handleButtonClick}>{UI.Repo}</Button>
+        <Button onClick={handleButtonClick}>{UI.REPO}</Button>
       </FileNameWrapper>
       {targetDiff.changedLog.map((log) => (
         <DiffParagraph key={log.codeLineOffsetString}>

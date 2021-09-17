@@ -200,6 +200,7 @@ const Logo = styled.img`
   width: ${({ width }) => width || '50px'};
   height: ${({ height }) => height || '50px'};
   margin-left: 10px;
+  cursor: pointer;
 `;
 
 const LogoWrapper = styled.div`
