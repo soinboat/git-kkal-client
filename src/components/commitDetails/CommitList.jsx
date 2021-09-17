@@ -47,7 +47,6 @@ const Commit = styled.div`
   align-items: center;
   height: 60%;
   box-sizing: border-box;
-  /* border-left: 3px solid ${({ color }) => color}; */
 `;
 
 const CommitHash = styled.div`
