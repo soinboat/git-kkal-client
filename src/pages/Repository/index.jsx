@@ -22,9 +22,15 @@ import { fetchDiff } from '../../api/git';
 import { getBranchList } from '../../utils/git';
 import UI from '../../constants/ui';
 
+import logo from '../../image/logo.ico';
+
 const Diff = loadable(() => import('./Diff'));
 
-export default function Repository({ repoUrl, repoData }) {
+export default function Repository({
+  repoUrl,
+  repoData,
+  handleResetRepository,
+}) {
   if (!repoData) {
     return <Redirect to="/" />;
   }
@@ -105,23 +111,24 @@ export default function Repository({ repoUrl, repoData }) {
       <HeaderWrapper>
         <NavBar>
           <Wrapper>
-            <RepositoryName>Repository: {repoData.repoName}</RepositoryName>
-            <div>
-              <ButtonWrapper>
-                {isDiffMode ? (
-                  <></>
-                ) : (
-                  <>
-                    <Button name={UI.TWO_DIMENSION} onClick={handleGraphMode}>
-                      {UI.TWO_DIMENSION}
-                    </Button>
-                    <Button name={UI.THREE_DIMENSION} onClick={handleGraphMode}>
-                      {UI.THREE_DIMENSION}
-                    </Button>
-                  </>
-                )}
-              </ButtonWrapper>
-            </div>
+            <LogoWrapper>
+              <Logo src={logo} onClick={handleResetRepository} />
+              <RepositoryName>Repository: {repoData.repoName}</RepositoryName>
+            </LogoWrapper>
+            <ButtonWrapper>
+              {isDiffMode ? (
+                <></>
+              ) : (
+                <>
+                  <Button name={UI.TWO_DIMENSION} onClick={handleGraphMode}>
+                    {UI.TWO_DIMENSION}
+                  </Button>
+                  <Button name={UI.THREE_DIMENSION} onClick={handleGraphMode}>
+                    {UI.THREE_DIMENSION}
+                  </Button>
+                </>
+              )}
+            </ButtonWrapper>
           </Wrapper>
         </NavBar>
       </HeaderWrapper>
@@ -179,10 +186,24 @@ export default function Repository({ repoUrl, repoData }) {
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   height: 60px;
   background-color: ${({ theme: { background } }) => background.black};
   color: ${({ theme: { font } }) => font.color.grey};
+`;
+
+const Logo = styled.img`
+  src: ${({ src }) => src || null};
+  width: ${({ width }) => width || '50px'};
+  height: ${({ height }) => height || '50px'};
+  margin-left: 10px;
+`;
+
+const LogoWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ButtonWrapper = styled.div`
@@ -213,6 +234,7 @@ Repository.defaultProps = {
       },
     ],
   },
+  handleResetRepository: () => {},
 };
 
 Repository.propTypes = {
@@ -240,4 +262,5 @@ Repository.propTypes = {
       ),
     ),
   }),
+  handleResetRepository: PropTypes.func,
 };
