@@ -34,6 +34,7 @@ export default function Repository({ repoUrl, repoData }) {
   const [targetDiffList, setTargetDiffList] = useState(null);
   const [targetDiffFile, setTargetDiffFile] = useState(null);
   const [is2dGraphMode, setIs2dGraphMode] = useState(true);
+  const [isDiffMode, setIsDiffMode] = useState(false);
 
   const branchList = useMemo(() => getBranchList(repoData), [repoData]);
 
@@ -54,8 +55,9 @@ export default function Repository({ repoUrl, repoData }) {
   const handleDiffClick = useCallback(
     (file) => {
       setTargetDiffFile(file);
+      setIsDiffMode(true);
     },
-    [setTargetDiffFile],
+    [setTargetDiffFile, setIsDiffMode],
   );
 
   const handleGraphMode = useCallback(
@@ -67,6 +69,10 @@ export default function Repository({ repoUrl, repoData }) {
     },
     [setIs2dGraphMode],
   );
+
+  const handleDiffMode = useCallback(() => {
+    setIsDiffMode(false);
+  }, [setIsDiffMode]);
 
   useEffect(() => {
     if (!targetBranch) {
@@ -102,12 +108,18 @@ export default function Repository({ repoUrl, repoData }) {
             <RepositoryName>Repository: {repoData.repoName}</RepositoryName>
             <div>
               <ButtonWrapper>
-                <Button name={UI.TWO_DIMENSION} onClick={handleGraphMode}>
-                  {UI.TWO_DIMENSION}
-                </Button>
-                <Button name={UI.THREE_DIMENSION} onClick={handleGraphMode}>
-                  {UI.THREE_DIMENSION}
-                </Button>
+                {isDiffMode ? (
+                  <></>
+                ) : (
+                  <>
+                    <Button name={UI.TWO_DIMENSION} onClick={handleGraphMode}>
+                      {UI.TWO_DIMENSION}
+                    </Button>
+                    <Button name={UI.THREE_DIMENSION} onClick={handleGraphMode}>
+                      {UI.THREE_DIMENSION}
+                    </Button>
+                  </>
+                )}
               </ButtonWrapper>
             </div>
           </Wrapper>
@@ -146,7 +158,10 @@ export default function Repository({ repoUrl, repoData }) {
           </Route>
           <Route path="/repository/diff">
             <DiffBox>
-              <Diff targetDiff={targetDiffFile} />
+              <Diff
+                targetDiff={targetDiffFile}
+                handleDiffMode={handleDiffMode}
+              />
             </DiffBox>
             <DiffBar>
               <DiffList
