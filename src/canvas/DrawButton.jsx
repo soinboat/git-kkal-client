@@ -20,6 +20,7 @@ export default function DrawButton({
       button.clear();
       button.alpha = log.hash === targetCommit ? graph2dButtonAlpha : 0;
       button.beginFill(convertColor(log.color));
+      button.buttonMode = true;
       button.drawRect(
         ...calcRectInfos(index, graph2dNodeSpacing, graph2dNodeRadius),
       );

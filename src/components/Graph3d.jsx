@@ -1,124 +1,256 @@
-import React, { useRef, useEffect } from 'react';
-
-import styled from 'styled-components';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { Canvas } from '@react-three/fiber';
+import { Text, OrbitControls } from '@react-three/drei';
 
-import useWindowDimensions from '../hooks/useWindowDimensions';
-import theme from '../context/theme';
+const Sphere = ({ log, onClickHandler, clicked }) => (
+  <mesh
+    visible
+    dispose={null}
+    scale={clicked === log.index ? 2 : 1}
+    position={[log.position * 5, -log.index * 5, 0]}
+    onClick={() => onClickHandler(log.hash, log.index)}
+  >
+    <sphereGeometry attach="geometry" args={[1, 32, 16]} />
+    <meshStandardMaterial
+      attach="material"
+      color={log.color}
+      transparent
+      metalness={1}
+    />
+  </mesh>
+);
 
-import {
-  getSphereList,
-  getLineInfoList,
-  getLineList,
-  SpotLight,
-  getCommitList,
-} from '../utils/graph3dDraw';
+const SphereList = ({ logList, onClickHandler, clicked }) =>
+  logList.map((log) => (
+    <Sphere
+      key={`log${log.hash}`}
+      log={log}
+      onClickHandler={onClickHandler}
+      clicked={clicked}
+    />
+  ));
 
-export default function Graph3d({ repoData }) {
-  const gitGraph3dRef = useRef(null);
-  const { width, height } = useWindowDimensions();
-  const logList = [...repoData.logList].reverse();
+const Line = ({ line }) => {
+  const points = line.points.map(
+    (point) => new THREE.Vector3(point[0] / 10 + 5, -point[1] / 10, 0),
+  );
+
+  const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+
+  return (
+    <line geometry={lineGeometry}>
+      <lineBasicMaterial
+        attach="material"
+        color={line.color}
+        linewidth={1}
+        linecap="round"
+        linejoin="round"
+      />
+    </line>
+  );
+};
+
+const LineList = ({ lineList }) =>
+  lineList
+    .flat()
+    .map((line, index) => (
+      <Line
+        key={`line${index}${line.points[0]}${line.points[1]}`}
+        line={line}
+      />
+    ));
+
+const CommitList = ({ logList, maxPipeCount }) =>
+  logList.map((log, index) => (
+    <Commit
+      key={`commit${index}${log.hash}`}
+      log={log}
+      maxPipeCount={maxPipeCount}
+    />
+  ));
+
+const Commit = ({ log, maxPipeCount }) => (
+  <Text
+    position={[(maxPipeCount + 1) * 5, -log.index * 5, 0]}
+    scale={[10, 10, 10]}
+    color={log.color}
+    anchorX="left"
+  >
+    {`${log.hash.slice(0, 7)}    ${log.message}`}
+  </Text>
+);
+
+export default function Graph3d({ repoData, handleNodeClick }) {
+  const { logList, lineList, maxPipeCount } = repoData;
+  const [clickedNode, setClickedNode] = useState(null);
+  const [clicked, setClicked] = useState(0);
+
+  const canvasRef = useRef();
+
+  const onClickHandler = (hash, index) => {
+    setClickedNode(hash);
+    setClicked(index);
+  };
 
   useEffect(() => {
-    if (!gitGraph3dRef) return;
+    if (!clickedNode) return;
 
-    const canvasWidth = parseInt((width * 55) / 100, 10); // FIXME: 55는 ContentBox의 퍼센트 width를 의미. theme에 추가할 것.
-    const canvasHeight = height - theme.size.navBarHeight;
+    handleNodeClick(clickedNode);
+  }, [clickedNode]);
 
-    const canvas = gitGraph3dRef.current;
-    const scene = new THREE.Scene();
-
-    const geometry = new THREE.SphereGeometry(1, 32, 16);
-
-    const sphereList = getSphereList(logList, geometry);
-    const lineInfoList = getLineInfoList(logList);
-    const lineList = getLineList(lineInfoList, sphereList);
-    const commitList = getCommitList(logList);
-
-    scene.add(...commitList);
-    scene.add(...sphereList);
-    scene.add(...lineList);
-
-    const polarGridHelper = new THREE.PolarGridHelper(
-      200,
-      16,
-      8,
-      64,
-      0x0000ff,
-      0x808080,
-    );
-    scene.add(polarGridHelper);
-
-    scene.add(new SpotLight(0xffffff, [1000, 1000, 100], THREE).light);
-    scene.add(new SpotLight(0xffffff, [1000, -100, 100], THREE).light);
-
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      canvasWidth / canvasHeight,
-      0.1,
-      2000,
-    );
-    const cameraTargetLog = logList[1];
-    const posY = cameraTargetLog.index;
-    const posZ = cameraTargetLog.position;
-    camera.position.set(100, posY, posZ);
-
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: true,
-      logarithmicDepthBuffer: true,
-    });
-    renderer.setSize(canvasWidth, canvasHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.target = new THREE.Vector3(0, posY, posZ);
-
-    const animation = () => {
-      controls.enableZoom = true;
-      controls.maxDistance = 400;
-
-      controls.update();
-      renderer.render(scene, camera);
-      window.requestAnimationFrame(animation);
-    };
-    animation();
-  }, []);
-
-  return <GitGraph3D ref={gitGraph3dRef} />;
+  return (
+    <Canvas
+      ref={canvasRef}
+      camera={{ fov: 75, position: [0, 0, 50], far: 3000 }}
+    >
+      <color attach="background" args={['#000']} />
+      <SphereList
+        logList={logList}
+        onClickHandler={onClickHandler}
+        clicked={clicked}
+      />
+      <LineList lineList={lineList} />
+      <CommitList logList={logList} maxPipeCount={maxPipeCount} />
+      <ambientLight intensity={1} />
+      <spotLight position={[10, 1000, 10]} angle={0.5} penumbra={1} />
+      <spotLight position={[10, -1000, 10]} angle={0.15} penumbra={1} />
+      <pointLight position={[-10, -10, -10]} />
+      <OrbitControls enablePan enableZoom enableRotate />
+    </Canvas>
+  );
 }
 
-const GitGraph3D = styled.canvas`
-  width: 100%;
-  height: 100%;
-`;
+Sphere.propTypes = {
+  log: PropTypes.shape({
+    message: PropTypes.string,
+    author: PropTypes.string,
+    authoredTime: PropTypes.string,
+    committer: PropTypes.string,
+    committedTime: PropTypes.string,
+    parents: PropTypes.arrayOf(PropTypes.string),
+    hash: PropTypes.string,
+    branchNames: PropTypes.arrayOf(PropTypes.string),
+    branchName2: PropTypes.string,
+    head: PropTypes.bool,
+    index: PropTypes.number,
+    position: PropTypes.number,
+    color: PropTypes.string,
+  }).isRequired,
+  clicked: PropTypes.number.isRequired,
+  onClickHandler: PropTypes.func.isRequired,
+};
 
-Graph3d.defaultProps = {
-  repoData: {
-    repoName: '',
-    logList: [
-      {
-        message: 'Message',
-      },
-    ],
-  },
+SphereList.propTypes = {
+  logList: PropTypes.arrayOf(
+    PropTypes.shape({
+      message: PropTypes.string,
+      author: PropTypes.string,
+      authoredTime: PropTypes.string,
+      committer: PropTypes.string,
+      committedTime: PropTypes.string,
+      parents: PropTypes.arrayOf(PropTypes.string),
+      hash: PropTypes.string,
+      branchNames: PropTypes.arrayOf(PropTypes.string),
+      branchName2: PropTypes.string,
+      head: PropTypes.bool,
+      index: PropTypes.number,
+      position: PropTypes.number,
+      color: PropTypes.string,
+    }),
+  ).isRequired,
+  clicked: PropTypes.number.isRequired,
+  onClickHandler: PropTypes.func.isRequired,
+};
+
+Line.propTypes = {
+  line: PropTypes.shape({
+    color: PropTypes.string,
+    points: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+  }).isRequired,
+};
+
+LineList.propTypes = {
+  lineList: PropTypes.arrayOf(
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        color: PropTypes.string,
+        points: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+      }),
+    ),
+  ).isRequired,
+};
+
+Commit.propTypes = {
+  log: PropTypes.shape({
+    message: PropTypes.string,
+    author: PropTypes.string,
+    authoredTime: PropTypes.string,
+    committer: PropTypes.string,
+    committedTime: PropTypes.string,
+    parents: PropTypes.arrayOf(PropTypes.string),
+    hash: PropTypes.string,
+    branchNames: PropTypes.arrayOf(PropTypes.string),
+    branchName2: PropTypes.string,
+    head: PropTypes.bool,
+    index: PropTypes.number,
+    position: PropTypes.number,
+    color: PropTypes.string,
+  }).isRequired,
+  maxPipeCount: PropTypes.number.isRequired,
+};
+
+CommitList.propTypes = {
+  logList: PropTypes.arrayOf(
+    PropTypes.shape({
+      message: PropTypes.string,
+      author: PropTypes.string,
+      authoredTime: PropTypes.string,
+      committer: PropTypes.string,
+      committedTime: PropTypes.string,
+      parents: PropTypes.arrayOf(PropTypes.string),
+      hash: PropTypes.string,
+      branchNames: PropTypes.arrayOf(PropTypes.string),
+      branchName2: PropTypes.string,
+      head: PropTypes.bool,
+      index: PropTypes.number,
+      position: PropTypes.number,
+      color: PropTypes.string,
+    }),
+  ).isRequired,
+  maxPipeCount: PropTypes.number.isRequired,
 };
 
 Graph3d.propTypes = {
   repoData: PropTypes.shape({
-    repoName: PropTypes.string.isRequired,
     logList: PropTypes.arrayOf(
-      PropTypes.objectOf(
-        PropTypes.oneOfType([
-          PropTypes.string,
-          PropTypes.number,
-          PropTypes.bool,
-          PropTypes.arrayOf(PropTypes.string),
-        ]),
+      PropTypes.shape({
+        message: PropTypes.string,
+        author: PropTypes.string,
+        authoredTime: PropTypes.string,
+        committer: PropTypes.string,
+        committedTime: PropTypes.string,
+        parents: PropTypes.arrayOf(PropTypes.string),
+        hash: PropTypes.string,
+        branchNames: PropTypes.arrayOf(PropTypes.string),
+        branchName2: PropTypes.string,
+        head: PropTypes.bool,
+        index: PropTypes.number,
+        position: PropTypes.number,
+        color: PropTypes.string,
+      }),
+    ).isRequired,
+    maxPipeCount: PropTypes.number.isRequired,
+    lineList: PropTypes.arrayOf(
+      PropTypes.arrayOf(
+        PropTypes.shape({
+          color: PropTypes.string,
+          points: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+        }),
       ),
     ).isRequired,
-  }),
+  }).isRequired,
+  handleNodeClick: PropTypes.func.isRequired,
 };
