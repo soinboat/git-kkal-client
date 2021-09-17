@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import { fetchRepoData } from './api/git';
 import { filterGitExtension } from './utils/git';
 import { notifyErr, notifySuccess } from './utils/notify';
+import ERROR from './constants/error';
 
 const Landing = loadable(() => import('./pages/Landing'));
 const Repository = loadable(() => import('./pages/Repository/index'));
@@ -31,7 +32,11 @@ function App() {
 
       notifySuccess();
     } catch (err) {
-      notifyErr(err.response.status);
+      if (err.response) {
+        notifyErr(err.response.status);
+      } else {
+        notifyErr(ERROR.INTERNAL_SERVER_ERROR_STATUS_CODE);
+      }
     }
   };
 
