@@ -33,6 +33,7 @@ export default function DrawButton({
       button.on('mouseout', () => {
         button.alpha = log.hash === targetCommit ? graph2dButtonAlpha : 0;
       });
+      button.buttonMode = true;
     },
     [log.hash === targetCommit],
   );
