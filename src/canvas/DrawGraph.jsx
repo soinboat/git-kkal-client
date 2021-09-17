@@ -1,4 +1,4 @@
-import React, { memo, useRef, useEffect } from 'react';
+import React, { memo } from 'react';
 import { Stage } from '@inlet/react-pixi';
 import PropTypes from 'prop-types';
 
@@ -15,22 +15,8 @@ function DrawGraph({
   clicked,
   onClickHandler,
 }) {
-  const stageRef = useRef();
-
-  useEffect(
-    () => () => {
-      if (stageRef.current) {
-        const canvas = stageRef.current;
-        const context = canvas.getContext('2d');
-        context.clearRect(0, 0, canvas.width, canvas.height);
-      }
-    },
-    [],
-  );
-
   return (
     <Stage
-      ref={stageRef}
       width={(maxPipeCount + 1) * theme.size.graph2dNodeSpacing}
       height={logList.length * theme.size.graph2dNodeSpacing}
       options={{ antialias: true }}

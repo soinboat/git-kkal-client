@@ -12,6 +12,7 @@ export default function DrawButton({ log, index, clicked, onClickHandler }) {
       button.clear();
       button.alpha = index === clicked ? 0.5 : 0;
       button.beginFill(convertColor(log.color));
+      button.buttonMode = true;
       button.drawRect(
         0,
         index * theme.size.graph2dNodeSpacing +

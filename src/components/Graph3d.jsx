@@ -5,28 +5,34 @@ import * as THREE from 'three';
 import { Canvas } from '@react-three/fiber';
 import { Text, OrbitControls } from '@react-three/drei';
 
-const Sphere = ({ log, setClickedNode }) => (
+const Sphere = ({ log, onClickHandler, clicked }) => (
   <mesh
     visible
     dispose={null}
+    scale={clicked === log.index ? 2 : 1}
     userData={{ test: 'hello' }}
     position={[log.position * 5, -log.index * 5, 0]}
     rotation={[0, 0, 0]}
-    onClick={() => setClickedNode(log.hash)}
+    onClick={() => onClickHandler(log.hash, log.index)}
   >
     <sphereGeometry attach="geometry" args={[1, 32, 16]} />
     <meshStandardMaterial
       attach="material"
       color={log.color}
       transparent
-      metalness={0.1}
+      metalness={1}
     />
   </mesh>
 );
 
-const SphereList = ({ logList, setClickedNode }) =>
+const SphereList = ({ logList, onClickHandler, clicked }) =>
   logList.map((log) => (
-    <Sphere key={`log${log.hash}`} log={log} setClickedNode={setClickedNode} />
+    <Sphere
+      key={`log${log.hash}`}
+      log={log}
+      onClickHandler={onClickHandler}
+      clicked={clicked}
+    />
   ));
 
 const Line = ({ line }) => {
@@ -82,8 +88,14 @@ const Commit = ({ log, maxPipeCount }) => (
 export default function Graph3d({ repoData, handleNodeClick }) {
   const { logList, lineList, maxPipeCount } = repoData;
   const [clickedNode, setClickedNode] = useState(null);
+  const [clicked, setClicked] = useState(0);
 
   const canvasRef = useRef();
+
+  const onClickHandler = (hash, index) => {
+    setClickedNode(hash);
+    setClicked(index);
+  };
 
   useEffect(() => {
     if (!clickedNode) return;
@@ -97,11 +109,16 @@ export default function Graph3d({ repoData, handleNodeClick }) {
       camera={{ fov: 75, position: [0, 0, 50], far: 3000 }}
     >
       <color attach="background" args={['#000']} />
-      <SphereList logList={logList} setClickedNode={setClickedNode} />
+      <SphereList
+        logList={logList}
+        onClickHandler={onClickHandler}
+        clicked={clicked}
+      />
       <LineList lineList={lineList} />
       <CommitList logList={logList} maxPipeCount={maxPipeCount} />
       <ambientLight intensity={1} />
-      <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+      <spotLight position={[10, 1000, 10]} angle={0.5} penumbra={1} />
+      <spotLight position={[10, -1000, 10]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
       <OrbitControls enablePan enableZoom enableRotate />
     </Canvas>
@@ -124,7 +141,8 @@ Sphere.propTypes = {
     position: PropTypes.number,
     color: PropTypes.string,
   }).isRequired,
-  setClickedNode: PropTypes.func.isRequired,
+  clicked: PropTypes.number.isRequired,
+  onClickHandler: PropTypes.func.isRequired,
 };
 
 SphereList.propTypes = {
@@ -145,7 +163,8 @@ SphereList.propTypes = {
       color: PropTypes.string,
     }),
   ).isRequired,
-  setClickedNode: PropTypes.func.isRequired,
+  clicked: PropTypes.number.isRequired,
+  onClickHandler: PropTypes.func.isRequired,
 };
 
 Line.propTypes = {
