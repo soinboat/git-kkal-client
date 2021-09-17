@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 
 import CommitList from './CommitList';
 
-export default function Description({ logList, colorList, onClickHandler }) {
+export default function Description({ logList, targetCommit, onClickHandler }) {
   return (
     <CommitListWrapper>
       <CommitList
         logList={logList}
-        colorList={colorList}
+        targetCommit={targetCommit}
         onClickHandler={onClickHandler}
       />
     </CommitListWrapper>
@@ -22,6 +22,10 @@ const CommitListWrapper = styled.ul`
   padding: 0;
 `;
 
+Description.defaultProps = {
+  targetCommit: '',
+};
+
 Description.propTypes = {
   logList: PropTypes.arrayOf(
     PropTypes.objectOf(
@@ -33,6 +37,6 @@ Description.propTypes = {
       ]),
     ),
   ).isRequired,
-  colorList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  targetCommit: PropTypes.string,
   onClickHandler: PropTypes.func.isRequired,
 };

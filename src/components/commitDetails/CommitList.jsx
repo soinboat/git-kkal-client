@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { selectFontColor } from '../../utils/color';
 
-export default function CommitList({ logList, colorList, onClickHandler }) {
+export default function CommitList({ logList, targetCommit, onClickHandler }) {
   return (
     <>
       {logList.map((log, index) => (
@@ -11,7 +11,7 @@ export default function CommitList({ logList, colorList, onClickHandler }) {
           key={`CommitWrapper${index}${log.hash}`}
           onClick={() => onClickHandler(log.index, log.hash)}
         >
-          <Commit color={colorList[index]}>
+          <Commit className={log.hash === targetCommit ? 'selected' : ''}>
             <CommitHash>{log.hash.slice(0, 7)}</CommitHash>
             {log.branchNames
               ? log.branchNames.map((branch) => (
@@ -36,6 +36,10 @@ const Log = styled.li`
   display: flex;
   height: 50px;
   align-items: center;
+
+  .selected {
+    border-left: 3px solid aqua;
+  }
 `;
 
 const Commit = styled.div`
@@ -43,7 +47,7 @@ const Commit = styled.div`
   align-items: center;
   height: 60%;
   box-sizing: border-box;
-  border-left: 3px solid ${({ color }) => color};
+  /* border-left: 3px solid ${({ color }) => color}; */
 `;
 
 const CommitHash = styled.div`
@@ -66,6 +70,10 @@ const CommitMessage = styled.div`
   white-space: nowrap;
 `;
 
+CommitList.defaultProps = {
+  targetCommit: '',
+};
+
 CommitList.propTypes = {
   logList: PropTypes.arrayOf(
     PropTypes.objectOf(
@@ -77,6 +85,6 @@ CommitList.propTypes = {
       ]),
     ),
   ).isRequired,
-  colorList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  targetCommit: PropTypes.string,
   onClickHandler: PropTypes.func.isRequired,
 };

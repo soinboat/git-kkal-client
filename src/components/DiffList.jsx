@@ -56,8 +56,11 @@ const InnerWrapper = styled.div`
 const FileName = styled.div`
   word-break: break-all;
   word-wrap: break-word;
-  margin: 5px 0;
+  margin: 10px 0;
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   :hover {
     background-color: #ffffff1f;

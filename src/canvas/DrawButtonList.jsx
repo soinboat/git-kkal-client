@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DrawButton from './DrawButton';
 
-export default function DrawButtonList({ logList, clicked, onClickHandler }) {
+export default function DrawButtonList({
+  logList,
+  targetCommit,
+  onClickHandler,
+}) {
   return (
     <>
       {logList.map((log, index) => (
@@ -10,13 +14,17 @@ export default function DrawButtonList({ logList, clicked, onClickHandler }) {
           key={`button${index}${log.hash}`}
           log={log}
           index={index}
-          clicked={clicked}
+          targetCommit={targetCommit}
           onClickHandler={onClickHandler}
         />
       ))}
     </>
   );
 }
+
+DrawButtonList.defaultProps = {
+  targetCommit: '',
+};
 
 DrawButtonList.propTypes = {
   logList: PropTypes.arrayOf(
@@ -36,6 +44,6 @@ DrawButtonList.propTypes = {
       color: PropTypes.string,
     }),
   ).isRequired,
-  clicked: PropTypes.number.isRequired,
+  targetCommit: PropTypes.string,
   onClickHandler: PropTypes.func.isRequired,
 };

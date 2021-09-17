@@ -6,17 +6,19 @@ import { IoMdArrowDropdown } from 'react-icons/io';
 
 import UI from '../constants/ui';
 
-export default function BranchList({ branchList, handleBranchClick }) {
+export default function BranchList({
+  branchList,
+  targetCommit,
+  handleBranchClick,
+}) {
   const [isBranchListClosed, setIsBranchListClosed] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const toggleCollapse = useCallback(() => {
     setIsBranchListClosed((prev) => !prev);
   }, []);
 
-  const handleClick = (branch, index) => {
+  const handleClick = (branch) => {
     handleBranchClick(branch);
-    setSelectedIndex(index);
   };
 
   return (
@@ -32,7 +34,7 @@ export default function BranchList({ branchList, handleBranchClick }) {
           branchList?.map(({ branchName, hash }, index) => (
             <BranchName
               key={hash}
-              className={`${selectedIndex === index ? 'selected' : ''}`}
+              className={`${targetCommit === hash ? 'selected' : ''}`}
               onClick={() => {
                 handleClick({ branchName, hash }, index);
               }}
@@ -103,6 +105,10 @@ const BranchNameList = styled.ul`
 const BranchName = styled.li`
   font-size: 1rem;
   cursor: pointer;
+  margin: 10px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   :hover {
     background-color: #ffffff1f;
@@ -111,9 +117,11 @@ const BranchName = styled.li`
 
 BranchList.defaultProps = {
   branchList: [],
+  targetCommit: '',
 };
 
 BranchList.propTypes = {
   branchList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+  targetCommit: PropTypes.string,
   handleBranchClick: PropTypes.func.isRequired,
 };

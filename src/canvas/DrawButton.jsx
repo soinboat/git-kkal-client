@@ -3,36 +3,42 @@ import PropTypes from 'prop-types';
 import { Graphics } from '@inlet/react-pixi';
 
 import { convertColor } from '../utils/color';
+import { calcRectInfos } from '../utils/calcLayout';
 import theme from '../context/theme';
-import { getHalf } from '../utils/calcLayout';
 
-export default function DrawButton({ log, index, clicked, onClickHandler }) {
+export default function DrawButton({
+  log,
+  index,
+  targetCommit,
+  onClickHandler,
+}) {
+  const {
+    size: { graph2dNodeSpacing, graph2dNodeRadius, graph2dButtonAlpha },
+  } = theme;
   const buttonGraphics = useCallback(
     (button) => {
       button.clear();
-      button.alpha = index === clicked ? 0.5 : 0;
+      button.alpha = log.hash === targetCommit ? graph2dButtonAlpha : 0;
       button.beginFill(convertColor(log.color));
       button.drawRect(
-        0,
-        index * theme.size.graph2dNodeSpacing +
-          (getHalf(theme.size.graph2dNodeSpacing) -
-            theme.size.graph2dNodeRadius),
-        10000,
-        theme.size.graph2dNodeRadius * 2,
+        ...calcRectInfos(index, graph2dNodeSpacing, graph2dNodeRadius),
       );
       button.interactive = true;
       button.click = () => {
         onClickHandler(index, log.hash);
       };
     },
-    [clicked === index],
+    [log.hash === targetCommit],
   );
 
   return <Graphics draw={buttonGraphics} />;
 }
 
+DrawButton.defaultProps = {
+  targetCommit: '',
+};
+
 DrawButton.propTypes = {
-  index: PropTypes.number.isRequired,
   log: PropTypes.shape({
     message: PropTypes.string,
     author: PropTypes.string,
@@ -48,6 +54,7 @@ DrawButton.propTypes = {
     position: PropTypes.number,
     color: PropTypes.string,
   }).isRequired,
-  clicked: PropTypes.number.isRequired,
+  index: PropTypes.number.isRequired,
+  targetCommit: PropTypes.string,
   onClickHandler: PropTypes.func.isRequired,
 };

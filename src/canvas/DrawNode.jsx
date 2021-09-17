@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Graphics } from '@inlet/react-pixi';
 
 import { convertColor } from '../utils/color';
-import { getHalf } from '../utils/calcLayout';
+import { calcHalf } from '../utils/calcLayout';
 import theme from '../context/theme';
 
 export default function DrawNode({ logList }) {
@@ -18,18 +18,18 @@ export default function DrawNode({ logList }) {
         node.drawCircle(
           log.position * theme.size.graph2dNodeSpacing + 50,
           index * theme.size.graph2dNodeSpacing +
-            getHalf(theme.size.graph2dNodeSpacing),
+            calcHalf(theme.size.graph2dNodeSpacing),
           theme.size.graph2dNodeRadius,
         );
         node.endFill();
 
         const black = convertColor(theme.background.black);
-        
+
         node.beginFill(black);
         node.drawCircle(
           log.position * theme.size.graph2dNodeSpacing + 50,
           index * theme.size.graph2dNodeSpacing +
-            getHalf(theme.size.graph2dNodeSpacing),
+            calcHalf(theme.size.graph2dNodeSpacing),
           theme.size.graph2dSmallNodeRadius,
         );
         node.endFill();

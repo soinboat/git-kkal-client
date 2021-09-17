@@ -119,6 +119,7 @@ export default function Repository({ repoUrl, repoData }) {
             <BranchBar>
               <BranchList
                 branchList={branchList}
+                targetCommit={targetCommit}
                 handleBranchClick={handleBranchClick}
               />
             </BranchBar>
@@ -126,6 +127,7 @@ export default function Repository({ repoUrl, repoData }) {
               {is2dGraphMode ? (
                 <Graph2d
                   repoData={repoData}
+                  targetCommit={targetCommit}
                   handleNodeClick={handleNodeClick}
                 />
               ) : (
