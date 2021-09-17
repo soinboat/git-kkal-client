@@ -11,6 +11,7 @@ export default function DiffList({ targetDiffList, handleDiffClick }) {
   const handleClick = (diff, index) => {
     handleDiffClick(diff);
     setSelectedIndex(index);
+
     history.push('/repository/diff');
   };
 

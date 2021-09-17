@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import loadable from '@loadable/component';
 import { ToastContainer } from 'react-toastify';
@@ -44,13 +44,21 @@ function App() {
     <>
       <Switch>
         <Route exact path="/">
-          <Landing
-            repoData={repoData}
-            handleRepoUrlSubmit={handleRepoUrlSubmit}
-          />
+          {repoData ? (
+            <Redirect to="/repository" />
+          ) : (
+            <Landing
+              repoData={repoData}
+              handleRepoUrlSubmit={handleRepoUrlSubmit}
+            />
+          )}
         </Route>
         <Route path="/repository">
-          <Repository repoUrl={repoUrl} repoData={repoData} />
+          {repoData ? (
+            <Repository repoUrl={repoUrl} repoData={repoData} />
+          ) : (
+            <Redirect to="/" />
+          )}
         </Route>
       </Switch>
       <ToastContainer />
