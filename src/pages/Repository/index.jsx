@@ -79,7 +79,7 @@ export default function Repository({
 
   useEffect(() => {
     if (!targetBranch) {
-      setTargetCommit(null);
+      setTargetCommit(repoData.logList[0].hash);
     } else {
       setTargetCommit(targetBranch.hash);
     }
