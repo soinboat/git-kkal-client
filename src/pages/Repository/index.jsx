@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import NavBar from '../../components/layouts/NavBar';
 import BranchBar from '../../components/layouts/BranchBar';
 import ContentBox from '../../components/layouts/ContentBox';
+import GraphBox from '../../components/layouts/GraphBox';
 import DiffBox from '../../components/layouts/DiffBox';
 import DiffBar from '../../components/layouts/DiffBar';
 
@@ -113,7 +114,7 @@ export default function Repository({
           <Wrapper>
             <LogoWrapper>
               <Logo src={logo} onClick={handleResetRepository} />
-              <RepositoryName>Repository: {repoData.repoName}</RepositoryName>
+              <RepositoryName>{repoData.repoName}</RepositoryName>
             </LogoWrapper>
             <ButtonWrapper>
               {isDiffMode ? (
@@ -135,26 +136,28 @@ export default function Repository({
       <BodyWrapper>
         <Switch>
           <Route exact path="/repository">
-            <BranchBar>
-              <BranchList
-                branchList={branchList}
-                targetCommit={targetCommit}
-                handleBranchClick={handleBranchClick}
-              />
-            </BranchBar>
             <ContentBox>
-              {is2dGraphMode ? (
-                <Graph2d
-                  repoData={repoData}
+              <BranchBar>
+                <BranchList
+                  branchList={branchList}
                   targetCommit={targetCommit}
-                  handleNodeClick={handleNodeClick}
+                  handleBranchClick={handleBranchClick}
                 />
-              ) : (
-                <Graph3d
-                  repoData={repoData}
-                  handleNodeClick={handleNodeClick}
-                />
-              )}
+              </BranchBar>
+              <GraphBox>
+                {is2dGraphMode ? (
+                  <Graph2d
+                    repoData={repoData}
+                    targetCommit={targetCommit}
+                    handleNodeClick={handleNodeClick}
+                  />
+                ) : (
+                  <Graph3d
+                    repoData={repoData}
+                    handleNodeClick={handleNodeClick}
+                  />
+                )}
+              </GraphBox>
             </ContentBox>
             <DiffBar>
               <DiffList
@@ -164,12 +167,14 @@ export default function Repository({
             </DiffBar>
           </Route>
           <Route path="/repository/diff">
-            <DiffBox>
-              <Diff
-                targetDiff={targetDiffFile}
-                handleDiffMode={handleDiffMode}
-              />
-            </DiffBox>
+            <ContentBox>
+              <DiffBox>
+                <Diff
+                  targetDiff={targetDiffFile}
+                  handleDiffMode={handleDiffMode}
+                />
+              </DiffBox>
+            </ContentBox>
             <DiffBar>
               <DiffList
                 targetDiffList={targetDiffList}
@@ -215,7 +220,7 @@ const RepositoryName = styled.div`
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
-  min-width: 200px;
+  width: auto;
   border: 2px solid #ffffff43;
   background-color: #ffffff5a;
   color: white;
