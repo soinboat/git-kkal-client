@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import loadable from '@loadable/component';
 import PropTypes from 'prop-types';
@@ -32,10 +32,6 @@ export default function Repository({
   repoData,
   handleResetRepository,
 }) {
-  if (!repoData) {
-    return <Redirect to="/" />;
-  }
-
   const [targetBranch, setTargetBranch] = useState(null);
   const [targetCommit, setTargetCommit] = useState(repoData.logList[0].hash);
   const [targetDiffList, setTargetDiffList] = useState(null);
