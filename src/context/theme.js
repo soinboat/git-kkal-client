@@ -29,6 +29,8 @@ const theme = {
     graph2dSmallNodeRadius: 10,
     graph2dNodeSpacing: 50,
     graph2dButtonAlpha: 0.5,
+
+    graphNavBarHeight: '30px',
   },
   limit: {
     maxNodeCount: 200,
