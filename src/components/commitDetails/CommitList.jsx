@@ -36,6 +36,7 @@ const Log = styled.li`
   display: flex;
   height: 50px;
   align-items: center;
+  cursor: pointer;
 
   .selected {
     border-left: 3px solid aqua;
