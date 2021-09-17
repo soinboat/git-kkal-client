@@ -6,6 +6,7 @@ import DrawGraph from '../canvas/DrawGraph';
 import Description from './commitDetails/Description';
 
 import theme from '../context/theme';
+import UI from '../constants/ui';
 
 export default function Graph2d({ repoData, targetCommit, handleNodeClick }) {
   if (!repoData.repoName) {
@@ -16,7 +17,7 @@ export default function Graph2d({ repoData, targetCommit, handleNodeClick }) {
   const limitedLogList = logList.slice(0, theme.limit.maxNodeCount);
   const limitedLineList = lineList.slice(0, theme.limit.maxNodeCount);
 
-  const onClickHandler = (index, hash) => {
+  const onClickHandler = (_, hash) => {
     handleNodeClick(hash);
   };
 
@@ -27,10 +28,10 @@ export default function Graph2d({ repoData, targetCommit, handleNodeClick }) {
           width={`${(maxPipeCount + 1) * theme.size.graph2dNodeSpacing}px`}
           borderRight
         >
-          GRAPH
+          {UI.GRAPH}
         </Item>
-        <Item borderRight>HASH</Item>
-        <Item>COMMIT</Item>
+        <Item borderRight>{UI.HASH}</Item>
+        <Item>{UI.COMMIT}</Item>
       </NavBar>
       <Content>
         <DrawGraph

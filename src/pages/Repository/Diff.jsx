@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import DiffParagraphCode from '../../components/diffCode/DiffParagraphCode';
 import Button from '../../components/Button';
+import UI from '../../constants/ui';
 
 export default function Diff({ targetDiff, handleDiffMode }) {
   const history = useHistory();
@@ -19,7 +20,7 @@ export default function Diff({ targetDiff, handleDiffMode }) {
     <Wrapper>
       <FileNameWrapper>
         <DiffFileName>{targetDiff.fileName}</DiffFileName>
-        <Button onClick={handleButtonClick}>Repo</Button>
+        <Button onClick={handleButtonClick}>{UI.Repo}</Button>
       </FileNameWrapper>
       {targetDiff.changedLog.map((log) => (
         <DiffParagraph key={log.codeLineOffsetString}>
