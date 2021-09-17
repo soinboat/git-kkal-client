@@ -47,8 +47,6 @@ const Wrapper = styled.div`
 
 const FileName = styled.div`
   width: 100%;
-  /* word-break: break-all;
-  word-wrap: break-word; */
   margin: 10px 0;
   cursor: pointer;
   white-space: nowrap;

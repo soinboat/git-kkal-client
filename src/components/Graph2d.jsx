@@ -75,10 +75,8 @@ const Item = styled.div`
 const Content = styled.div`
   display: flex;
   width: 100%;
-  /* height: 100%; */
   height: calc(100% - 60px);
   overflow: scroll;
-  /* border: 1px solid yellow; */
 `;
 
 Graph2d.defaultProps = {
