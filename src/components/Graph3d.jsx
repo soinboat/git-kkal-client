@@ -10,9 +10,7 @@ const Sphere = ({ log, onClickHandler, clicked }) => (
     visible
     dispose={null}
     scale={clicked === log.index ? 2 : 1}
-    userData={{ test: 'hello' }}
     position={[log.position * 5, -log.index * 5, 0]}
-    rotation={[0, 0, 0]}
     onClick={() => onClickHandler(log.hash, log.index)}
   >
     <sphereGeometry attach="geometry" args={[1, 32, 16]} />
