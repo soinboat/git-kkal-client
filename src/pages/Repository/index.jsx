@@ -133,6 +133,7 @@ export default function Repository({ repoUrl, repoData }) {
               ) : (
                 <Graph3d
                   repoData={repoData}
+                  targetCommit={targetCommit}
                   handleNodeClick={handleNodeClick}
                 />
               )}

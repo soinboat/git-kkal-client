@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
@@ -160,7 +159,7 @@ SphereList.propTypes = {
       color: PropTypes.string,
     }),
   ).isRequired,
-  clicked: PropTypes.number.isRequired,
+  targetCommit: PropTypes.string.isRequired,
   onClickHandler: PropTypes.func.isRequired,
 };
 
@@ -251,5 +250,6 @@ Graph3d.propTypes = {
       ),
     ).isRequired,
   }).isRequired,
+  targetCommit: PropTypes.string.isRequired,
   handleNodeClick: PropTypes.func.isRequired,
 };
