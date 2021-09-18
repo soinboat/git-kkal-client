@@ -6,21 +6,21 @@ import styled from 'styled-components';
 
 import DiffParagraphCode from '../../components/diffCode/DiffParagraphCode';
 import Button from '../../components/Button';
+import UI from '../../constants/ui';
 
-export default function Diff({ targetDiff }) {
+export default function Diff({ targetDiff, handleDiffMode }) {
   const history = useHistory();
+
+  const handleButtonClick = () => {
+    handleDiffMode();
+    history.push('/repository');
+  };
 
   return (
     <Wrapper>
       <FileNameWrapper>
         <DiffFileName>{targetDiff.fileName}</DiffFileName>
-        <Button
-          onClick={() => {
-            history.push('/repository');
-          }}
-        >
-          Repo
-        </Button>
+        <Button onClick={handleButtonClick}>{UI.REPO}</Button>
       </FileNameWrapper>
       {targetDiff.changedLog.map((log) => (
         <DiffParagraph key={log.codeLineOffsetString}>
@@ -68,6 +68,7 @@ Diff.defaultProps = {
     fileName: '',
     changedLog: [],
   },
+  handleDiffMode: () => {},
 };
 
 Diff.propTypes = {
@@ -89,4 +90,5 @@ Diff.propTypes = {
       ),
     ]),
   ),
+  handleDiffMode: PropTypes.func,
 };

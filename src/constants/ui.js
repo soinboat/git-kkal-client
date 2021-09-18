@@ -5,6 +5,10 @@ const UI = {
   THREE_DIMENSION: '3D',
   BRANCH: 'Branch',
   TITLE: 'GIT KKAL',
+  GRAPH: 'GRAPH',
+  HASH: 'HASH',
+  COMMIT: 'COMMIT',
+  REPO: 'REPO',
 };
 
 export default UI;

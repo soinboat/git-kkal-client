@@ -28,6 +28,13 @@ export default function DrawButton({
       button.click = () => {
         onClickHandler(index, log.hash);
       };
+      button.on('mouseover', () => {
+        button.alpha = 0.3;
+      });
+      button.on('mouseout', () => {
+        button.alpha = log.hash === targetCommit ? graph2dButtonAlpha : 0;
+      });
+      button.buttonMode = true;
     },
     [log.hash === targetCommit],
   );

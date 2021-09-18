@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -7,11 +6,7 @@ import styled from 'styled-components';
 import UrlForm from '../components/UrlForm';
 import UI from '../constants/ui';
 
-export default function Landing({ repoData, handleRepoUrlSubmit }) {
-  if (repoData) {
-    return <Redirect to="/repository" />;
-  }
-
+export default function Landing({ handleRepoUrlSubmit }) {
   return (
     <Wrapper>
       <TopWrapper>
@@ -107,30 +102,6 @@ const BottomWrapper = styled.div`
   box-sizing: border-box;
 `;
 
-Landing.defaultProps = {
-  repoData: {
-    repoName: 'repoName',
-    logList: [
-      {
-        message: 'Message',
-      },
-    ],
-  },
-};
-
 Landing.propTypes = {
-  repoData: PropTypes.shape({
-    repoName: PropTypes.string.isRequired,
-    logList: PropTypes.arrayOf(
-      PropTypes.objectOf(
-        PropTypes.oneOfType([
-          PropTypes.string,
-          PropTypes.number,
-          PropTypes.bool,
-          PropTypes.arrayOf(PropTypes.string),
-        ]),
-      ),
-    ).isRequired,
-  }),
   handleRepoUrlSubmit: PropTypes.func.isRequired,
 };

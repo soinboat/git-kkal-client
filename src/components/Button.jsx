@@ -10,7 +10,6 @@ const Button = styled.button`
   color: white;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
 
   &:hover {
     opacity: 0.6;

@@ -7,7 +7,6 @@ export default function BranchBar({ children }) {
 }
 
 const Wrapper = styled.div`
-  min-width: ${({ theme: { size } }) => size.branchBarMinWidth};
   width: ${({ theme: { size } }) => size.branchBarWidth};
   height: 100%;
   background-color: ${({ theme: { background } }) => background.grey3};

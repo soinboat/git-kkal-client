@@ -10,8 +10,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: ${({ theme: { size } }) => size.diffBoxMinWidth};
-  width: ${({ theme: { size } }) => size.diffBoxWidth};
+  width: 100%;
   height: 100%;
   background-color: ${({ theme: { background } }) => background.black};
   color: ${({ theme: { font } }) => font.color.white};

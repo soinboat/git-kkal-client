@@ -11,24 +11,23 @@ export default function DiffList({ targetDiffList, handleDiffClick }) {
   const handleClick = (diff, index) => {
     handleDiffClick(diff);
     setSelectedIndex(index);
+
     history.push('/repository/diff');
   };
 
   return (
     <Wrapper>
-      <InnerWrapper>
-        {targetDiffList?.map((diff, index) => (
-          <FileName
-            key={diff.fileName}
-            className={`${selectedIndex === index ? 'selected' : ''}`}
-            onClick={() => {
-              handleClick(diff, index);
-            }}
-          >
-            {diff.fileName}
-          </FileName>
-        ))}
-      </InnerWrapper>
+      {targetDiffList?.map((diff, index) => (
+        <FileName
+          key={diff.fileName}
+          className={`${selectedIndex === index ? 'selected' : ''}`}
+          onClick={() => {
+            handleClick(diff, index);
+          }}
+        >
+          {diff.fileName}
+        </FileName>
+      ))}
     </Wrapper>
   );
 }
@@ -40,12 +39,6 @@ const Wrapper = styled.div`
   background-color: ${({ theme: { background } }) => background.grey3};
   color: ${({ theme: { font } }) => font.color.white};
   font-family: Arial, Helvetica, sans-serif;
-`;
-
-const InnerWrapper = styled.div`
-  width: 100%;
-  height: auto;
-  margin: 10px 0;
 
   .selected {
     color: black;
@@ -54,8 +47,7 @@ const InnerWrapper = styled.div`
 `;
 
 const FileName = styled.div`
-  word-break: break-all;
-  word-wrap: break-word;
+  width: 100%;
   margin: 10px 0;
   cursor: pointer;
   white-space: nowrap;

@@ -5,13 +5,13 @@ import * as THREE from 'three';
 import { Canvas } from '@react-three/fiber';
 import { Text, OrbitControls } from '@react-three/drei';
 
-const Sphere = ({ log, onClickHandler, clicked }) => (
+const Sphere = ({ log, onClickHandler, targetCommit }) => (
   <mesh
     visible
     dispose={null}
-    scale={clicked === log.index ? 2 : 1}
+    scale={targetCommit === log.hash ? 2 : 1}
     position={[log.position * 5, -log.index * 5, 0]}
-    onClick={() => onClickHandler(log.hash, log.index)}
+    onClick={() => onClickHandler(log.hash)}
   >
     <sphereGeometry attach="geometry" args={[1, 32, 16]} />
     <meshStandardMaterial
@@ -23,13 +23,13 @@ const Sphere = ({ log, onClickHandler, clicked }) => (
   </mesh>
 );
 
-const SphereList = ({ logList, onClickHandler, clicked }) =>
+const SphereList = ({ logList, onClickHandler, targetCommit }) =>
   logList.map((log) => (
     <Sphere
       key={`log${log.hash}`}
       log={log}
       onClickHandler={onClickHandler}
-      clicked={clicked}
+      targetCommit={targetCommit}
     />
   ));
 
@@ -83,16 +83,14 @@ const Commit = ({ log, maxPipeCount }) => (
   </Text>
 );
 
-export default function Graph3d({ repoData, handleNodeClick }) {
+export default function Graph3d({ repoData, handleNodeClick, targetCommit }) {
   const { logList, lineList, maxPipeCount } = repoData;
   const [clickedNode, setClickedNode] = useState(null);
-  const [clicked, setClicked] = useState(0);
 
   const canvasRef = useRef();
 
-  const onClickHandler = (hash, index) => {
+  const onClickHandler = (hash) => {
     setClickedNode(hash);
-    setClicked(index);
   };
 
   useEffect(() => {
@@ -110,7 +108,7 @@ export default function Graph3d({ repoData, handleNodeClick }) {
       <SphereList
         logList={logList}
         onClickHandler={onClickHandler}
-        clicked={clicked}
+        targetCommit={targetCommit}
       />
       <LineList lineList={lineList} />
       <CommitList logList={logList} maxPipeCount={maxPipeCount} />
@@ -139,7 +137,7 @@ Sphere.propTypes = {
     position: PropTypes.number,
     color: PropTypes.string,
   }).isRequired,
-  clicked: PropTypes.number.isRequired,
+  targetCommit: PropTypes.string.isRequired,
   onClickHandler: PropTypes.func.isRequired,
 };
 
@@ -161,7 +159,7 @@ SphereList.propTypes = {
       color: PropTypes.string,
     }),
   ).isRequired,
-  clicked: PropTypes.number.isRequired,
+  targetCommit: PropTypes.string.isRequired,
   onClickHandler: PropTypes.func.isRequired,
 };
 
@@ -252,5 +250,6 @@ Graph3d.propTypes = {
       ),
     ).isRequired,
   }).isRequired,
+  targetCommit: PropTypes.string.isRequired,
   handleNodeClick: PropTypes.func.isRequired,
 };

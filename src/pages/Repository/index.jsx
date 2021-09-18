@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import loadable from '@loadable/component';
 import PropTypes from 'prop-types';
@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import NavBar from '../../components/layouts/NavBar';
 import BranchBar from '../../components/layouts/BranchBar';
 import ContentBox from '../../components/layouts/ContentBox';
+import GraphBox from '../../components/layouts/GraphBox';
 import DiffBox from '../../components/layouts/DiffBox';
 import DiffBar from '../../components/layouts/DiffBar';
 
@@ -22,18 +23,21 @@ import { fetchDiff } from '../../api/git';
 import { getBranchList } from '../../utils/git';
 import UI from '../../constants/ui';
 
+import logo from '../../image/logo.ico';
+
 const Diff = loadable(() => import('./Diff'));
 
-export default function Repository({ repoUrl, repoData }) {
-  if (!repoData) {
-    return <Redirect to="/" />;
-  }
-
+export default function Repository({
+  repoUrl,
+  repoData,
+  handleResetRepository,
+}) {
   const [targetBranch, setTargetBranch] = useState(null);
   const [targetCommit, setTargetCommit] = useState(repoData.logList[0].hash);
   const [targetDiffList, setTargetDiffList] = useState(null);
   const [targetDiffFile, setTargetDiffFile] = useState(null);
   const [is2dGraphMode, setIs2dGraphMode] = useState(true);
+  const [isDiffMode, setIsDiffMode] = useState(false);
 
   const branchList = useMemo(() => getBranchList(repoData), [repoData]);
 
@@ -54,8 +58,9 @@ export default function Repository({ repoUrl, repoData }) {
   const handleDiffClick = useCallback(
     (file) => {
       setTargetDiffFile(file);
+      setIsDiffMode(true);
     },
-    [setTargetDiffFile],
+    [setTargetDiffFile, setIsDiffMode],
   );
 
   const handleGraphMode = useCallback(
@@ -68,9 +73,13 @@ export default function Repository({ repoUrl, repoData }) {
     [setIs2dGraphMode],
   );
 
+  const handleDiffMode = useCallback(() => {
+    setIsDiffMode(false);
+  }, [setIsDiffMode]);
+
   useEffect(() => {
     if (!targetBranch) {
-      setTargetCommit(null);
+      setTargetCommit(repoData.logList[0].hash);
     } else {
       setTargetCommit(targetBranch.hash);
     }
@@ -99,43 +108,53 @@ export default function Repository({ repoUrl, repoData }) {
       <HeaderWrapper>
         <NavBar>
           <Wrapper>
-            <RepositoryName>Repository: {repoData.repoName}</RepositoryName>
-            <div>
-              <ButtonWrapper>
-                <Button name={UI.TWO_DIMENSION} onClick={handleGraphMode}>
-                  {UI.TWO_DIMENSION}
-                </Button>
-                <Button name={UI.THREE_DIMENSION} onClick={handleGraphMode}>
-                  {UI.THREE_DIMENSION}
-                </Button>
-              </ButtonWrapper>
-            </div>
+            <LogoWrapper>
+              <Logo src={logo} onClick={handleResetRepository} />
+              <RepositoryName>{repoData.repoName}</RepositoryName>
+            </LogoWrapper>
+            <ButtonWrapper>
+              {isDiffMode ? (
+                <></>
+              ) : (
+                <>
+                  <Button name={UI.TWO_DIMENSION} onClick={handleGraphMode}>
+                    {UI.TWO_DIMENSION}
+                  </Button>
+                  <Button name={UI.THREE_DIMENSION} onClick={handleGraphMode}>
+                    {UI.THREE_DIMENSION}
+                  </Button>
+                </>
+              )}
+            </ButtonWrapper>
           </Wrapper>
         </NavBar>
       </HeaderWrapper>
       <BodyWrapper>
         <Switch>
           <Route exact path="/repository">
-            <BranchBar>
-              <BranchList
-                branchList={branchList}
-                targetCommit={targetCommit}
-                handleBranchClick={handleBranchClick}
-              />
-            </BranchBar>
             <ContentBox>
-              {is2dGraphMode ? (
-                <Graph2d
-                  repoData={repoData}
+              <BranchBar>
+                <BranchList
+                  branchList={branchList}
                   targetCommit={targetCommit}
-                  handleNodeClick={handleNodeClick}
+                  handleBranchClick={handleBranchClick}
                 />
-              ) : (
-                <Graph3d
-                  repoData={repoData}
-                  handleNodeClick={handleNodeClick}
-                />
-              )}
+              </BranchBar>
+              <GraphBox>
+                {is2dGraphMode ? (
+                  <Graph2d
+                    repoData={repoData}
+                    targetCommit={targetCommit}
+                    handleNodeClick={handleNodeClick}
+                  />
+                ) : (
+                  <Graph3d
+                    repoData={repoData}
+                    targetCommit={targetCommit}
+                    handleNodeClick={handleNodeClick}
+                  />
+                )}
+              </GraphBox>
             </ContentBox>
             <DiffBar>
               <DiffList
@@ -145,9 +164,14 @@ export default function Repository({ repoUrl, repoData }) {
             </DiffBar>
           </Route>
           <Route path="/repository/diff">
-            <DiffBox>
-              <Diff targetDiff={targetDiffFile} />
-            </DiffBox>
+            <ContentBox>
+              <DiffBox>
+                <Diff
+                  targetDiff={targetDiffFile}
+                  handleDiffMode={handleDiffMode}
+                />
+              </DiffBox>
+            </ContentBox>
             <DiffBar>
               <DiffList
                 targetDiffList={targetDiffList}
@@ -164,10 +188,25 @@ export default function Repository({ repoUrl, repoData }) {
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   height: 60px;
   background-color: ${({ theme: { background } }) => background.black};
   color: ${({ theme: { font } }) => font.color.grey};
+`;
+
+const Logo = styled.img`
+  src: ${({ src }) => src || null};
+  width: ${({ width }) => width || '50px'};
+  height: ${({ height }) => height || '50px'};
+  margin-left: 10px;
+  cursor: pointer;
+`;
+
+const LogoWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ButtonWrapper = styled.div`
@@ -179,7 +218,7 @@ const RepositoryName = styled.div`
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
-  min-width: 200px;
+  width: auto;
   border: 2px solid #ffffff43;
   background-color: #ffffff5a;
   color: white;
@@ -198,6 +237,7 @@ Repository.defaultProps = {
       },
     ],
   },
+  handleResetRepository: () => {},
 };
 
 Repository.propTypes = {
@@ -225,4 +265,5 @@ Repository.propTypes = {
       ),
     ),
   }),
+  handleResetRepository: PropTypes.func,
 };
